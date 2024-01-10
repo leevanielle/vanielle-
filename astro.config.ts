@@ -13,6 +13,9 @@ export default defineConfig({
   output: "static",
   adapter: vercelStatic({
     imageService: true,
+    speedInsights: {
+      enabled: true,
+    },
     webAnalytics: {
       enabled: true,
     },
