@@ -2,13 +2,13 @@
 author: Vanielle Lee
 pubDatetime: 2024-02-13T15:57:52.737Z
 title: From Small Town Dreams to Global Horizons Pt. 1
-slug: small-town-dreams-global-horizons-journey-exploration
+slug: small-town-dreams-global-horizons-journey-exploration-pt-1
 featured: true
 draft: false
 tags:
   - personal
   - travel
-description: Join me as I share the raw and honest moments of my personal diary, revealing the world beyond the comforts of home.
+description: I grew up in a small town in middle America. Oklahoma was a state with a population of merely 3.9 million people...
 ---
 
 I grew up in a small town in middle America. Oklahoma was a state with a population of merely 3.9 million people. The two most exciting things were American football and going to church. That was the kind of small town that I grew up in. Though it was a nice, quiet life, I was deeply searching for something deeper and more profound. I wanted to explore the world. I wanted to know what was out there. I had a love for history, philosophy, politics, and languages. I knew that staying cooped up in the small town was too limiting.
