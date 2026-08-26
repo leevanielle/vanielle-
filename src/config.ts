@@ -1,10 +1,10 @@
 import type { Site, SocialObjects } from "./types";
 
 export const SITE: Site = {
-  website: "https://vanielle.lee/", // replace this with your deployed domain
-  author: "Vanielle LEE",
-  desc: "Vanielle LEE's personal blog",
-  title: "Vanielle LEE",
+  website: "https://vanielle.io/",
+  author: "Vanielle Lee",
+  desc: "Founder, AI engineer, and author building from Tokyo.",
+  title: "Vanielle Lee",
   ogImage: "astropaper-og.jpg",
   lightAndDarkMode: true,
   postPerPage: 3,
@@ -31,8 +31,15 @@ export const SOCIALS: SocialObjects = [
     target: true,
   },
   {
+    name: "Twitter",
+    href: "https://x.com/lee_vanielle",
+    linkTitle: `${SITE.title} on X`,
+    active: true,
+    target: true,
+  },
+  {
     name: "LinkedIn",
-    href: "https://github.com/leevanielle",
+    href: "https://linkedin.com/in/vanielle",
     linkTitle: `${SITE.title} on LinkedIn`,
     active: true,
     target: true,
@@ -41,7 +48,7 @@ export const SOCIALS: SocialObjects = [
     name: "GitLab",
     href: "https://gitlab.com/leevanielle",
     linkTitle: `${SITE.title} on GitLab`,
-    active: true,
+    active: false,
     target: true,
   },
   {
