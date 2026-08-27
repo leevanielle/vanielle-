@@ -47,27 +47,23 @@ const agents = [
 
 <Layout
   title="Vanielle Lee — AI Engineer, Founder & CTO"
-  description="Meet Vanielle Lee through a playful constellation of AI, engineering leadership, writing, and founder work."
+  description="Meet Vanielle Lee through her work in AI, engineering leadership, writing, and company building."
 >
-  <div class="atelier-shell" data-atelier>
+  <div class="atelier-shell simple-flow" data-atelier>
     <div class="sheet-texture" aria-hidden="true"></div>
 
     <header class="atelier-header">
-      <a class="wordmark" href="#host" data-mode-shortcut="host">
+      <a class="wordmark" href="#host">
         <span aria-hidden="true">✦</span>
          Vanielle Lee
       </a>
-      <p class="atelier-status">
-        <i aria-hidden="true"></i>
-         Field system / online
-      </p>
       <button class="guestbook-trigger" type="button" data-invite-open>
         Join the field notes
       </button>
     </header>
 
     <main class="studio-grid">
-      <section class="intro" aria-labelledby="intro-title">
+      <section class="intro" id="host" aria-labelledby="intro-title">
         <figure class="host-portrait">
           <img
             src="assets/vanielle-profile.jpg"
@@ -87,19 +83,19 @@ const agents = [
         </p>
         <div class="intro-actions">
           <button type="button" data-invite-open>Start with a note</button>
-          <span>or choose an agent ↓</span>
+          <span>or see the work ↓</span>
         </div>
       </section>
 
-      <section class="discovery" aria-label="Interactive agent constellation">
+      <section class="discovery" aria-label="Map of Vanielle's work">
         <p class="discovery-hint">
-          <span aria-hidden="true">↓</span>
-           Scroll to move the signal through six chapters.
+          <span aria-hidden="true">✦</span>
+           The field map
         </p>
         <div class="field-board" data-field-board aria-hidden="true">
           <header>
             <span>AGENT FIELD SYSTEM / 001</span>
-            <strong data-board-mode>MEET</strong>
+            <strong>THE WORK</strong>
           </header>
           <svg viewBox="0 0 560 420" role="presentation">
             <defs>
@@ -124,14 +120,12 @@ const agents = [
             ></path>
             <path
               class="agent-rail"
-              data-agent-rail
               d="M54 322 C95 322 108 212 155 212 S205 292 255 271 S305 150 356 150 S404 234 446 215 S486 112 507 94"
             ></path>
             {
               agents.map((agent, index) => (
                 <g
                   class="rail-station"
-                  data-rail-station={agent.id}
                   transform={`translate(${agent.x} ${agent.y})`}
                   style={`--station-color:${agent.color}`}
                 >
@@ -146,65 +140,22 @@ const agents = [
                 </g>
               ))
             }
-            <g
-              class="rail-traveler"
-              data-rail-traveler
-              transform="translate(54 322)"
-            >
-              <circle class="traveler-signal" r="27"></circle>
-              <circle class="traveler-face" r="15"></circle>
-              <circle class="traveler-eye" cx="-5" cy="-1" r="2"></circle>
-              <circle class="traveler-eye" cx="5" cy="-1" r="2"></circle>
-              <path class="traveler-antenna" d="M0 -15 V-23 L6 -27"></path>
-            </g>
             <g class="board-ticks">
               <path d="M24 24 h28 M24 24 v28 M536 396 h-28 M536 396 v-28"
               ></path>
-              <text x="24" y="390">SCROLL INPUT</text>
+              <text x="24" y="390">BUILD / LEAD / WRITE</text>
               <text x="536" y="40" text-anchor="end">HUMAN IN THE LOOP</text>
             </g>
           </svg>
           <footer>
-            <span>Signal follows scroll</span>
-            <i><b data-board-progress></b></i>
-            <strong data-board-index>01 / 06</strong>
+            <span>A quiet map of the work</span>
+            <strong>06 stations</strong>
           </footer>
         </div>
       </section>
 
       <section class="detail-deck" aria-live="polite" data-detail-deck>
-        <article
-          class="detail-card host-card is-active"
-          id="detail-host"
-          role="tabpanel"
-          tabindex="-1"
-          aria-label="Meet Vanielle"
-          data-detail="host"
-        >
-          <p class="card-agent"><i></i> Mochi found the short version</p>
-          <h2>Engineer brain.<br />Founder nerve.</h2>
-          <p>
-            Full-stack technical depth with a C-suite view of what the company
-            actually needs.
-          </p>
-          <div class="proof-pills">
-            <span><strong>10+</strong> years building</span>
-            <span><strong>8</strong> years CTO</span>
-          </div>
-          <a href={FORBES_URL} target="_blank" rel="noopener noreferrer">
-            Featured in Forbes <span aria-hidden="true">↗</span>
-          </a>
-        </article>
-
-        <article
-          class="detail-card"
-          id="detail-build"
-          role="tabpanel"
-          tabindex="-1"
-          aria-label="Engineering range"
-          data-detail="build"
-          hidden
-        >
+        <article class="detail-card" id="build" aria-label="Engineering range">
           <p class="card-agent"><i></i> Pixel opened the workbench</p>
           <h2>Across the whole machine.</h2>
           <p>From the first interface to the agents running underneath it.</p>
@@ -212,19 +163,15 @@ const agents = [
             <span>Agentic AI</span><span>Frontend</span><span>Backend</span
             ><span>Infrastructure</span><span>Data</span><span>Product</span>
           </div>
-          <button type="button" data-mode-shortcut="lead">
+          <a href="#lead">
             Follow the system <span aria-hidden="true">→</span>
-          </button>
+          </a>
         </article>
 
         <article
           class="detail-card"
-          id="detail-lead"
-          role="tabpanel"
-          tabindex="-1"
+          id="lead"
           aria-label="Leadership experience"
-          data-detail="lead"
-          hidden
         >
           <p class="card-agent"><i></i> Atlas brought the company map</p>
           <h2>From codebase to company.</h2>
@@ -242,12 +189,8 @@ const agents = [
 
         <article
           class="detail-card book-card"
-          id="detail-read"
-          role="tabpanel"
-          tabindex="-1"
+          id="book"
           aria-label="Vanielle's book"
-          data-detail="read"
-          hidden
         >
           <img
             src="assets/book-cover.jpg?v=3"
@@ -268,12 +211,8 @@ const agents = [
 
         <article
           class="detail-card"
-          id="detail-notes"
-          role="tabpanel"
-          tabindex="-1"
+          id="notes"
           aria-label="Vanielle's field notes"
-          data-detail="notes"
-          hidden
         >
           <p class="card-agent"><i></i> Scout found three useful trails</p>
           <h2>Notes worth keeping.</h2>
@@ -289,12 +228,8 @@ const agents = [
 
         <article
           class="detail-card talk-card"
-          id="detail-talk"
-          role="tabpanel"
-          tabindex="-1"
+          id="talk"
           aria-label="Consulting with Vanielle"
-          data-detail="talk"
-          hidden
         >
           <p class="card-agent"><i></i> Miso reserved thirty minutes</p>
           <h2>Bring one hard decision.</h2>
@@ -306,14 +241,6 @@ const agents = [
         </article>
       </section>
     </main>
-
-    <aside class="story-meter" aria-hidden="true">
-      <span class="story-track"><i data-story-fill></i></span>
-      <p>
-        <b data-story-index>01</b><em>/ 06</em>
-        <strong data-story-name>Meet</strong>
-      </p>
-    </aside>
 
     <aside
       class="invitation is-open"
@@ -358,60 +285,14 @@ const agents = [
         >
       </nav>
     </footer>
-
-    <div class="scroll-story" aria-hidden="true">
-      {
-        agents.map((agent, index) => (
-          <section
-            data-scroll-mode={agent.id}
-            data-scroll-label={agent.label}
-            data-scroll-index={index}
-          >
-            <span>
-              {String(index + 1).padStart(2, "0")} · {agent.label}
-            </span>
-          </section>
-        ))
-      }
-    </div>
   </div>
 </Layout>
 
 <script>
-  const shell = document.querySelector("[data-atelier]");
-  const details = Array.from(document.querySelectorAll("[data-detail]"));
-  const chapters = Array.from(document.querySelectorAll("[data-scroll-mode]"));
-  const storyFill = document.querySelector("[data-story-fill]");
-  const storyIndex = document.querySelector("[data-story-index]");
-  const storyName = document.querySelector("[data-story-name]");
-  const railPath = document.querySelector("[data-agent-rail]");
-  const railTraveler = document.querySelector("[data-rail-traveler]");
-  const railStations = Array.from(
-    document.querySelectorAll("[data-rail-station]")
-  );
-  const boardMode = document.querySelector("[data-board-mode]");
-  const boardIndex = document.querySelector("[data-board-index]");
-  const boardProgress = document.querySelector("[data-board-progress]");
   const invitation = document.querySelector("[data-invitation]");
   const reduceMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
   ).matches;
-  const aliases = {
-    lobby: "host",
-    lab: "build",
-    boardroom: "lead",
-    library: "read",
-    balcony: "notes",
-    salon: "talk",
-  };
-  const ids = chapters.flatMap(chapter =>
-    chapter.dataset.scrollMode ? [chapter.dataset.scrollMode] : []
-  );
-  let scrollProgress = 0;
-  let scrollVelocity = 0;
-  let lastScrollY = window.scrollY;
-  let scrollTick = 0;
-  let scrollHasStarted = false;
 
   const closeInvitation = () => {
     invitation?.classList.remove("is-open");
@@ -429,71 +310,6 @@ const agents = [
     );
   };
 
-  const selectMode = (id, options = {}) => {
-    if (!ids.includes(id)) return;
-    const activeIndex = ids.indexOf(id);
-    const activeChapter = chapters[activeIndex];
-    const activeLabel = activeChapter?.dataset.scrollLabel ?? "";
-    shell?.setAttribute("data-mode", id);
-    details.forEach(detail => {
-      const active = detail.dataset.detail === id;
-      detail.hidden = !active;
-      detail.classList.toggle("is-active", active);
-    });
-    if (storyIndex)
-      storyIndex.textContent = String(activeIndex + 1).padStart(2, "0");
-    if (storyName) storyName.textContent = activeLabel;
-    railStations.forEach(station => {
-      station.classList.toggle("is-active", station.dataset.railStation === id);
-    });
-    if (boardMode) boardMode.textContent = activeLabel.toUpperCase();
-    if (boardIndex)
-      boardIndex.textContent = `${String(activeIndex + 1).padStart(
-        2,
-        "0"
-      )} / 06`;
-    if (options.updateUrl !== false) {
-      window.history.replaceState(null, "", `#${id}`);
-    }
-    if (options.reveal !== false) closeInvitation();
-    if (options.focus) {
-      document.querySelector(`[data-detail="${id}"]`)?.focus({
-        preventScroll: true,
-      });
-    }
-  };
-
-  const updateRailPosition = progress => {
-    if (!railPath || !railTraveler) return;
-    const length = railPath.getTotalLength();
-    const distance = Math.min(length, Math.max(0, progress * length));
-    const point = railPath.getPointAtLength(distance);
-    const next = railPath.getPointAtLength(Math.min(length, distance + 2));
-    const angle =
-      Math.atan2(next.y - point.y, next.x - point.x) * (180 / Math.PI);
-    railTraveler.setAttribute(
-      "transform",
-      `translate(${point.x} ${point.y}) rotate(${angle * 0.24})`
-    );
-  };
-
-  const scrollToMode = (id, behavior = reduceMotion ? "auto" : "smooth") => {
-    const chapter = chapters.find(item => item.dataset.scrollMode === id);
-    if (!chapter) return;
-    scrollHasStarted = id !== "host" || window.scrollY > 8;
-    chapter.scrollIntoView({ behavior, block: "start" });
-  };
-
-  document.querySelectorAll("[data-mode-shortcut]").forEach(button => {
-    button.addEventListener("click", event => {
-      event.preventDefault();
-      const id = button.dataset.modeShortcut;
-      if (id) {
-        selectMode(id);
-        scrollToMode(id);
-      }
-    });
-  });
   document
     .querySelectorAll("[data-invite-open]")
     .forEach(button => button.addEventListener("click", openInvitation));
@@ -501,83 +317,22 @@ const agents = [
     .querySelector("[data-invite-close]")
     ?.addEventListener("click", closeInvitation);
 
-  const rawHash = window.location.hash.slice(1);
-  const initialId = ids.includes(rawHash) ? rawHash : aliases[rawHash];
-  selectMode(initialId ?? "host", {
-    updateUrl: false,
-    reveal: Boolean(initialId),
-  });
-  if (initialId) {
-    scrollHasStarted = initialId !== "host";
-    closeInvitation();
-  }
-
-  const updateScrollState = () => {
-    scrollTick = 0;
-    const y = window.scrollY;
-    const max = Math.max(
-      1,
-      document.documentElement.scrollHeight - window.innerHeight
-    );
-    scrollProgress = Math.min(1, Math.max(0, y / max));
-    scrollVelocity = Math.max(-120, Math.min(120, y - lastScrollY));
-    lastScrollY = y;
-    if (y > 8) scrollHasStarted = true;
-    shell?.classList.toggle("has-scrolled", y > window.innerHeight * 0.18);
-    shell?.style.setProperty("--story-progress", String(scrollProgress));
-    shell?.style.setProperty("--story-hue", `${scrollProgress * 42}deg`);
-    shell?.style.setProperty("--story-shift", `${scrollProgress * 84}px`);
-    shell?.style.setProperty(
-      "--board-tilt",
-      `${Math.max(-1.4, Math.min(1.4, scrollVelocity * 0.025))}deg`
-    );
-    if (storyFill) storyFill.style.transform = `scaleX(${scrollProgress})`;
-    if (boardProgress)
-      boardProgress.style.transform = `scaleX(${scrollProgress})`;
-    updateRailPosition(scrollProgress);
+  const centerHashTarget = () => {
+    const id = window.location.hash.slice(1);
+    if (!id || id === "host") return;
+    window.requestAnimationFrame(() => {
+      const previousBehavior = document.documentElement.style.scrollBehavior;
+      document.documentElement.style.scrollBehavior = "auto";
+      document.getElementById(id)?.scrollIntoView({ block: "center" });
+      document.documentElement.style.scrollBehavior = previousBehavior;
+    });
   };
 
-  window.addEventListener(
-    "scroll",
-    () => {
-      if (!scrollTick)
-        scrollTick = window.requestAnimationFrame(updateScrollState);
-    },
-    { passive: true }
-  );
-  window.addEventListener("resize", updateScrollState, { passive: true });
-
-  const chapterObserver = new IntersectionObserver(
-    entries => {
-      const active = entries
-        .filter(entry => entry.isIntersecting)
-        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-      const id = active?.target.dataset.scrollMode;
-      if (!id || (!scrollHasStarted && id === "host")) return;
-      selectMode(id, {
-        reveal: id !== "host" || window.scrollY > window.innerHeight * 0.18,
-      });
-    },
-    {
-      rootMargin: "-38% 0px -38% 0px",
-      threshold: [0, 0.1, 0.5, 1],
-    }
-  );
-  chapters.forEach(chapter => chapterObserver.observe(chapter));
-
-  window.requestAnimationFrame(() => {
-    if (initialId) scrollToMode(initialId, "auto");
-    updateScrollState();
-  });
-
-  window.addEventListener("hashchange", () => {
-    const raw = window.location.hash.slice(1);
-    const id = ids.includes(raw) ? raw : aliases[raw];
-    if (id) {
-      selectMode(id, { updateUrl: false });
-      scrollToMode(id);
-    }
-  });
+  if (window.location.hash && window.location.hash !== "#host") {
+    closeInvitation();
+    centerHashTarget();
+  }
+  window.addEventListener("hashchange", centerHashTarget);
 </script>
 
 <style>
@@ -1696,6 +1451,242 @@ const agents = [
 
     .story-meter {
       top: 78px;
+    }
+  }
+
+  /* The calm reading layout: one idea at a time. */
+  :global(html) {
+    scroll-behavior: auto;
+    scroll-snap-type: none;
+    scroll-padding-top: 90px;
+  }
+
+  .simple-flow .atelier-header {
+    position: sticky;
+    top: 0;
+    grid-template-columns: 1fr auto;
+  }
+
+  .simple-flow .studio-grid {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    pointer-events: auto;
+  }
+
+  .simple-flow .intro {
+    position: relative;
+    top: auto;
+    left: auto;
+    order: 1;
+    width: min(820px, calc(100% - 3rem));
+    max-width: none;
+    min-height: calc(100svh - 74px);
+    margin: 0 auto;
+    padding: 5rem 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+
+  .simple-flow .host-portrait {
+    width: min(320px, 62vw);
+  }
+
+  .simple-flow .intro h1 {
+    max-width: 760px;
+    font-size: clamp(3.7rem, 7.2vw, 7rem);
+  }
+
+  .simple-flow .intro-copy {
+    max-width: 560px;
+    font-size: 1rem;
+  }
+
+  .simple-flow .detail-deck {
+    position: relative;
+    inset: auto;
+    order: 2;
+    width: 100%;
+    margin: 0;
+    padding: clamp(5rem, 12vh, 9rem) 1.5rem clamp(7rem, 18vh, 13rem);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: clamp(7rem, 18vh, 12rem);
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+    transition: none;
+  }
+
+  .simple-flow .detail-card {
+    width: min(620px, 100%);
+    min-height: min(680px, 72svh);
+    max-height: none;
+    margin: 0 auto;
+    padding: clamp(2.2rem, 5vw, 4rem);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    overflow: visible;
+    scroll-margin-top: 7rem;
+  }
+
+  .simple-flow .detail-card h2 {
+    font-size: clamp(3.2rem, 6vw, 5.6rem);
+  }
+
+  .simple-flow .detail-card > p:not(.card-agent),
+  .simple-flow .book-card > div > p:not(.card-agent) {
+    max-width: 470px;
+    font-size: 0.95rem;
+  }
+
+  .simple-flow .detail-card > a,
+  .simple-flow .detail-card > button,
+  .simple-flow .book-card a {
+    width: fit-content;
+    min-width: 240px;
+    margin-top: 1rem;
+  }
+
+  .simple-flow .book-card {
+    display: grid;
+    grid-template-columns: minmax(150px, 220px) 1fr;
+    align-items: center;
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+  }
+
+  .simple-flow .discovery {
+    position: relative;
+    inset: auto;
+    order: 3;
+    width: min(820px, calc(100% - 3rem));
+    min-height: 0;
+    margin: 0 auto;
+    padding: 3rem 0 9rem;
+  }
+
+  .simple-flow .discovery-hint {
+    position: static;
+    width: auto;
+    margin: 0 0 1rem;
+    transform: none;
+  }
+
+  .simple-flow .field-board {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    max-width: none;
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .simple-flow .rail-station,
+  .simple-flow .rail-station:not(.is-active) {
+    opacity: 1;
+    scale: 1;
+  }
+
+  .simple-flow .atelier-footer {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    padding: 1.5rem clamp(1rem, 4vw, 4rem);
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid rgba(25, 25, 21, 0.25);
+  }
+
+  @media (max-width: 820px) {
+    .simple-flow .studio-grid {
+      position: relative;
+      inset: auto;
+      height: auto;
+      padding: 0;
+    }
+
+    .simple-flow .intro {
+      top: auto;
+      left: auto;
+      width: calc(100% - 2rem);
+      min-height: auto;
+      padding: 4.5rem 0 6rem;
+      opacity: 1;
+      transform: none;
+    }
+
+    .simple-flow .host-portrait {
+      width: min(320px, 86vw);
+    }
+
+    .simple-flow .intro h1 {
+      font-size: clamp(3.2rem, 15vw, 5.4rem);
+    }
+
+    .simple-flow .detail-deck {
+      position: relative;
+      inset: auto;
+      padding: 4rem 1rem 7rem;
+      gap: 5rem;
+      opacity: 1;
+      transform: none;
+    }
+
+    .simple-flow .detail-card {
+      width: min(620px, 100%);
+      min-height: 0;
+      max-height: none;
+      padding: clamp(2rem, 8vw, 3rem);
+      overflow: visible;
+    }
+
+    .simple-flow .detail-card h2 {
+      font-size: clamp(3rem, 14vw, 4.6rem);
+    }
+
+    .simple-flow .book-card {
+      display: grid;
+      grid-template-columns: minmax(105px, 34%) 1fr;
+    }
+
+    .simple-flow .discovery {
+      position: relative;
+      inset: auto;
+      width: calc(100% - 2rem);
+      padding: 2rem 0 6rem;
+    }
+
+    .simple-flow .discovery-hint {
+      display: flex;
+    }
+
+    .simple-flow .field-board,
+    .simple-flow:not(.has-scrolled) .field-board {
+      position: relative;
+      top: auto;
+      left: auto;
+      width: 100%;
+      opacity: 1;
+      transform: none;
+    }
+
+    .simple-flow .atelier-footer {
+      display: flex;
     }
   }
 
