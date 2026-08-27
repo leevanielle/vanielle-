@@ -90,7 +90,7 @@ export default () => {
               lineHeight: 1.4,
             }}
           >
-            AI ENGINEER · ODECLOUD CO-FOUNDER/CTO · AUTHOR
+            AI ENGINEER · ODECLOUD FOUNDER/CTO · AUTHOR
           </div>
         </div>
 
