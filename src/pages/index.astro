@@ -528,7 +528,8 @@ const agents = [
       const pointer = new THREE.Vector2(4, 4);
       const pointerEase = new THREE.Vector2(0, 0);
       const raycaster = new THREE.Raycaster();
-      const clock = new THREE.Clock();
+      const timer = new THREE.Timer();
+      timer.connect(document);
 
       const resize = () => {
         const width = canvas.clientWidth;
@@ -589,12 +590,16 @@ const agents = [
         renderer.render(scene, camera);
       };
 
-      const animate = () => {
-        draw(clock.getElapsedTime());
+      const animate = timestamp => {
+        timer.update(timestamp);
+        draw(timer.getElapsed());
         if (!reduceMotion) window.requestAnimationFrame(animate);
       };
-      renderStill = () => draw(clock.getElapsedTime());
-      animate();
+      renderStill = () => {
+        timer.update();
+        draw(timer.getElapsed());
+      };
+      animate(performance.now());
 
       canvas.addEventListener("pointermove", event => {
         const rect = canvas.getBoundingClientRect();
@@ -1322,7 +1327,8 @@ const agents = [
   @media (max-width: 820px) {
     .atelier-shell {
       min-height: 100svh;
-      overflow: visible;
+      overflow-x: hidden;
+      overflow-y: visible;
     }
 
     .atelier-canvas,
