@@ -1,86 +1,173 @@
-import { SITE } from "@config";
-
 export default () => {
+  const rows = [
+    ["MODEL", "READY", "96%"],
+    ["SYSTEMS", "ONLINE", "84%"],
+    ["STRATEGY", "MURKY", "67%"],
+    ["ALIGNMENT", "HUMAN", "22%"],
+  ];
+
   return (
     <div
       style={{
-        background: "#fefbfb",
+        position: "relative",
         width: "100%",
         height: "100%",
+        padding: "42px 48px 36px",
         display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+        flexDirection: "column",
+        background: "#0a0b0a",
+        color: "#eae6db",
+        fontFamily: "IBM Plex Mono",
       }}
     >
       <div
         style={{
           position: "absolute",
-          top: "-1px",
-          right: "-1px",
-          border: "4px solid #000",
-          background: "#ecebeb",
-          opacity: "0.9",
-          borderRadius: "4px",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 14,
           display: "flex",
-          justifyContent: "center",
-          margin: "2.5rem",
-          width: "88%",
-          height: "80%",
+          background: "#d62f24",
         }}
       />
 
       <div
         style={{
-          border: "4px solid #000",
-          background: "#fefbfb",
-          borderRadius: "4px",
           display: "flex",
-          justifyContent: "center",
-          margin: "2rem",
-          width: "88%",
-          height: "80%",
+          justifyContent: "space-between",
+          alignItems: "center",
+          paddingBottom: 18,
+          borderBottom: "2px solid #5c5f58",
+          color: "#f2c84b",
+          fontSize: 18,
+          fontWeight: 600,
+          letterSpacing: "0.05em",
+        }}
+      >
+        <span>VANIELLE LEE / OPERATOR MODE</span>
+        <span>FIELD NOTE 001</span>
+      </div>
+
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          alignItems: "center",
+          gap: 52,
         }}
       >
         <div
           style={{
+            width: 730,
             display: "flex",
             flexDirection: "column",
-            justifyContent: "space-between",
-            margin: "20px",
-            width: "90%",
-            height: "90%",
           }}
         >
           <div
             style={{
               display: "flex",
               flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              height: "90%",
-              maxHeight: "90%",
-              overflow: "hidden",
-              textAlign: "center",
+              fontSize: 66,
+              fontWeight: 600,
+              letterSpacing: "-0.065em",
+              lineHeight: 0.98,
             }}
           >
-            <p style={{ fontSize: 72, fontWeight: "bold" }}>{SITE.title}</p>
-            <p style={{ fontSize: 28 }}>{SITE.desc}</p>
+            <span>THE MODEL IS RARELY</span>
+            <span>THE BOTTLENECK.</span>
+            <span style={{ marginTop: 12, color: "#e24738", fontSize: 48 }}>
+              THE COMPANY IS.
+            </span>
           </div>
 
           <div
             style={{
+              marginTop: 30,
               display: "flex",
-              justifyContent: "flex-end",
-              width: "100%",
-              marginBottom: "8px",
-              fontSize: 28,
+              color: "#b8b9b2",
+              fontSize: 20,
+              lineHeight: 1.4,
             }}
           >
-            <span style={{ overflow: "hidden", fontWeight: "bold" }}>
-              {new URL(SITE.website).hostname}
-            </span>
+            AI ENGINEER · ODECLOUD CO-FOUNDER/CTO · AUTHOR
           </div>
         </div>
+
+        <div
+          style={{
+            width: 320,
+            padding: "20px 22px",
+            display: "flex",
+            flexDirection: "column",
+            border: "2px solid #686a63",
+            background: "#11130f",
+            boxShadow: "10px 10px 0 #f2c84b",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              paddingBottom: 14,
+              borderBottom: "1px solid #4e504a",
+              color: "#72d5b6",
+              fontSize: 14,
+              fontWeight: 600,
+            }}
+          >
+            <span>COMPANY DIAGNOSTIC</span>
+            <span>LIVE</span>
+          </div>
+
+          {rows.map(([label, status, score], index) => (
+            <div
+              style={{
+                height: 58,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                borderBottom: "1px solid #343630",
+                fontSize: 15,
+              }}
+            >
+              <span style={{ color: "#676962" }}>0{index + 1}</span>
+              <span style={{ width: 112 }}>{label}</span>
+              <span style={{ color: index > 1 ? "#f2c84b" : "#72d5b6" }}>
+                {status}
+              </span>
+              <span style={{ color: "#8d8f87" }}>{score}</span>
+            </div>
+          ))}
+
+          <div
+            style={{
+              marginTop: 16,
+              padding: "12px 14px",
+              display: "flex",
+              background: "#d62f24",
+              color: "white",
+              fontSize: 14,
+              fontWeight: 600,
+            }}
+          >
+            RUN THE ORGANIZATION →
+          </div>
+        </div>
+      </div>
+
+      <div
+        style={{
+          paddingTop: 16,
+          display: "flex",
+          justifyContent: "space-between",
+          borderTop: "2px solid #5c5f58",
+          color: "#9b9c94",
+          fontSize: 16,
+        }}
+      >
+        <span>10+ YEARS IN ENGINEERING / 8 YEARS AS CTO</span>
+        <span style={{ color: "#f2c84b" }}>VANIELLE.IO ↗</span>
       </div>
     </div>
   );
