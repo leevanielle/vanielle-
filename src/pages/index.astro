@@ -10,148 +10,197 @@ const LIVE_URL = "https://leevanielle.github.io/vanielle-/";
 const X_SHARE_URL =
   "https://twitter.com/intent/tweet?text=" +
   encodeURIComponent(
-    "I make ambitious technology feel clear, human, and possible.\n\nA quiet tour through AI, engineering leadership, and building across cultures."
+    "A penthouse tour through AI, engineering leadership, and building across cultures."
   ) +
   "&url=" +
   encodeURIComponent(LIVE_URL) +
   "&via=lee_vanielle";
-
-const expertise = [
-  {
-    room: "The lab",
-    title: "Agentic AI",
-    copy: "LLM systems, AI product strategy, and the practical work of turning a promising model into something people can trust.",
-  },
-  {
-    room: "The studio",
-    title: "Product engineering",
-    copy: "Frontend, backend, infrastructure, and data—connected into products that are useful, resilient, and ready to grow.",
-  },
-  {
-    room: "The study",
-    title: "Technical leadership",
-    copy: "Architecture, hiring, team design, and the decisions that help engineers move with clarity instead of ceremony.",
-  },
-  {
-    room: "The table",
-    title: "Founder perspective",
-    copy: "A decade of translating between code, customers, culture, and the business outcomes that make the work matter.",
-  },
-];
-
-const notes = [
-  {
-    title: "Practical AI",
-    copy: "What agentic systems can do, where they fail, and what it takes to ship them.",
-  },
-  {
-    title: "The career playbook",
-    copy: "Industry shortcuts, getting hired, and the choices that create real leverage.",
-  },
-  {
-    title: "Building across cultures",
-    copy: "Candid lessons from leading a company across countries, expectations, and working styles.",
-  },
-];
-
-const links = [
-  {
-    label: "X / Twitter",
-    handle: "@lee_vanielle",
-    href: "https://x.com/lee_vanielle",
-  },
-  {
-    label: "LinkedIn",
-    handle: "/in/vanielle",
-    href: LINKEDIN_URL,
-  },
-  {
-    label: "GitHub",
-    handle: "github.com/leevanielle",
-    href: "https://github.com/leevanielle",
-  },
-  {
-    label: "Stan Store",
-    handle: "stan.store/vanielle",
-    href: "https://stan.store/vanielle",
-  },
-];
 ---
 
 <Layout
   title="Vanielle Lee — AI Engineer, Founder & CTO"
-  description="A quiet tour through the work of Vanielle Lee—AI engineer, OdeCloud founder and CTO, author, and cross-cultural entrepreneur."
+  description="Step inside Vanielle Lee’s interactive penthouse—a room-by-room tour through agentic AI, engineering leadership, her book, and founder life."
 >
-  <div class="site-shell">
-    <div class="scroll-progress" aria-hidden="true">
-      <span class="scroll-progress-fill"></span>
+  <div class="penthouse-shell">
+    <div class="skyline" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span>
     </div>
 
-    <header class="site-header">
-      <a class="wordmark" href="#home" aria-label="Vanielle Lee, home">
-        <span class="wordmark-mark" aria-hidden="true">✦</span>
+    <header class="penthouse-header">
+      <a class="wordmark" href="#lobby" data-room-shortcut="lobby">
+        <span class="wordmark-gem" aria-hidden="true">✦</span>
         <span>Vanielle Lee</span>
       </a>
 
-      <nav aria-label="Main navigation">
-        <a href="#about">About</a>
-        <a href="#work">Work</a>
-        <a href="#book">Book</a>
-        <a href="#consulting">Consulting</a>
-      </nav>
+      <p class="building-title">
+        <span>Private residence</span>
+         AI engineer · Founder · CTO
+      </p>
 
-      <a class="header-cta" href="#newsletter" data-focus-newsletter>
-        Join my notes
-      </a>
+      <div class="header-actions">
+        <a href={AMAZON_URL} target="_blank" rel="noopener noreferrer">
+          The book
+        </a>
+        <a class="guestbook-shortcut" href="#guestbook" data-focus-newsletter>
+          Sign the guestbook
+        </a>
+      </div>
     </header>
 
-    <main>
-      <section class="hero" id="home" aria-labelledby="hero-heading">
-        <div class="ambient-orb ambient-orb-one" aria-hidden="true"></div>
-        <div class="ambient-orb ambient-orb-two" aria-hidden="true"></div>
+    <main class="residence">
+      <aside class="floor-plan" aria-labelledby="floor-plan-heading">
+        <div class="floor-plan-heading">
+          <p id="floor-plan-heading">Penthouse directory</p>
+          <span>PH</span>
+        </div>
 
-        <div class="hero-layout">
-          <div class="hero-copy" data-reveal>
-            <p class="room-label"><span aria-hidden="true"></span>The foyer</p>
-            <p class="hero-role">AI engineer · Founder · CTO · Author</p>
-            <h1 id="hero-heading">
-              I make ambitious technology feel
-              <em>clear, human, and possible.</em>
-            </h1>
-            <p class="hero-intro">
-              I’m Vanielle Lee. For more than ten years, I’ve built across the
-              engineering stack and led the people, products, and decisions
-              around it.
-            </p>
+        <div class="elevator-status" aria-live="polite">
+          <span aria-hidden="true"></span>
+          <p>
+            Now viewing
+            <strong data-room-status>The lobby</strong>
+          </p>
+        </div>
 
-            <div class="hero-actions">
-              <a
-                class="button-primary"
-                href="#newsletter"
-                data-focus-newsletter
-              >
-                Stay for the field notes <span aria-hidden="true">↘</span>
-              </a>
-              <a class="text-link" href="#about">
-                Take the tour <span aria-hidden="true">↓</span>
-              </a>
-            </div>
+        <div class="room-map" role="tablist" aria-label="Explore the penthouse">
+          <button
+            class="room-key room-key-lobby"
+            type="button"
+            role="tab"
+            id="tab-lobby"
+            aria-controls="panel-lobby"
+            aria-selected="true"
+            tabindex="0"
+            data-room-tab="lobby"
+            data-room-label="The lobby"
+          >
+            <span>Welcome</span>
+            <strong>Lobby</strong>
+          </button>
+          <button
+            class="room-key room-key-lab"
+            type="button"
+            role="tab"
+            id="tab-lab"
+            aria-controls="panel-lab"
+            aria-selected="false"
+            tabindex="-1"
+            data-room-tab="lab"
+            data-room-label="The lab"
+          >
+            <span>Build</span>
+            <strong>Lab</strong>
+          </button>
+          <button
+            class="room-key room-key-boardroom"
+            type="button"
+            role="tab"
+            id="tab-boardroom"
+            aria-controls="panel-boardroom"
+            aria-selected="false"
+            tabindex="-1"
+            data-room-tab="boardroom"
+            data-room-label="The boardroom"
+          >
+            <span>Lead</span>
+            <strong>Boardroom</strong>
+          </button>
+          <button
+            class="room-key room-key-library"
+            type="button"
+            role="tab"
+            id="tab-library"
+            aria-controls="panel-library"
+            aria-selected="false"
+            tabindex="-1"
+            data-room-tab="library"
+            data-room-label="The library"
+          >
+            <span>Read</span>
+            <strong>Library</strong>
+          </button>
+          <button
+            class="room-key room-key-balcony"
+            type="button"
+            role="tab"
+            id="tab-balcony"
+            aria-controls="panel-balcony"
+            aria-selected="false"
+            tabindex="-1"
+            data-room-tab="balcony"
+            data-room-label="The balcony"
+          >
+            <span>Think</span>
+            <strong>Balcony</strong>
+          </button>
+          <button
+            class="room-key room-key-salon"
+            type="button"
+            role="tab"
+            id="tab-salon"
+            aria-controls="panel-salon"
+            aria-selected="false"
+            tabindex="-1"
+            data-room-tab="salon"
+            data-room-label="The salon"
+          >
+            <span>Talk</span>
+            <strong>Salon</strong>
+          </button>
+        </div>
 
-            <div class="hero-newsletter" id="newsletter">
-              <div class="newsletter-heading">
-                <span class="soft-spark" aria-hidden="true">✦</span>
-                <p>
-                  <strong>A useful note, now and then.</strong>
-                   Practical AI, engineering leadership, career advice, and
-                  honest stories from building across cultures.
-                </p>
-              </div>
-              <NewsletterSignup />
-            </div>
+        <p class="map-hint">
+          Choose a room. Your place in the tour will be remembered in the URL.
+        </p>
+      </aside>
+
+      <section
+        class="room-stage"
+        aria-label="Penthouse room"
+        data-room-stage
+        data-active-room="lobby"
+      >
+        <article
+          class="room-panel lobby-panel is-active"
+          id="panel-lobby"
+          role="tabpanel"
+          tabindex="0"
+          aria-labelledby="tab-lobby"
+          data-room-panel="lobby"
+        >
+          <div class="panel-kicker">
+            <span>Welcome upstairs</span>
+            <i>01:12 local time</i>
           </div>
 
-          <div class="hero-portrait" data-reveal>
-            <div class="portrait-arch">
+          <div class="lobby-layout">
+            <div class="lobby-copy">
+              <p class="room-eyebrow">The lobby</p>
+              <h1>
+                Technology gets complicated.
+                <em>I make it easier to lead.</em>
+              </h1>
+              <p class="lobby-intro">
+                I’m Vanielle—an AI engineer, founder, CTO, and author. I’ve
+                spent 10+ years building across the stack and translating
+                difficult technology into decisions people can actually make.
+              </p>
+
+              <div class="lobby-proof" aria-label="Career highlights">
+                <span><strong>10+</strong> years engineering</span>
+                <span><strong>8</strong> years as CTO</span>
+                <a href={FORBES_URL} target="_blank" rel="noopener noreferrer">
+                  <strong>Forbes</strong> featured ↗
+                </a>
+              </div>
+
+              <button class="next-room" type="button" data-room-shortcut="lab">
+                Start in the lab <span aria-hidden="true">→</span>
+              </button>
+            </div>
+
+            <figure class="portrait-window">
+              <div class="window-glow" aria-hidden="true"></div>
               <img
                 src="assets/vanielle-profile.jpg"
                 width="894"
@@ -160,367 +209,445 @@ const links = [
                 loading="eager"
                 fetchpriority="high"
               />
-            </div>
-            <div class="portrait-note">
-              <span>Current view</span>
-              <p>Agentic AI · product leadership · cross-cultural building</p>
-            </div>
-            <div class="house-key" aria-hidden="true">
-              <span></span>
-              <i></i>
-            </div>
+              <figcaption>
+                <span>Host</span>
+                <strong>Vanielle Lee</strong>
+                <i>Agentic AI · product · people</i>
+              </figcaption>
+            </figure>
           </div>
-        </div>
+        </article>
 
-        <a
-          class="quiet-share"
-          href={X_SHARE_URL}
-          target="_blank"
-          rel="noopener noreferrer"
+        <article
+          class="room-panel lab-panel"
+          id="panel-lab"
+          role="tabpanel"
+          tabindex="0"
+          aria-labelledby="tab-lab"
+          data-room-panel="lab"
+          hidden
         >
-          Share the view on X <span aria-hidden="true">↗</span>
-        </a>
-      </section>
-
-      <section class="proof-view" aria-label="Career highlights">
-        <div data-reveal>
-          <strong>10+</strong>
-          <span>years building technology</span>
-        </div>
-        <div data-reveal>
-          <strong>8</strong>
-          <span>years as OdeCloud CTO + founder</span>
-        </div>
-        <a
-          href={FORBES_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          data-reveal
-        >
-          <strong>Forbes</strong>
-          <span>featured company profile ↗</span>
-        </a>
-        <div data-reveal>
-          <strong>Enterprise</strong>
-          <span>JVC Kenwood · Coinbase · WarnerMedia</span>
-        </div>
-      </section>
-
-      <section class="about-room" id="about" aria-labelledby="about-heading">
-        <div class="section-intro" data-reveal>
-          <p class="room-label">
-            <span aria-hidden="true"></span>The great room
-          </p>
-          <h2 id="about-heading">A wide view, without the altitude.</h2>
-        </div>
-
-        <div class="about-story" data-reveal>
-          <p class="story-lead">
-            I can go deep with engineers and still make the work legible to the
-            person who does not write code.
-          </p>
-          <p>
-            My career has moved from hands-on engineering to founder and C-suite
-            leadership, but the throughline has stayed the same: understand the
-            real problem, reduce the noise, and help people make a better
-            decision.
-          </p>
-          <p>
-            At OdeCloud, I’ve spent eight years as CTO and founder, building
-            products and teams across countries while working with enterprise
-            organizations that expect both technical depth and business
-            judgment.
-          </p>
-        </div>
-
-        <blockquote data-reveal>
-          <span aria-hidden="true">“</span>
-          <p>
-            Make complex technology understandable—and ambitious work feel
-            possible.
-          </p>
-        </blockquote>
-      </section>
-
-      <section class="work-room" id="work" aria-labelledby="work-heading">
-        <div class="section-intro work-intro" data-reveal>
-          <p class="room-label">
-            <span aria-hidden="true"></span>The private tour
-          </p>
-          <h2 id="work-heading">The rooms I know well.</h2>
-          <p>
-            I work across the full life of a technology company, from the first
-            line of code to the decisions made around the boardroom table.
-          </p>
-        </div>
-
-        <div class="expertise-grid">
-          {
-            expertise.map((item, index) => (
-              <article data-reveal>
-                <div class="expertise-number">
-                  {String(index + 1).padStart(2, "0")}
-                </div>
-                <p>{item.room}</p>
-                <h3>{item.title}</h3>
-                <span>{item.copy}</span>
-              </article>
-            ))
-          }
-        </div>
-      </section>
-
-      <section class="book-room" id="book" aria-labelledby="book-heading">
-        <div class="book-layout">
-          <figure class="book-stage" data-reveal>
-            <div class="book-halo" aria-hidden="true"></div>
-            <img
-              src="assets/book-cover.jpg?v=3"
-              width="1600"
-              height="2560"
-              alt="Cover of Emperors, Prophets, and Product Managers by Vanielle Lee"
-              loading="lazy"
-            />
-            <figcaption>Prophet’s guides · field manual № 001</figcaption>
-          </figure>
-
-          <div class="book-copy" data-reveal>
-            <p class="room-label">
-              <span aria-hidden="true"></span>The library
-            </p>
-            <h2 id="book-heading">
-              A field guide for people leading through
-              <em>beautiful chaos.</em>
-            </h2>
-            <p class="book-lede">
-              <cite>Emperors, Prophets, and Product Managers</cite> is my honest
-              guide to engineering leadership, management, power, prediction,
-              and the recurring human patterns behind technical work.
-            </p>
-
-            <div class="book-details" aria-label="Book details">
-              <span><strong>12</strong> chapters</span>
-              <span><strong>6</strong> frameworks</span>
-              <span><strong>1</strong> candid field guide</span>
-            </div>
-
-            <a
-              class="button-primary"
-              href={AMAZON_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Read the book <span aria-hidden="true">↗</span>
-            </a>
+          <div class="panel-kicker">
+            <span>The lab</span>
+            <i>Systems under construction</i>
           </div>
-        </div>
-      </section>
 
-      <section
-        class="consulting-room"
-        id="consulting"
-        aria-labelledby="consulting-heading"
-      >
-        <div class="consulting-card" data-reveal>
-          <div>
-            <p class="room-label"><span aria-hidden="true"></span>The salon</p>
-            <h2 id="consulting-heading">Bring one hard decision.</h2>
-          </div>
-          <div class="consulting-copy">
+          <div class="panel-heading">
+            <p class="room-eyebrow">Where the ideas become systems</p>
+            <h2>I work across the whole machine.</h2>
             <p>
-              If you’re weighing an AI bet, architecture choice, product
-              tradeoff, or team problem, I’ll help you see the decision clearly
-              and leave with a practical next move.
+              Not only the model. The product, infrastructure, data, and human
+              systems required to make it useful.
             </p>
-            <div class="price-row">
-              <div>
-                <span>Decision sessions</span>
-                <strong>From $300/hr</strong>
-              </div>
-              <p>Projects, speaking, and retainers are scoped separately.</p>
+          </div>
+
+          <div
+            class="system-specimen"
+            aria-label="Vanielle’s engineering range"
+          >
+            <div class="system-node node-model">
+              <span>01</span>
+              <strong>Agentic AI</strong>
+              <p>LLMs, agents, evaluation, and AI product strategy.</p>
             </div>
-            <a
-              class="button-dark"
-              href={LINKEDIN_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Start a conversation <span aria-hidden="true">↗</span>
+            <div class="system-connector" aria-hidden="true">
+              <i></i><i></i><i></i>
+            </div>
+            <div class="system-node node-product">
+              <span>02</span>
+              <strong>Product engineering</strong>
+              <p>Frontend, backend, APIs, and product architecture.</p>
+            </div>
+            <div class="system-connector" aria-hidden="true">
+              <i></i><i></i><i></i>
+            </div>
+            <div class="system-node node-platform">
+              <span>03</span>
+              <strong>Platform</strong>
+              <p>Cloud, infrastructure, reliability, and data systems.</p>
+            </div>
+          </div>
+
+          <aside class="lab-note">
+            <span>Working principle</span>
+            <p>
+              The best technical answer is the one the company can understand,
+              operate, and improve.
+            </p>
+          </aside>
+        </article>
+
+        <article
+          class="room-panel boardroom-panel"
+          id="panel-boardroom"
+          role="tabpanel"
+          tabindex="0"
+          aria-labelledby="tab-boardroom"
+          data-room-panel="boardroom"
+          hidden
+        >
+          <div class="panel-kicker">
+            <span>The boardroom</span>
+            <i>Code · company · people</i>
+          </div>
+
+          <div class="boardroom-layout">
+            <div class="panel-heading">
+              <p class="room-eyebrow">The decisions behind the technology</p>
+              <h2>From codebase to company.</h2>
+              <p>
+                At OdeCloud, I’ve spent eight years as CTO and founder,
+                translating what the business needs into systems teams can build
+                and grow.
+              </p>
+            </div>
+
+            <div class="decision-table" aria-label="Leadership experience">
+              <div>
+                <span>Scale</span>
+                <strong>Build the system before the bottleneck arrives.</strong>
+              </div>
+              <div>
+                <span>People</span>
+                <strong>Give teams context—not just instructions.</strong>
+              </div>
+              <div>
+                <span>Strategy</span>
+                <strong>Turn technical uncertainty into a clear bet.</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="client-shelf">
+            <p>Enterprise work includes</p>
+            <span>JVC Kenwood</span>
+            <span>Coinbase</span>
+            <span>WarnerMedia</span>
+            <a href={FORBES_URL} target="_blank" rel="noopener noreferrer">
+              OdeCloud in Forbes ↗
             </a>
           </div>
-        </div>
-      </section>
+        </article>
 
-      <section class="notes-room" id="notes" aria-labelledby="notes-heading">
-        <div class="notes-heading" data-reveal>
-          <p class="room-label">
-            <span aria-hidden="true"></span>By the window
-          </p>
-          <h2 id="notes-heading">Notes for thoughtful builders.</h2>
-          <p>
-            Useful ideas for the people funding technology, building it, and
-            living with the outcome.
-          </p>
-        </div>
-
-        <div class="notes-list">
-          {
-            notes.map((note, index) => (
-              <article data-reveal>
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <div>
-                  <h3>{note.title}</h3>
-                  <p>{note.copy}</p>
-                </div>
-              </article>
-            ))
-          }
-        </div>
-
-        <a
-          class="notes-invite"
-          href="#newsletter"
-          data-focus-newsletter
-          data-reveal
+        <article
+          class="room-panel library-panel"
+          id="panel-library"
+          role="tabpanel"
+          tabindex="0"
+          aria-labelledby="tab-library"
+          data-room-panel="library"
+          hidden
         >
-          <span class="soft-spark" aria-hidden="true">✦</span>
-          <div>
-            <small>Leave your email by the door</small>
-            <strong>Send me the next field note.</strong>
+          <div class="panel-kicker">
+            <span>The library</span>
+            <i>Prophet’s guides · № 001</i>
           </div>
-          <i aria-hidden="true">↗</i>
-        </a>
-      </section>
 
-      <section
-        class="connect-room"
-        id="connect"
-        aria-labelledby="connect-heading"
-      >
-        <div class="connect-copy" data-reveal>
-          <p class="room-label"><span aria-hidden="true"></span>The terrace</p>
-          <h2 id="connect-heading">Come say hello.</h2>
-          <p>
-            Find the working notes, the technical experiments, and the person
-            behind both.
-          </p>
-        </div>
+          <div class="library-layout">
+            <figure class="book-object">
+              <span aria-hidden="true"></span>
+              <img
+                src="assets/book-cover.jpg?v=3"
+                width="1600"
+                height="2560"
+                alt="Cover of Emperors, Prophets, and Product Managers by Vanielle Lee"
+                loading="lazy"
+              />
+            </figure>
 
-        <div class="link-grid">
-          {
-            links.map(link => (
+            <div class="library-copy">
+              <p class="room-eyebrow">Now on the reading table</p>
+              <h2>Leadership has always been chaos.</h2>
+              <p>
+                <cite>Emperors, Prophets, and Product Managers</cite> is my
+                field guide to engineering leadership, management, power,
+                prediction, and the recurring human patterns behind technical
+                work.
+              </p>
+              <div class="book-facts">
+                <span><strong>12</strong> chapters</span>
+                <span><strong>6</strong> frameworks</span>
+                <span><strong>1</strong> honest manual</span>
+              </div>
               <a
-                href={link.href}
+                class="room-action"
+                href={AMAZON_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                data-reveal
               >
-                <span>
-                  <strong>{link.label}</strong>
-                  <i>{link.handle}</i>
-                </span>
-                <b aria-hidden="true">↗</b>
+                Read the book <span aria-hidden="true">↗</span>
               </a>
-            ))
-          }
-        </div>
+            </div>
+          </div>
+        </article>
+
+        <article
+          class="room-panel balcony-panel"
+          id="panel-balcony"
+          role="tabpanel"
+          tabindex="0"
+          aria-labelledby="tab-balcony"
+          data-room-panel="balcony"
+          hidden
+        >
+          <div class="panel-kicker">
+            <span>The balcony</span>
+            <i>Field notes from the edge</i>
+          </div>
+
+          <div class="balcony-view">
+            <div class="panel-heading">
+              <p class="room-eyebrow">A wider point of view</p>
+              <h2>Notes for thoughtful builders.</h2>
+              <p>
+                The practical memo behind the hot take—written for technical and
+                non-technical people alike.
+              </p>
+            </div>
+
+            <div class="note-stack">
+              <article>
+                <span>AI</span>
+                <h3>Practical AI, without the theater</h3>
+                <p>What works, what breaks, and what it takes to ship.</p>
+              </article>
+              <article>
+                <span>Career</span>
+                <h3>The unspoken industry playbook</h3>
+                <p>Getting hired, building leverage, and choosing well.</p>
+              </article>
+              <article>
+                <span>Culture</span>
+                <h3>Building across borders</h3>
+                <p>Founder notes from countries, cultures, and expectations.</p>
+              </article>
+            </div>
+          </div>
+
+          <a
+            class="balcony-share"
+            href={X_SHARE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Share the penthouse on X <span aria-hidden="true">↗</span>
+          </a>
+        </article>
+
+        <article
+          class="room-panel salon-panel"
+          id="panel-salon"
+          role="tabpanel"
+          tabindex="0"
+          aria-labelledby="tab-salon"
+          data-room-panel="salon"
+          hidden
+        >
+          <div class="panel-kicker">
+            <span>The salon</span>
+            <i>Private conversation</i>
+          </div>
+
+          <div class="salon-layout">
+            <div class="salon-copy">
+              <p class="room-eyebrow">Bring one hard decision</p>
+              <h2>Let’s make the next move clear.</h2>
+              <p>
+                Bring an AI bet, architecture question, product tradeoff, or
+                team problem. We’ll leave the room with a practical next move.
+              </p>
+            </div>
+
+            <div class="consulting-menu">
+              <span>Decision session</span>
+              <strong>From $300/hr</strong>
+              <p>Projects, speaking, and retainers are scoped separately.</p>
+              <a
+                class="room-action"
+                href={LINKEDIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Start a conversation <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
+        </article>
       </section>
+
+      <aside class="guestbook" id="guestbook" aria-labelledby="guestbook-title">
+        <div class="guestbook-key" aria-hidden="true">
+          <span></span><i></i>
+        </div>
+        <p class="guestbook-label">Before you go</p>
+        <h2 id="guestbook-title">Sign the guestbook.</h2>
+        <p class="guestbook-copy">
+          Get my field notes on AI, engineering leadership, careers, and
+          building across cultures.
+        </p>
+        <NewsletterSignup />
+        <div class="guestbook-footer">
+          <span>A useful note, now and then.</span>
+          <i>No spam · unsubscribe anytime</i>
+        </div>
+      </aside>
     </main>
 
-    <footer>
-      <div>
-        <span class="wordmark-mark" aria-hidden="true">✦</span>
-        <p>Vanielle Lee · AI engineer · Founder · CTO</p>
-      </div>
-      <a href="#newsletter" data-focus-newsletter>Join the field notes ↑</a>
-      <p>© {new Date().getFullYear()}</p>
+    <footer class="residence-footer">
+      <p>© {new Date().getFullYear()} Vanielle Lee</p>
+      <nav aria-label="Social links">
+        <a
+          href="https://x.com/lee_vanielle"
+          target="_blank"
+          rel="noopener noreferrer">X</a
+        >
+        <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer"
+          >LinkedIn</a
+        >
+        <a
+          href="https://github.com/leevanielle"
+          target="_blank"
+          rel="noopener noreferrer">GitHub</a
+        >
+      </nav>
+      <p>Built from the top floor.</p>
     </footer>
   </div>
 </Layout>
 
 <script>
-  const shell = document.querySelector<HTMLElement>(".site-shell");
+  const tabs = Array.from(
+    document.querySelectorAll<HTMLButtonElement>("[data-room-tab]")
+  );
+  const panels = Array.from(
+    document.querySelectorAll<HTMLElement>("[data-room-panel]")
+  );
+  const shortcuts = document.querySelectorAll<HTMLElement>(
+    "[data-room-shortcut]"
+  );
+  const stage = document.querySelector<HTMLElement>("[data-room-stage]");
+  const roomStatus = document.querySelector<HTMLElement>("[data-room-status]");
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
 
-  if (shell && shell.dataset.motionReady !== "true") {
-    shell.dataset.motionReady = "true";
-    const reduceMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+  const roomIds = tabs.flatMap(tab =>
+    tab.dataset.roomTab ? [tab.dataset.roomTab] : []
+  );
 
-    if (!reduceMotion) {
-      shell.classList.add("motion-ready");
-      const reveals = document.querySelectorAll<HTMLElement>("[data-reveal]");
-      const revealObserver = new IntersectionObserver(
-        entries => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("is-visible");
-              revealObserver.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.08, rootMargin: "0px 0px -8% 0px" }
-      );
-      reveals.forEach(element => revealObserver.observe(element));
+  const selectRoom = (roomId, options = {}) => {
+    if (!roomIds.includes(roomId)) return;
+
+    const selectedTab = tabs.find(tab => tab.dataset.roomTab === roomId);
+    const selectedPanel = panels.find(
+      panel => panel.dataset.roomPanel === roomId
+    );
+    if (!selectedTab || !selectedPanel) return;
+
+    tabs.forEach(tab => {
+      const selected = tab === selectedTab;
+      tab.setAttribute("aria-selected", String(selected));
+      tab.tabIndex = selected ? 0 : -1;
+    });
+
+    panels.forEach(panel => {
+      const selected = panel === selectedPanel;
+      panel.hidden = !selected;
+      panel.classList.toggle("is-active", selected);
+      panel.classList.remove("is-entering");
+    });
+
+    stage?.setAttribute("data-active-room", roomId);
+    if (roomStatus) {
+      roomStatus.textContent = selectedTab.dataset.roomLabel ?? roomId;
     }
 
-    let progressFrame = 0;
-    const revealVisible = () => {
-      if (reduceMotion) return;
-      document
-        .querySelectorAll<HTMLElement>("[data-reveal]")
-        .forEach(element => {
-          const bounds = element.getBoundingClientRect();
-          if (bounds.top < window.innerHeight * 0.92 && bounds.bottom > 0) {
-            element.classList.add("is-visible");
-          }
-        });
-    };
-    const updateProgress = () => {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      const ratio = max > 0 ? window.scrollY / max : 0;
-      shell.style.setProperty("--scroll-progress", String(ratio));
-      revealVisible();
-      progressFrame = 0;
-    };
-    window.addEventListener(
-      "scroll",
-      () => {
-        if (!progressFrame) {
-          progressFrame = window.requestAnimationFrame(updateProgress);
-        }
-      },
-      { passive: true }
-    );
-    updateProgress();
-
-    document
-      .querySelectorAll<HTMLAnchorElement>("[data-focus-newsletter]")
-      .forEach(link => {
-        link.addEventListener("click", () => {
-          window.setTimeout(
-            () => {
-              document
-                .querySelector<HTMLInputElement>("#newsletter-email")
-                ?.focus({ preventScroll: true });
-            },
-            reduceMotion ? 0 : 500
-          );
-        });
+    if (!reduceMotion) {
+      window.requestAnimationFrame(() => {
+        selectedPanel.classList.add("is-entering");
       });
-  }
+    }
+
+    if (options.updateUrl !== false) {
+      window.history.replaceState(null, "", "#" + roomId);
+    }
+    if (options.focus) {
+      selectedPanel.focus({ preventScroll: true });
+    }
+  };
+
+  tabs.forEach((tab, index) => {
+    tab.addEventListener("click", () => {
+      const roomId = tab.dataset.roomTab;
+      if (roomId) selectRoom(roomId, { focus: true });
+    });
+
+    tab.addEventListener("keydown", event => {
+      if (
+        !["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight"].includes(event.key)
+      ) {
+        return;
+      }
+      event.preventDefault();
+      const direction =
+        event.key === "ArrowDown" || event.key === "ArrowRight" ? 1 : -1;
+      const nextIndex = (index + direction + tabs.length) % tabs.length;
+      const nextTab = tabs[nextIndex];
+      const roomId = nextTab?.dataset.roomTab;
+      if (roomId) {
+        nextTab.focus();
+        selectRoom(roomId);
+      }
+    });
+  });
+
+  shortcuts.forEach(shortcut => {
+    shortcut.addEventListener("click", event => {
+      const roomId = shortcut.dataset.roomShortcut;
+      if (!roomId) return;
+      event.preventDefault();
+      selectRoom(roomId, { focus: true });
+    });
+  });
+
+  document
+    .querySelectorAll<HTMLAnchorElement>("[data-focus-newsletter]")
+    .forEach(link => {
+      link.addEventListener("click", () => {
+        window.setTimeout(
+          () => {
+            document
+              .querySelector<HTMLInputElement>("#newsletter-email")
+              ?.focus({ preventScroll: true });
+          },
+          reduceMotion ? 0 : 450
+        );
+      });
+    });
+
+  const initialRoom = window.location.hash.replace("#", "");
+  selectRoom(roomIds.includes(initialRoom) ? initialRoom : "lobby", {
+    updateUrl: false,
+  });
+
+  window.addEventListener("hashchange", () => {
+    const roomId = window.location.hash.replace("#", "");
+    if (roomIds.includes(roomId)) {
+      selectRoom(roomId, { updateUrl: false });
+    }
+  });
 </script>
 
 <style>
   :global(html) {
+    background: #1d2630;
     scroll-behavior: smooth;
-    scroll-padding-top: 6rem;
   }
 
   :global(body) {
     margin: 0;
-    background: #f7f5f2;
-    color: #2b2926;
+    background: #1d2630;
+    color: #25292c;
     font-family: "DM Sans", "Instrument Sans", ui-sans-serif, system-ui,
       sans-serif;
   }
@@ -529,69 +656,124 @@ const links = [
     box-sizing: border-box;
   }
 
-  .site-shell {
-    --ink: #2b2926;
-    --ink-soft: #5d5953;
-    --porcelain: #f7f5f2;
-    --white: #fffefa;
-    --blush: #efe5e2;
-    --mist: #dfe8e3;
-    --coral: #bd574c;
-    --coral-dark: #9e433a;
-    --brass: #a98a55;
-    --line: #d8d3cb;
-    --scroll-progress: 0;
-    min-height: 100vh;
-    overflow: clip;
-    background: var(--porcelain);
+  :global([hidden]) {
+    display: none !important;
   }
 
-  .site-shell > main,
-  .site-shell main > section,
-  .site-shell > footer {
-    width: 100%;
-    max-width: none;
-    margin: 0;
-  }
-
-  .scroll-progress {
-    position: fixed;
-    inset: 0 auto 0 0;
-    z-index: 90;
-    width: 3px;
-    background: rgba(169, 138, 85, 0.12);
-  }
-
-  .scroll-progress-fill {
-    width: 100%;
-    height: calc(var(--scroll-progress) * 100%);
-    display: block;
-    border-radius: 0 0 99px 99px;
-    background: var(--coral);
-    transition: height 100ms linear;
-  }
-
-  .site-header {
-    position: fixed;
-    top: 1rem;
-    left: 50%;
-    z-index: 80;
-    width: min(1120px, calc(100% - 2rem));
-    min-height: 58px;
-    padding: 0.45rem 0.55rem 0.45rem 1.05rem;
+  .penthouse-shell {
+    --night: #1d2630;
+    --night-soft: #2a3541;
+    --sky: #758c9c;
+    --pearl: #f6f3ec;
+    --glass: #edf1ef;
+    --blush: #ead9d5;
+    --coral: #b95347;
+    --brass: #b89a61;
+    --ink: #25292c;
+    --muted: #706f6a;
+    --line: rgba(37, 41, 44, 0.16);
+    position: relative;
+    height: 100svh;
+    min-height: 680px;
+    padding: 0.75rem;
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-rows: 64px minmax(0, 1fr) 30px;
+    gap: 0.7rem;
+    overflow: hidden;
+    background: radial-gradient(
+        circle at 72% 0%,
+        rgba(117, 140, 156, 0.38),
+        transparent 33%
+      ),
+      linear-gradient(145deg, #26313c 0%, var(--night) 58%, #171e25 100%);
+  }
+
+  .skyline {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 28%;
+    pointer-events: none;
+    opacity: 0.27;
+  }
+
+  .skyline span {
+    position: absolute;
+    bottom: 0;
+    display: block;
+    background: #0f151b;
+  }
+
+  .skyline span::after {
+    content: "";
+    position: absolute;
+    inset: 10% 16%;
+    background: repeating-linear-gradient(
+      90deg,
+      rgba(231, 204, 147, 0.55) 0 3px,
+      transparent 3px 18px
+    );
+    mask-image: repeating-linear-gradient(
+      0deg,
+      black 0 3px,
+      transparent 3px 16px
+    );
+  }
+
+  .skyline span:nth-child(1) {
+    left: 2%;
+    width: 16%;
+    height: 52%;
+  }
+
+  .skyline span:nth-child(2) {
+    left: 20%;
+    width: 19%;
+    height: 74%;
+  }
+
+  .skyline span:nth-child(3) {
+    left: 42%;
+    width: 12%;
+    height: 43%;
+  }
+
+  .skyline span:nth-child(4) {
+    left: 57%;
+    width: 23%;
+    height: 62%;
+  }
+
+  .skyline span:nth-child(5) {
+    right: 2%;
+    width: 16%;
+    height: 85%;
+  }
+
+  .penthouse-header,
+  .floor-plan,
+  .room-stage,
+  .guestbook {
+    position: relative;
+    z-index: 2;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 18px 60px rgba(7, 12, 17, 0.2);
+  }
+
+  .penthouse-header {
+    padding: 0.45rem 0.55rem 0.45rem 1rem;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    gap: 2rem;
-    border: 1px solid rgba(216, 211, 203, 0.9);
+    gap: 1rem;
     border-radius: 18px;
-    background: rgba(255, 254, 250, 0.86);
-    box-shadow: 0 12px 40px rgba(43, 41, 38, 0.07);
+    background: rgba(246, 243, 236, 0.94);
     backdrop-filter: blur(18px);
-    transform: translateX(-50%);
   }
 
   .wordmark {
+    justify-self: start;
     display: flex;
     align-items: center;
     gap: 0.65rem;
@@ -602,145 +784,299 @@ const links = [
     text-decoration: none;
   }
 
-  .wordmark-mark {
+  .wordmark-gem {
     color: var(--coral);
-    font-size: 0.9em;
+    font-size: 0.8rem;
   }
 
-  .site-header nav {
-    justify-self: center;
-    display: flex;
-    gap: clamp(0.9rem, 2.6vw, 2.2rem);
-  }
-
-  .site-header nav a {
-    color: #6c6862;
-    font-size: 0.75rem;
-    font-weight: 500;
-    text-decoration: none;
-    transition: color 180ms ease;
-  }
-
-  .site-header nav a:hover {
-    color: var(--coral);
-  }
-
-  .header-cta,
-  .button-primary,
-  .button-dark {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    border-radius: 999px;
-    text-decoration: none;
-    transition:
-      transform 180ms ease,
-      box-shadow 180ms ease,
-      background 180ms ease;
-  }
-
-  .header-cta {
-    min-height: 42px;
-    padding: 0.65rem 1rem;
-    background: var(--ink);
-    color: white;
-    font-size: 0.7rem;
-    font-weight: 600;
-  }
-
-  .header-cta:hover,
-  .button-dark:hover {
-    background: #44403a;
-    transform: translateY(-2px);
-  }
-
-  .hero {
-    position: relative;
-    min-height: 100svh;
-    padding: clamp(8.5rem, 13vh, 10rem) max(1.25rem, calc((100vw - 1120px) / 2))
-      clamp(4.5rem, 8vh, 6rem);
-    display: grid;
-    align-items: center;
-    overflow: hidden;
-    background: radial-gradient(
-        circle at 87% 17%,
-        rgba(239, 229, 226, 0.86),
-        transparent 31%
-      ),
-      linear-gradient(145deg, #fbfaf7, #f5f2ed);
-  }
-
-  .ambient-orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(1px);
-    pointer-events: none;
-  }
-
-  .ambient-orb-one {
-    top: 17%;
-    right: 7%;
-    width: clamp(180px, 25vw, 340px);
-    aspect-ratio: 1;
-    background: rgba(223, 232, 227, 0.65);
-  }
-
-  .ambient-orb-two {
-    right: 24%;
-    bottom: 5%;
-    width: clamp(90px, 14vw, 180px);
-    aspect-ratio: 1;
-    background: rgba(239, 229, 226, 0.72);
-  }
-
-  .hero-layout {
-    position: relative;
-    z-index: 2;
-    width: min(1120px, 100%);
-    margin-inline: auto;
-    display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.72fr);
-    align-items: center;
-    gap: clamp(3rem, 8vw, 7rem);
-  }
-
-  .room-label {
-    margin: 0 0 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.65rem;
-    color: var(--coral);
-    font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.13em;
+  .building-title {
+    margin: 0;
+    color: #716f68;
+    font-size: 0.62rem;
+    letter-spacing: 0.07em;
+    text-align: center;
     text-transform: uppercase;
   }
 
-  .room-label > span {
-    position: relative;
-    width: 18px;
-    height: 18px;
-    display: block;
-    border: 1px solid var(--brass);
-    border-radius: 50%;
+  .building-title span {
+    margin-right: 0.55rem;
+    color: var(--coral);
+    font-weight: 600;
   }
 
-  .room-label > span::after {
+  .header-actions {
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .header-actions a {
+    min-height: 40px;
+    padding: 0.65rem 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    color: #5f5d58;
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .header-actions .guestbook-shortcut {
+    background: var(--ink);
+    color: white;
+  }
+
+  .residence {
+    position: relative;
+    z-index: 2;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(188px, 0.55fr) minmax(520px, 2fr) minmax(
+        260px,
+        0.8fr
+      );
+    gap: 0.7rem;
+  }
+
+  .floor-plan {
+    min-height: 0;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    border-radius: 22px;
+    background: rgba(237, 241, 239, 0.94);
+    backdrop-filter: blur(18px);
+  }
+
+  .floor-plan-heading {
+    padding-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .floor-plan-heading p,
+  .floor-plan-heading span {
+    margin: 0;
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .floor-plan-heading span {
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--night);
+    color: white;
+  }
+
+  .elevator-status {
+    margin: 0.75rem 0;
+    padding: 0.65rem 0.7rem;
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.68);
+  }
+
+  .elevator-status > span {
+    width: 7px;
+    height: 7px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background: #79a88f;
+    box-shadow: 0 0 0 4px rgba(121, 168, 143, 0.13);
+  }
+
+  .elevator-status p {
+    margin: 0;
+    color: #85817a;
+    font-size: 0.52rem;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  .elevator-status strong {
+    display: block;
+    color: var(--ink);
+    font-size: 0.66rem;
+    font-weight: 600;
+    text-transform: none;
+  }
+
+  .room-map {
+    min-height: 0;
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 0.82fr 1fr 1fr;
+    gap: 4px;
+    border: 1px solid #aeb7b4;
+    background: #aeb7b4;
+  }
+
+  .room-key {
+    min-width: 0;
+    padding: 0.65rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    flex-direction: column;
+    border: 0;
+    border-radius: 0;
+    background: #f7f8f5;
+    color: var(--ink);
+    cursor: pointer;
+    text-align: left;
+    transition:
+      background 180ms ease,
+      color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .room-key-lobby {
+    grid-column: 1 / -1;
+  }
+
+  .room-key span,
+  .room-key strong {
+    display: block;
+  }
+
+  .room-key span {
+    color: #89857e;
+    font-size: 0.48rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .room-key strong {
+    margin-top: 0.15rem;
+    font-family: "Newsreader", Georgia, serif;
+    font-size: clamp(0.9rem, 1.35vw, 1.3rem);
+    font-weight: 400;
+    line-height: 1;
+  }
+
+  .room-key:hover {
+    background: var(--blush);
+  }
+
+  .room-key[aria-selected="true"] {
+    position: relative;
+    z-index: 2;
+    background: var(--night);
+    color: white;
+    box-shadow: inset 0 0 0 2px var(--brass);
+  }
+
+  .room-key[aria-selected="true"] span {
+    color: #cfb985;
+  }
+
+  .map-hint {
+    margin: 0.75rem 0 0;
+    color: #87837c;
+    font-size: 0.53rem;
+    line-height: 1.45;
+  }
+
+  .room-stage {
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    border-radius: 24px;
+    background: var(--pearl);
+  }
+
+  .room-stage::before {
     content: "";
     position: absolute;
-    top: 8px;
-    left: 17px;
-    width: 12px;
-    height: 1px;
-    background: var(--brass);
+    top: -110px;
+    right: -90px;
+    z-index: 0;
+    width: 270px;
+    height: 270px;
+    border-radius: 50%;
+    background: var(--blush);
+    opacity: 0.58;
+    transition:
+      background 420ms ease,
+      transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .hero-role {
-    margin: 0 0 1.25rem;
-    color: #77716a;
-    font-size: 0.72rem;
-    letter-spacing: 0.06em;
+  .room-stage[data-active-room="lab"]::before {
+    background: #d4e3de;
+    transform: translate(-25px, 80px) scale(1.2);
+  }
+
+  .room-stage[data-active-room="boardroom"]::before {
+    background: #d8d2c4;
+    transform: translate(-90px, 35px) scale(1.35);
+  }
+
+  .room-stage[data-active-room="library"]::before {
+    background: #ead9d5;
+    transform: translate(-210px, 130px) scale(1.6);
+  }
+
+  .room-stage[data-active-room="balcony"]::before {
+    background: #cadbe3;
+    transform: translate(-30px, 130px) scale(1.5);
+  }
+
+  .room-stage[data-active-room="salon"]::before {
+    background: #d6c3b6;
+    transform: translate(-150px, 30px) scale(1.2);
+  }
+
+  .room-panel {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    padding: clamp(1.25rem, 2.7vw, 2.3rem);
+    overflow: auto;
+    outline: none;
+    scrollbar-color: rgba(37, 41, 44, 0.25) transparent;
+  }
+
+  .room-panel.is-entering {
+    animation: room-arrival 520ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .panel-kicker {
+    padding-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 1px solid var(--line);
+    color: #7a7771;
+    font-size: 0.54rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .panel-kicker i {
+    color: var(--coral);
+    font-style: normal;
+  }
+
+  .room-eyebrow {
+    margin: 0 0 0.7rem;
+    color: var(--coral);
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
   }
 
   h1,
@@ -753,939 +1089,839 @@ const links = [
   }
 
   h1 {
-    max-width: 720px;
-    font-size: clamp(3.15rem, 5.4vw, 5.15rem);
+    max-width: 670px;
+    font-size: clamp(2.75rem, 4.7vw, 4.8rem);
     letter-spacing: -0.055em;
     line-height: 0.98;
   }
 
-  h1 em,
-  h2 em {
+  h1 em {
+    display: block;
     color: var(--coral);
     font-weight: 400;
   }
 
-  .hero-intro {
-    max-width: 660px;
-    margin: 1.5rem 0 0;
-    color: var(--ink-soft);
-    font-size: clamp(1rem, 1.45vw, 1.13rem);
-    line-height: 1.72;
-  }
-
-  .hero-actions {
-    margin-top: 1.7rem;
-    display: flex;
-    align-items: center;
-    gap: 1.2rem;
-    flex-wrap: wrap;
-  }
-
-  .button-primary {
-    min-height: 48px;
-    padding: 0.75rem 1.15rem;
-    background: var(--coral);
-    color: white;
-    box-shadow: 0 10px 24px rgba(189, 87, 76, 0.18);
-    font-size: 0.75rem;
-    font-weight: 600;
-  }
-
-  .button-primary:hover {
-    background: var(--coral-dark);
-    box-shadow: 0 14px 30px rgba(189, 87, 76, 0.24);
-    transform: translateY(-2px);
-  }
-
-  .text-link {
-    color: var(--ink);
-    font-size: 0.76rem;
-    font-weight: 600;
-    text-decoration-color: #bbb3a9;
-    text-underline-offset: 5px;
-  }
-
-  .hero-newsletter {
-    max-width: 690px;
-    margin-top: 1.65rem;
-    padding: 1rem;
-    border: 1px solid rgba(216, 211, 203, 0.88);
-    border-radius: 22px;
-    background: rgba(255, 254, 250, 0.74);
-    box-shadow: 0 18px 50px rgba(43, 41, 38, 0.06);
-    backdrop-filter: blur(12px);
-  }
-
-  .newsletter-heading {
-    margin-bottom: 0.85rem;
-    display: flex;
-    align-items: flex-start;
-    gap: 0.7rem;
-  }
-
-  .newsletter-heading p {
-    margin: 0;
-    color: #6d6861;
-    font-size: 0.74rem;
-    line-height: 1.5;
-  }
-
-  .newsletter-heading strong {
-    display: block;
-    color: var(--ink);
-    font-weight: 600;
-  }
-
-  .soft-spark {
-    color: var(--coral);
-  }
-
-  .hero-portrait {
-    position: relative;
-    width: min(390px, 100%);
-    margin-inline: auto;
-    padding: 1rem 1rem 5.2rem;
-    border: 1px solid rgba(216, 211, 203, 0.95);
-    border-radius: 180px 180px 28px 28px;
-    background: rgba(255, 254, 250, 0.78);
-    box-shadow: 0 28px 80px rgba(43, 41, 38, 0.11);
-    backdrop-filter: blur(14px);
-  }
-
-  .portrait-arch {
-    aspect-ratio: 0.84;
-    overflow: hidden;
-    border-radius: 160px 160px 18px 18px;
-    background: var(--mist);
-  }
-
-  .portrait-arch img {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-    object-position: 51% center;
-    filter: saturate(0.78) contrast(0.96);
-    transform: scale(1.03);
-    transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .hero-portrait:hover img {
-    transform: scale(1.055);
-  }
-
-  .portrait-note {
-    position: absolute;
-    right: 1rem;
-    bottom: 1rem;
-    left: 1rem;
-    padding: 0.9rem 1rem;
-    border-radius: 16px;
-    background: var(--ink);
-    color: white;
-  }
-
-  .portrait-note span {
-    color: #cfb783;
-    font-size: 0.55rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  .portrait-note p {
-    margin: 0.35rem 0 0;
-    color: #e5e1da;
-    font-size: 0.7rem;
-    line-height: 1.45;
-  }
-
-  .house-key {
-    position: absolute;
-    top: 38%;
-    right: -43px;
-    width: 58px;
-    height: 24px;
-    transform: rotate(-8deg);
-  }
-
-  .house-key span {
-    width: 24px;
-    height: 24px;
-    display: block;
-    border: 2px solid var(--brass);
-    border-radius: 50%;
-  }
-
-  .house-key i {
-    position: absolute;
-    top: 11px;
-    left: 22px;
-    width: 34px;
-    height: 2px;
-    background: var(--brass);
-  }
-
-  .house-key i::after {
-    content: "";
-    position: absolute;
-    right: 2px;
-    bottom: 0;
-    width: 2px;
-    height: 8px;
-    background: var(--brass);
-  }
-
-  .quiet-share {
-    position: absolute;
-    right: max(1.25rem, calc((100vw - 1120px) / 2));
-    bottom: 2rem;
-    z-index: 2;
-    color: #77716a;
-    font-size: 0.66rem;
-    text-decoration: none;
-  }
-
-  .quiet-share:hover {
-    color: var(--coral);
-  }
-
-  .proof-view {
-    padding: 0 max(1.25rem, calc((100vw - 1120px) / 2));
-    display: grid;
-    grid-template-columns: 0.7fr 0.85fr 0.9fr 1.55fr;
-    background: var(--white);
-  }
-
-  .proof-view > * {
-    min-width: 0;
-    min-height: 120px;
-    padding: 1.35rem clamp(1rem, 2.3vw, 1.6rem);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border-left: 1px solid var(--line);
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .proof-view > *:last-child {
-    border-right: 1px solid var(--line);
-  }
-
-  .proof-view strong {
-    font-family: "Newsreader", Georgia, serif;
-    font-size: clamp(1.55rem, 2.4vw, 2.25rem);
-    font-weight: 400;
-    letter-spacing: -0.03em;
-  }
-
-  .proof-view span {
-    margin-top: 0.4rem;
-    color: #77716a;
-    font-size: 0.64rem;
-    line-height: 1.45;
-  }
-
-  .proof-view a {
-    transition: background 180ms ease;
-  }
-
-  .proof-view a:hover {
-    background: var(--blush);
-  }
-
-  .about-room,
-  .work-room,
-  .notes-room,
-  .connect-room {
-    padding: clamp(6rem, 10vw, 9rem) max(1.25rem, calc((100vw - 1120px) / 2));
-  }
-
-  .about-room {
-    display: grid;
-    grid-template-columns: 0.82fr 1.18fr;
-    gap: clamp(3rem, 8vw, 7rem);
-    background: var(--porcelain);
-  }
-
-  .section-intro h2,
-  .book-copy h2,
-  .consulting-card h2,
-  .notes-heading h2,
-  .connect-copy h2 {
-    font-size: clamp(2.7rem, 4.7vw, 4.6rem);
+  h2 {
+    font-size: clamp(2.45rem, 4vw, 4rem);
     letter-spacing: -0.05em;
     line-height: 1;
   }
 
-  .about-story {
-    color: var(--ink-soft);
-    line-height: 1.75;
+  .lobby-layout {
+    min-height: calc(100% - 2rem);
+    padding-top: clamp(1.5rem, 4vh, 3rem);
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(200px, 0.65fr);
+    align-items: center;
+    gap: clamp(1.5rem, 4vw, 4rem);
   }
 
-  .about-story p {
-    max-width: 650px;
+  .lobby-intro {
+    max-width: 630px;
+    margin: 1.1rem 0 0;
+    color: #5f605e;
+    font-size: clamp(0.9rem, 1.2vw, 1.04rem);
+    line-height: 1.68;
   }
 
-  .about-story .story-lead {
-    margin-top: 0;
+  .lobby-proof {
+    margin-top: 1.3rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .lobby-proof > * {
+    min-height: 48px;
+    padding: 0.55rem 0.7rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.58);
+    color: #72706a;
+    font-size: 0.59rem;
+    text-decoration: none;
+  }
+
+  .lobby-proof strong {
     color: var(--ink);
     font-family: "Newsreader", Georgia, serif;
-    font-size: clamp(1.55rem, 2.6vw, 2.2rem);
-    line-height: 1.3;
+    font-size: 1.1rem;
+    font-weight: 500;
   }
 
-  .about-room blockquote {
-    grid-column: 1 / -1;
-    margin: 2rem 0 0;
-    padding: clamp(1.5rem, 3vw, 2.5rem);
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: start;
+  .next-room,
+  .room-action {
+    min-height: 44px;
+    padding: 0.7rem 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     gap: 1rem;
-    border: 1px solid #d9ccc7;
-    border-radius: 24px;
-    background: var(--blush);
-  }
-
-  .about-room blockquote > span {
-    color: var(--coral);
-    font-family: "Newsreader", Georgia, serif;
-    font-size: 3rem;
-    line-height: 0.75;
-  }
-
-  .about-room blockquote p {
-    max-width: 760px;
-    margin: 0;
-    font-family: "Newsreader", Georgia, serif;
-    font-size: clamp(1.4rem, 2.8vw, 2.25rem);
-    line-height: 1.25;
-  }
-
-  .work-room {
-    background: var(--white);
-  }
-
-  .work-intro {
-    max-width: 760px;
-  }
-
-  .work-intro > p:last-child,
-  .notes-heading > p:last-child,
-  .connect-copy > p:last-child {
-    max-width: 620px;
-    margin: 1.2rem 0 0;
-    color: var(--ink-soft);
-    line-height: 1.7;
-  }
-
-  .expertise-grid {
-    margin-top: clamp(3rem, 6vw, 5rem);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-
-  .expertise-grid article {
-    position: relative;
-    min-height: 300px;
-    padding: clamp(1.5rem, 3.5vw, 2.5rem);
-    overflow: hidden;
-    border: 1px solid var(--line);
-    border-radius: 24px;
-    background: var(--porcelain);
-    transition:
-      border-color 220ms ease,
-      transform 220ms ease,
-      box-shadow 220ms ease;
-  }
-
-  .expertise-grid article:nth-child(2),
-  .expertise-grid article:nth-child(3) {
-    background: #f1f5f2;
-  }
-
-  .expertise-grid article:hover {
-    border-color: #c8b9b3;
-    box-shadow: 0 20px 50px rgba(43, 41, 38, 0.07);
-    transform: translateY(-4px);
-  }
-
-  .expertise-number {
-    position: absolute;
-    top: 1.2rem;
-    right: 1.4rem;
-    color: #b6afa6;
-    font-family: "Newsreader", Georgia, serif;
-    font-size: 1.2rem;
-  }
-
-  .expertise-grid article > p {
-    margin: 0;
-    color: var(--coral);
-    font-size: 0.62rem;
+    border: 0;
+    border-radius: 999px;
+    background: var(--coral);
+    color: white;
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.67rem;
     font-weight: 600;
-    letter-spacing: 0.12em;
+    text-decoration: none;
+    transition:
+      transform 180ms ease,
+      background 180ms ease;
+  }
+
+  .next-room {
+    margin-top: 1.3rem;
+  }
+
+  .next-room:hover,
+  .room-action:hover {
+    background: #9e443b;
+    transform: translateY(-2px);
+  }
+
+  .portrait-window {
+    position: relative;
+    width: min(280px, 100%);
+    margin: 0 auto;
+    padding: 0.65rem 0.65rem 4.7rem;
+    border: 1px solid var(--line);
+    border-radius: 140px 140px 20px 20px;
+    background: rgba(255, 255, 255, 0.64);
+    box-shadow: 0 24px 70px rgba(36, 42, 46, 0.13);
+  }
+
+  .window-glow {
+    position: absolute;
+    inset: -8% -12% 28% 18%;
+    z-index: -1;
+    border-radius: 50%;
+    background: #d9e4e0;
+  }
+
+  .portrait-window img {
+    width: 100%;
+    aspect-ratio: 0.86;
+    display: block;
+    border-radius: 130px 130px 14px 14px;
+    object-fit: cover;
+    object-position: center;
+    filter: saturate(0.76) contrast(0.95);
+  }
+
+  .portrait-window figcaption {
+    position: absolute;
+    right: 0.65rem;
+    bottom: 0.65rem;
+    left: 0.65rem;
+  }
+
+  .portrait-window figcaption span,
+  .portrait-window figcaption strong,
+  .portrait-window figcaption i {
+    display: block;
+  }
+
+  .portrait-window figcaption span {
+    color: var(--coral);
+    font-size: 0.51rem;
     text-transform: uppercase;
   }
 
-  .expertise-grid h3 {
-    max-width: 360px;
-    margin-top: clamp(3.2rem, 7vw, 5.2rem);
-    font-size: clamp(2rem, 3.5vw, 3rem);
-    letter-spacing: -0.045em;
-    line-height: 1;
+  .portrait-window figcaption strong {
+    margin-top: 0.15rem;
+    font-family: "Newsreader", Georgia, serif;
+    font-size: 1.25rem;
+    font-weight: 400;
   }
 
-  .expertise-grid article > span {
-    max-width: 490px;
-    margin-top: 1rem;
-    display: block;
-    color: var(--ink-soft);
-    font-size: 0.88rem;
+  .portrait-window figcaption i {
+    margin-top: 0.1rem;
+    color: #77746e;
+    font-size: 0.53rem;
+    font-style: normal;
+  }
+
+  .panel-heading {
+    max-width: 680px;
+    padding-top: clamp(1.5rem, 3.5vh, 2.8rem);
+  }
+
+  .panel-heading > p:last-child {
+    max-width: 600px;
+    margin: 0.9rem 0 0;
+    color: #5e605e;
+    font-size: 0.9rem;
     line-height: 1.65;
   }
 
-  .book-room {
-    padding: clamp(6rem, 10vw, 9rem) max(1.25rem, calc((100vw - 1120px) / 2));
-    background: radial-gradient(
-        circle at 18% 50%,
-        rgba(239, 229, 226, 0.75),
-        transparent 34%
-      ),
-      #f4f1eb;
-  }
-
-  .book-layout {
-    width: min(1040px, 100%);
-    margin-inline: auto;
+  .system-specimen {
+    margin-top: clamp(1.5rem, 4vh, 3rem);
     display: grid;
-    grid-template-columns: minmax(270px, 0.72fr) minmax(0, 1.28fr);
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    align-items: stretch;
+  }
+
+  .system-node {
+    min-height: 180px;
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.65);
+  }
+
+  .system-node > span {
+    color: var(--coral);
+    font-size: 0.54rem;
+  }
+
+  .system-node strong {
+    margin-top: auto;
+    font-family: "Newsreader", Georgia, serif;
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+    font-weight: 400;
+  }
+
+  .system-node p {
+    margin: 0.45rem 0 0;
+    color: #676964;
+    font-size: 0.67rem;
+    line-height: 1.5;
+  }
+
+  .system-connector {
+    width: clamp(24px, 3vw, 44px);
+    display: flex;
     align-items: center;
-    gap: clamp(4rem, 10vw, 8rem);
+    justify-content: center;
+    gap: 3px;
   }
 
-  .book-stage {
-    position: relative;
+  .system-connector i {
+    width: 4px;
+    height: 4px;
+    display: block;
+    border-radius: 50%;
+    background: var(--brass);
+  }
+
+  .lab-note {
+    margin-top: 1rem;
+    padding: 0.9rem 1rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 1rem;
+    border-radius: 14px;
+    background: var(--night);
+    color: white;
+  }
+
+  .lab-note span {
+    color: #cfb985;
+    font-size: 0.55rem;
+    text-transform: uppercase;
+  }
+
+  .lab-note p {
     margin: 0;
+    color: #e3e4df;
+    font-size: 0.75rem;
+    line-height: 1.5;
   }
 
-  .book-halo {
+  .boardroom-layout {
+    min-height: calc(100% - 130px);
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    align-items: center;
+    gap: clamp(2rem, 5vw, 5rem);
+  }
+
+  .decision-table {
+    border-top: 1px solid var(--line);
+  }
+
+  .decision-table > div {
+    padding: 1rem 0;
+    display: grid;
+    grid-template-columns: 65px 1fr;
+    gap: 1rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .decision-table span {
+    color: var(--coral);
+    font-size: 0.56rem;
+    text-transform: uppercase;
+  }
+
+  .decision-table strong {
+    font-family: "Newsreader", Georgia, serif;
+    font-size: clamp(1.15rem, 1.8vw, 1.55rem);
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  .client-shelf {
+    padding: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.56);
+  }
+
+  .client-shelf p {
+    margin: 0 auto 0 0;
+    color: #7a7771;
+    font-size: 0.55rem;
+    text-transform: uppercase;
+  }
+
+  .client-shelf span,
+  .client-shelf a {
+    padding: 0.45rem 0.55rem;
+    border-radius: 999px;
+    background: var(--glass);
+    color: var(--ink);
+    font-size: 0.54rem;
+    text-decoration: none;
+  }
+
+  .client-shelf a {
+    background: var(--blush);
+  }
+
+  .library-layout {
+    min-height: calc(100% - 2rem);
+    padding-top: 1.4rem;
+    display: grid;
+    grid-template-columns: minmax(190px, 0.68fr) minmax(0, 1.32fr);
+    align-items: center;
+    gap: clamp(2rem, 5vw, 5rem);
+  }
+
+  .book-object {
+    position: relative;
+    width: min(300px, 100%);
+    margin: 0 auto;
+  }
+
+  .book-object > span {
     position: absolute;
-    inset: 8% -12% -5% 12%;
-    border-radius: 36px;
-    background: var(--mist);
+    inset: 7% -9% -5% 12%;
+    border-radius: 24px;
+    background: #d5e1dd;
     transform: rotate(4deg);
   }
 
-  .book-stage img {
+  .book-object img {
     position: relative;
     width: 100%;
     height: auto;
     display: block;
-    border-radius: 8px;
-    box-shadow: 0 30px 70px rgba(43, 41, 38, 0.2);
+    border-radius: 5px;
+    box-shadow: 0 26px 65px rgba(38, 43, 46, 0.2);
     transform: rotate(-1.5deg);
-    transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 400ms ease;
   }
 
-  .book-stage:hover img {
-    transform: rotate(0) translateY(-6px);
+  .book-object:hover img {
+    transform: rotate(0) translateY(-5px);
   }
 
-  .book-stage figcaption {
-    position: relative;
-    margin-top: 1.1rem;
-    color: #77716a;
-    font-size: 0.6rem;
+  .library-copy > p:not(.room-eyebrow) {
+    max-width: 580px;
+    margin: 1rem 0 0;
+    color: #5f605e;
+    font-size: 0.88rem;
+    line-height: 1.65;
+  }
+
+  .library-copy cite {
+    color: var(--ink);
+    font-family: "Newsreader", Georgia, serif;
+    font-size: 1.12em;
+  }
+
+  .book-facts {
+    margin: 1.2rem 0;
+    display: flex;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+  }
+
+  .book-facts span {
+    padding: 0.55rem 0.7rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: #77746e;
+    font-size: 0.56rem;
+  }
+
+  .book-facts strong {
+    color: var(--coral);
+  }
+
+  .balcony-view {
+    min-height: calc(100% - 92px);
+    display: grid;
+    grid-template-columns: 0.82fr 1.18fr;
+    align-items: center;
+    gap: clamp(2rem, 5vw, 5rem);
+  }
+
+  .note-stack {
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .note-stack article {
+    padding: 0.9rem 1rem;
+    display: grid;
+    grid-template-columns: 54px 1fr;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.62);
+  }
+
+  .note-stack article > span {
+    grid-row: 1 / 3;
+    color: var(--coral);
+    font-size: 0.55rem;
+    text-transform: uppercase;
+  }
+
+  .note-stack h3 {
+    font-size: clamp(1.2rem, 1.9vw, 1.6rem);
+  }
+
+  .note-stack p {
+    margin: 0.2rem 0 0;
+    color: #696a66;
+    font-size: 0.67rem;
+    line-height: 1.45;
+  }
+
+  .balcony-share {
+    min-height: 42px;
+    padding: 0.65rem 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    border-radius: 999px;
+    background: var(--night);
+    color: white;
+    font-size: 0.62rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .salon-layout {
+    min-height: calc(100% - 2rem);
+    display: grid;
+    grid-template-columns: 1fr 0.82fr;
+    align-items: center;
+    gap: clamp(2rem, 6vw, 6rem);
+  }
+
+  .salon-copy > p:last-child {
+    max-width: 580px;
+    margin: 1rem 0 0;
+    color: #5e605e;
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+
+  .consulting-menu {
+    padding: clamp(1.3rem, 3vw, 2.2rem);
+    border-radius: 22px;
+    background: var(--night);
+    color: white;
+    box-shadow: 0 24px 65px rgba(34, 40, 45, 0.22);
+  }
+
+  .consulting-menu > span {
+    color: #cfb985;
+    font-size: 0.56rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
 
-  .book-copy h2 {
-    max-width: 690px;
-  }
-
-  .book-lede {
-    max-width: 650px;
-    margin: 1.4rem 0 0;
-    color: var(--ink-soft);
-    line-height: 1.75;
-  }
-
-  .book-lede cite {
-    color: var(--ink);
-    font-family: "Newsreader", Georgia, serif;
-    font-size: 1.14em;
-  }
-
-  .book-details {
-    margin: 1.8rem 0;
-    display: flex;
-    gap: 0.7rem;
-    flex-wrap: wrap;
-  }
-
-  .book-details span {
-    padding: 0.75rem 0.9rem;
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    background: rgba(255, 254, 250, 0.58);
-    color: #706a63;
-    font-size: 0.66rem;
-  }
-
-  .book-details strong {
-    color: var(--coral);
-    font-weight: 700;
-  }
-
-  .consulting-room {
-    padding: clamp(5rem, 9vw, 8rem) max(1.25rem, calc((100vw - 1120px) / 2));
-    background: var(--ink);
-  }
-
-  .consulting-card {
-    width: min(1120px, 100%);
-    margin-inline: auto;
-    padding: clamp(1.6rem, 5vw, 4rem);
-    display: grid;
-    grid-template-columns: 0.8fr 1.2fr;
-    gap: clamp(3rem, 8vw, 7rem);
-    border: 1px solid #4d4943;
-    border-radius: 30px;
-    background: radial-gradient(
-        circle at 0 100%,
-        rgba(189, 87, 76, 0.2),
-        transparent 30%
-      ),
-      #302e2a;
-    color: white;
-  }
-
-  .consulting-card .room-label {
-    color: #dba9a3;
-  }
-
-  .consulting-card h2 {
-    max-width: 480px;
-  }
-
-  .consulting-copy > p {
-    max-width: 610px;
-    margin-top: 0;
-    color: #d2cec7;
-    font-size: 1rem;
-    line-height: 1.72;
-  }
-
-  .price-row {
-    margin: 2rem 0;
-    padding-block: 1.3rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: end;
-    gap: 2rem;
-    border-block: 1px solid #5b5750;
-  }
-
-  .price-row span,
-  .price-row strong {
+  .consulting-menu > strong {
+    margin-top: 0.65rem;
     display: block;
-  }
-
-  .price-row span {
-    color: #bcb7ae;
-    font-size: 0.65rem;
-  }
-
-  .price-row strong {
-    margin-top: 0.3rem;
-    color: #f0d0cb;
+    color: #f0cbc5;
     font-family: "Newsreader", Georgia, serif;
-    font-size: clamp(1.7rem, 3vw, 2.7rem);
+    font-size: clamp(2.2rem, 4vw, 3.6rem);
     font-weight: 400;
+    line-height: 1;
   }
 
-  .price-row p {
+  .consulting-menu > p {
+    margin: 0.75rem 0 1.2rem;
+    color: #b9bbb7;
+    font-size: 0.64rem;
+    line-height: 1.5;
+  }
+
+  .guestbook {
+    min-height: 0;
+    padding: clamp(1rem, 1.8vw, 1.5rem);
+    overflow: auto;
+    border-radius: 22px;
+    background: rgba(234, 217, 213, 0.96);
+    backdrop-filter: blur(18px);
+  }
+
+  .guestbook-key {
+    position: relative;
+    width: 48px;
+    height: 20px;
+    margin-bottom: 1rem;
+  }
+
+  .guestbook-key span {
+    width: 20px;
+    height: 20px;
+    display: block;
+    border: 1px solid var(--brass);
+    border-radius: 50%;
+  }
+
+  .guestbook-key i {
+    position: absolute;
+    top: 9px;
+    left: 19px;
+    width: 28px;
+    height: 1px;
+    background: var(--brass);
+  }
+
+  .guestbook-key i::after {
+    content: "";
+    position: absolute;
+    right: 2px;
+    width: 1px;
+    height: 7px;
+    background: var(--brass);
+  }
+
+  .guestbook-label {
     margin: 0;
-    color: #aaa49c;
-    font-size: 0.72rem;
+    color: var(--coral);
+    font-size: 0.57rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .guestbook h2 {
+    margin-top: 0.35rem;
+    font-size: clamp(2rem, 3vw, 3rem);
+  }
+
+  .guestbook-copy {
+    margin: 0.8rem 0 1rem;
+    color: #65625e;
+    font-size: 0.76rem;
     line-height: 1.55;
   }
 
-  .button-dark {
-    min-height: 48px;
-    padding: 0.75rem 1.15rem;
-    background: white;
-    color: var(--ink);
-    font-size: 0.75rem;
-    font-weight: 600;
-  }
-
-  .notes-room {
-    display: grid;
-    grid-template-columns: 0.8fr 1.2fr;
-    gap: clamp(3rem, 8vw, 7rem);
-    background: #eef3f0;
-  }
-
-  .notes-list {
-    border-top: 1px solid #c9d1cc;
-  }
-
-  .notes-list article {
-    padding: 1.5rem 0;
-    display: grid;
-    grid-template-columns: 42px 1fr;
-    gap: 1rem;
-    border-bottom: 1px solid #c9d1cc;
-  }
-
-  .notes-list article > span {
-    color: var(--coral);
-    font-size: 0.62rem;
-  }
-
-  .notes-list h3 {
-    font-size: clamp(1.45rem, 2.4vw, 2rem);
-  }
-
-  .notes-list p {
-    max-width: 570px;
-    margin: 0.4rem 0 0;
-    color: var(--ink-soft);
-    font-size: 0.86rem;
-    line-height: 1.6;
-  }
-
-  .notes-invite {
-    grid-column: 1 / -1;
-    margin-top: 1rem;
-    padding: 1.2rem 1.4rem;
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    align-items: center;
-    gap: 1.1rem;
-    border: 1px solid #d8d3cb;
-    border-radius: 22px;
-    background: var(--white);
-    color: var(--ink);
-    box-shadow: 0 16px 40px rgba(43, 41, 38, 0.06);
-    text-decoration: none;
-    transition:
-      transform 180ms ease,
-      box-shadow 180ms ease;
-  }
-
-  .notes-invite:hover {
-    box-shadow: 0 22px 55px rgba(43, 41, 38, 0.1);
-    transform: translateY(-3px);
-  }
-
-  .notes-invite small,
-  .notes-invite strong {
-    display: block;
-  }
-
-  .notes-invite small {
-    color: #77716a;
-    font-size: 0.62rem;
-  }
-
-  .notes-invite strong {
-    margin-top: 0.2rem;
-    font-family: "Newsreader", Georgia, serif;
-    font-size: clamp(1.35rem, 2.5vw, 2rem);
-    font-weight: 400;
-  }
-
-  .notes-invite i {
-    color: var(--coral);
-    font-size: 1.2rem;
-    font-style: normal;
-  }
-
-  .connect-room {
-    display: grid;
-    grid-template-columns: 0.75fr 1.25fr;
-    align-items: center;
-    gap: clamp(3rem, 8vw, 7rem);
-    background: var(--porcelain);
-  }
-
-  .link-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.8rem;
-  }
-
-  .link-grid a {
-    min-height: 102px;
-    padding: 1.1rem 1.2rem;
+  .guestbook-footer {
+    margin-top: 0.7rem;
+    padding-top: 0.7rem;
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    gap: 1rem;
-    border: 1px solid var(--line);
-    border-radius: 20px;
-    background: var(--white);
-    color: var(--ink);
-    text-decoration: none;
-    transition:
-      border-color 180ms ease,
-      transform 180ms ease,
-      box-shadow 180ms ease;
+    gap: 0.6rem;
+    border-top: 1px solid rgba(37, 41, 44, 0.14);
   }
 
-  .link-grid a:hover {
-    border-color: #c8b5af;
-    box-shadow: 0 12px 34px rgba(43, 41, 38, 0.06);
-    transform: translateY(-3px);
-  }
-
-  .link-grid strong,
-  .link-grid i {
-    display: block;
-  }
-
-  .link-grid strong {
-    font-family: "Newsreader", Georgia, serif;
-    font-size: 1.4rem;
-    font-weight: 400;
-  }
-
-  .link-grid i {
-    margin-top: 0.2rem;
-    color: #827c74;
-    font-size: 0.62rem;
+  .guestbook-footer span,
+  .guestbook-footer i {
+    color: #75716c;
+    font-size: 0.5rem;
     font-style: normal;
   }
 
-  .link-grid b {
-    color: var(--coral);
-    font-weight: 400;
-  }
-
-  footer {
-    min-height: 100px;
-    padding: 1.4rem max(1.25rem, calc((100vw - 1120px) / 2));
+  .residence-footer {
+    position: relative;
+    z-index: 2;
+    padding-inline: 0.5rem;
     display: grid;
-    grid-template-columns: 1fr auto auto;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    gap: 2rem;
-    border-top: 1px solid var(--line);
-    background: var(--white);
-    color: #77716a;
-    font-size: 0.64rem;
+    gap: 1rem;
+    color: #9fabaf;
+    font-size: 0.52rem;
   }
 
-  footer > div {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-  }
-
-  footer p {
+  .residence-footer p {
     margin: 0;
   }
 
-  footer a {
-    color: var(--ink);
-    text-underline-offset: 4px;
+  .residence-footer p:last-child {
+    justify-self: end;
   }
 
-  .motion-ready [data-reveal] {
-    opacity: 0;
-    transform: translateY(18px);
-    transition:
-      opacity 700ms ease,
-      transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+  .residence-footer nav {
+    display: flex;
+    gap: 1rem;
   }
 
-  .motion-ready [data-reveal].is-visible {
-    opacity: 1;
-    transform: translateY(0);
+  .residence-footer a {
+    color: #d2dadb;
+    text-decoration: none;
   }
 
   :global(a:focus-visible),
   :global(button:focus-visible),
   :global(input:focus-visible) {
     outline: 2px solid var(--coral);
-    outline-offset: 4px;
+    outline-offset: 3px;
   }
 
-  @media (max-width: 940px) {
-    .site-header nav {
-      display: none;
+  @keyframes room-arrival {
+    from {
+      opacity: 0;
+      transform: translateY(14px) scale(0.995);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @media (max-width: 1120px) {
+    .penthouse-shell {
+      height: auto;
+      min-height: 100svh;
+      overflow: visible;
     }
 
-    .site-header {
+    .residence {
+      grid-template-columns: minmax(180px, 0.58fr) minmax(0, 1.42fr);
+    }
+
+    .room-stage {
+      min-height: 660px;
+    }
+
+    .guestbook {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 0.7fr 1.3fr;
+      gap: 1rem 2rem;
+    }
+
+    .guestbook-key,
+    .guestbook-label,
+    .guestbook h2,
+    .guestbook-copy {
+      grid-column: 1;
+    }
+
+    .guestbook :global(.newsletter-form) {
+      grid-column: 2;
+      grid-row: 1 / 5;
+      align-self: center;
+    }
+
+    .guestbook-footer {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .penthouse-shell {
+      padding: 0.5rem;
+      grid-template-rows: 58px auto 50px;
+    }
+
+    .penthouse-header {
       grid-template-columns: 1fr auto;
-    }
-
-    .hero {
-      min-height: auto;
-      padding-top: 8.5rem;
-    }
-
-    .hero-layout,
-    .about-room,
-    .book-layout,
-    .consulting-card,
-    .notes-room,
-    .connect-room {
-      grid-template-columns: 1fr;
-    }
-
-    .hero-portrait {
-      width: min(430px, calc(100% - 2rem));
-    }
-
-    .quiet-share {
-      position: relative;
-      right: auto;
-      bottom: auto;
-      margin-top: 3rem;
-      justify-self: end;
-    }
-
-    .proof-view {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .proof-view > * {
-      border-bottom: 1px solid var(--line);
-    }
-
-    .proof-view > *:nth-child(2n) {
-      border-right: 1px solid var(--line);
-    }
-
-    .about-room blockquote {
-      margin-top: 0;
-    }
-
-    .book-stage {
-      width: min(420px, calc(100% - 1rem));
-    }
-  }
-
-  @media (max-width: 660px) {
-    :global(html) {
-      scroll-padding-top: 5rem;
-    }
-
-    .site-header {
-      top: 0.65rem;
-      width: calc(100% - 1.3rem);
-      min-height: 54px;
-      padding-left: 0.85rem;
       border-radius: 16px;
     }
 
-    .wordmark {
-      font-size: 0.98rem;
-    }
-
-    .header-cta {
-      min-height: 38px;
-      padding-inline: 0.8rem;
-      font-size: 0.64rem;
-    }
-
-    .hero,
-    .about-room,
-    .work-room,
-    .book-room,
-    .consulting-room,
-    .notes-room,
-    .connect-room {
-      padding-inline: 1rem;
-    }
-
-    .hero {
-      padding-top: 7.4rem;
-      padding-bottom: 4rem;
-    }
-
-    h1 {
-      font-size: clamp(2.9rem, 14vw, 4.2rem);
-    }
-
-    .section-intro h2,
-    .book-copy h2,
-    .consulting-card h2,
-    .notes-heading h2,
-    .connect-copy h2 {
-      font-size: clamp(2.55rem, 12vw, 3.7rem);
-    }
-
-    .hero-actions {
-      align-items: stretch;
-      flex-direction: column;
-    }
-
-    .button-primary,
-    .text-link {
-      justify-content: space-between;
-    }
-
-    .hero-portrait {
-      width: calc(100% - 1.5rem);
-    }
-
-    .house-key {
-      right: -28px;
-    }
-
-    .proof-view {
-      padding-inline: 1rem;
-      grid-template-columns: 1fr;
-    }
-
-    .proof-view > *,
-    .proof-view > *:nth-child(2n) {
-      min-height: 90px;
-      border-right: 1px solid var(--line);
-    }
-
-    .expertise-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .expertise-grid article {
-      min-height: 270px;
-    }
-
-    .book-details {
-      align-items: stretch;
-      flex-direction: column;
-    }
-
-    .consulting-card {
-      padding: 1.4rem;
-      border-radius: 24px;
-    }
-
-    .price-row,
-    .link-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .notes-invite {
-      grid-template-columns: auto 1fr;
-    }
-
-    .notes-invite i {
+    .building-title,
+    .header-actions > a:first-child {
       display: none;
     }
 
-    footer {
+    .residence {
+      grid-template-columns: 1fr;
+    }
+
+    .floor-plan {
+      padding: 0.75rem;
+      border-radius: 18px;
+    }
+
+    .floor-plan-heading,
+    .elevator-status,
+    .map-hint {
+      display: none;
+    }
+
+    .room-map {
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      border: 0;
+      background: transparent;
+      scrollbar-width: none;
+    }
+
+    .room-map::-webkit-scrollbar {
+      display: none;
+    }
+
+    .room-key {
+      min-width: max-content;
+      min-height: 54px;
+      padding: 0.6rem 0.8rem;
+      justify-content: center;
+      border: 1px solid #c5cecb;
+      border-radius: 12px;
+    }
+
+    .room-key strong {
+      font-size: 1rem;
+    }
+
+    .guestbook {
+      grid-row: 2;
+      grid-column: 1;
+      padding: 1rem;
+      display: block;
+      border-radius: 18px;
+    }
+
+    .guestbook-key {
+      display: none;
+    }
+
+    .guestbook h2 {
+      font-size: 2rem;
+    }
+
+    .guestbook-copy {
+      margin-block: 0.45rem 0.8rem;
+    }
+
+    .guestbook-footer {
+      display: none;
+    }
+
+    .room-stage {
+      grid-row: 3;
+      min-height: 670px;
+      border-radius: 20px;
+    }
+
+    .room-panel {
+      padding: 1rem;
+    }
+
+    .panel-kicker i {
+      display: none;
+    }
+
+    .lobby-layout,
+    .boardroom-layout,
+    .library-layout,
+    .balcony-view,
+    .salon-layout {
+      grid-template-columns: 1fr;
+    }
+
+    h1 {
+      font-size: clamp(2.75rem, 13.5vw, 4rem);
+    }
+
+    h2 {
+      font-size: clamp(2.45rem, 11.5vw, 3.5rem);
+    }
+
+    .portrait-window {
+      width: min(280px, calc(100% - 1rem));
+    }
+
+    .system-specimen {
       grid-template-columns: 1fr;
       gap: 0.55rem;
+    }
+
+    .system-node {
+      min-height: 145px;
+    }
+
+    .system-connector {
+      width: 100%;
+      height: 14px;
+    }
+
+    .lab-note {
+      grid-template-columns: 1fr;
+    }
+
+    .client-shelf {
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .client-shelf p {
+      width: 100%;
+    }
+
+    .library-layout {
+      padding-bottom: 1rem;
+    }
+
+    .book-object {
+      width: min(250px, calc(100% - 2rem));
+    }
+
+    .note-stack article {
+      grid-template-columns: 46px 1fr;
+    }
+
+    .residence-footer {
+      grid-template-columns: 1fr auto;
+    }
+
+    .residence-footer p:last-child {
+      display: none;
+    }
+  }
+
+  @media (max-height: 760px) and (min-width: 1121px) {
+    .penthouse-shell {
+      min-height: 620px;
+    }
+
+    .room-panel {
+      padding: 1.2rem;
+    }
+
+    .panel-heading {
+      padding-top: 1.2rem;
+    }
+
+    .portrait-window {
+      width: min(235px, 100%);
+    }
+
+    .system-node {
+      min-height: 155px;
     }
   }
 
@@ -1697,7 +1933,6 @@ const links = [
     *,
     *::before,
     *::after {
-      scroll-behavior: auto !important;
       transition-duration: 0.01ms !important;
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;

@@ -1,186 +1,203 @@
-export default () => (
-  <div
-    style={{
-      position: "relative",
-      width: "100%",
-      height: "100%",
-      padding: "46px 52px",
-      display: "flex",
-      flexDirection: "column",
-      overflow: "hidden",
-      background: "#f7f5f2",
-      color: "#2b2926",
-      fontFamily: "IBM Plex Mono",
-    }}
-  >
-    <div
-      style={{
-        position: "absolute",
-        top: -90,
-        right: -10,
-        width: 390,
-        height: 390,
-        display: "flex",
-        borderRadius: "50%",
-        background: "#efe5e2",
-      }}
-    />
-    <div
-      style={{
-        position: "absolute",
-        right: 180,
-        bottom: -130,
-        width: 270,
-        height: 270,
-        display: "flex",
-        borderRadius: "50%",
-        background: "#dfe8e3",
-      }}
-    />
+export default () => {
+  const rooms = [
+    ["LOBBY", "WELCOME"],
+    ["LAB", "BUILD"],
+    ["BOARDROOM", "LEAD"],
+    ["LIBRARY", "READ"],
+    ["BALCONY", "THINK"],
+    ["SALON", "TALK"],
+  ];
 
+  return (
     <div
       style={{
         position: "relative",
+        width: "100%",
+        height: "100%",
+        padding: 24,
         display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        paddingBottom: 24,
-        borderBottom: "1px solid #d8d3cb",
-        fontSize: 17,
-      }}
-    >
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <span style={{ marginRight: 12, color: "#bd574c" }}>✦</span>
-        <span style={{ fontWeight: 600 }}>Vanielle Lee</span>
-      </div>
-      <span style={{ color: "#77716a", fontSize: 14 }}>
-        AI engineer · Founder · CTO · Author
-      </span>
-    </div>
-
-    <div
-      style={{
-        position: "relative",
-        flex: 1,
-        display: "flex",
-        alignItems: "center",
+        flexDirection: "column",
+        overflow: "hidden",
+        background:
+          "linear-gradient(145deg, #2a3541 0%, #1d2630 60%, #151c23 100%)",
+        color: "#25292c",
+        fontFamily: "IBM Plex Mono",
       }}
     >
       <div
         style={{
-          width: 780,
+          height: 66,
+          padding: "0 20px",
           display: "flex",
-          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "space-between",
+          border: "1px solid rgba(255,255,255,.28)",
+          borderRadius: 18,
+          background: "#f6f3ec",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <span style={{ marginRight: 12, color: "#b95347" }}>✦</span>
+          <span style={{ fontSize: 18, fontWeight: 600 }}>Vanielle Lee</span>
+        </div>
+        <span
+          style={{
+            color: "#77736d",
+            fontSize: 13,
+            letterSpacing: "0.04em",
+          }}
+        >
+          PRIVATE RESIDENCE · PENTHOUSE
+        </span>
+        <span
+          style={{
+            padding: "10px 14px",
+            borderRadius: 999,
+            background: "#25292c",
+            color: "white",
+            fontSize: 12,
+          }}
+        >
+          SIGN THE GUESTBOOK
+        </span>
+      </div>
+
+      <div
+        style={{
+          flex: 1,
+          marginTop: 12,
+          display: "flex",
+          gap: 12,
         }}
       >
         <div
           style={{
+            width: 250,
+            padding: 18,
             display: "flex",
-            alignItems: "center",
-            marginBottom: 22,
-            color: "#bd574c",
-            fontSize: 14,
-            fontWeight: 600,
-            letterSpacing: "0.08em",
-            textTransform: "uppercase",
+            flexDirection: "column",
+            borderRadius: 20,
+            background: "#edf1ef",
+          }}
+        >
+          <div
+            style={{
+              paddingBottom: 12,
+              display: "flex",
+              justifyContent: "space-between",
+              borderBottom: "1px solid #cdd3d0",
+              color: "#6f736f",
+              fontSize: 12,
+            }}
+          >
+            <span>FLOOR PLAN</span>
+            <span style={{ color: "#b95347" }}>PH</span>
+          </div>
+          <div
+            style={{
+              flex: 1,
+              marginTop: 12,
+              display: "flex",
+              flexWrap: "wrap",
+              border: "2px solid #aeb7b4",
+              background: "#aeb7b4",
+              gap: 2,
+            }}
+          >
+            {rooms.map(([room, action], index) => (
+              <div
+                style={{
+                  width: index === 0 ? "100%" : "49.5%",
+                  padding: "11px 10px",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "flex-end",
+                  background: index === 0 ? "#25292c" : "#f8f8f5",
+                  color: index === 0 ? "white" : "#25292c",
+                }}
+              >
+                <span
+                  style={{
+                    color: index === 0 ? "#cfb985" : "#96928b",
+                    fontSize: 9,
+                  }}
+                >
+                  {action}
+                </span>
+                <span style={{ marginTop: 4, fontSize: 13, fontWeight: 600 }}>
+                  {room}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div
+          style={{
+            flex: 1,
+            padding: "32px 38px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            borderRadius: 20,
+            background: "#f6f3ec",
           }}
         >
           <span
             style={{
-              width: 19,
-              height: 19,
-              marginRight: 13,
-              display: "flex",
-              border: "1px solid #a98a55",
-              borderRadius: "50%",
+              color: "#b95347",
+              fontSize: 13,
+              fontWeight: 600,
+              letterSpacing: "0.08em",
             }}
-          />
-          A quiet tour of the work
-        </div>
-
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            fontSize: 57,
-            fontWeight: 600,
-            letterSpacing: "-0.055em",
-            lineHeight: 1.08,
-          }}
-        >
-          <span>I make ambitious technology</span>
-          <span style={{ color: "#bd574c" }}>
-            feel clear, human, and possible.
+          >
+            WELCOME UPSTAIRS
           </span>
-        </div>
-
-        <div
-          style={{
-            width: 650,
-            marginTop: 28,
-            display: "flex",
-            color: "#68625b",
-            fontSize: 18,
-            lineHeight: 1.5,
-          }}
-        >
-          Agentic AI · product engineering · technical leadership · founder
-          perspective
+          <div
+            style={{
+              marginTop: 20,
+              display: "flex",
+              flexDirection: "column",
+              fontSize: 47,
+              fontWeight: 600,
+              letterSpacing: "-0.055em",
+              lineHeight: 1.12,
+            }}
+          >
+            <span>Technology gets complicated.</span>
+            <span style={{ marginTop: 9, color: "#b95347", fontSize: 38 }}>
+              I make it easier to lead.
+            </span>
+          </div>
+          <div
+            style={{
+              width: 590,
+              marginTop: 24,
+              display: "flex",
+              color: "#666762",
+              fontSize: 17,
+              lineHeight: 1.5,
+            }}
+          >
+            Explore a room-by-room tour through agentic AI, engineering
+            leadership, writing, and founder life.
+          </div>
+          <div
+            style={{
+              marginTop: 28,
+              display: "flex",
+              color: "#8a857e",
+              fontSize: 13,
+            }}
+          >
+            <span>10+ YEARS ENGINEERING</span>
+            <span style={{ marginLeft: 28 }}>8 YEARS AS CTO</span>
+            <span style={{ marginLeft: 28, color: "#b95347" }}>
+              VANIELLE.IO ↗
+            </span>
+          </div>
         </div>
       </div>
-
-      <div
-        style={{
-          position: "absolute",
-          right: 28,
-          width: 210,
-          height: 300,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "flex-end",
-          padding: "24px 22px",
-          border: "1px solid #d8d3cb",
-          borderRadius: "110px 110px 22px 22px",
-          background: "rgba(255, 254, 250, 0.84)",
-          boxShadow: "0 20px 60px rgba(43, 41, 38, 0.10)",
-        }}
-      >
-        <span
-          style={{
-            color: "#a98a55",
-            fontSize: 13,
-            letterSpacing: "0.08em",
-            textTransform: "uppercase",
-          }}
-        >
-          Current view
-        </span>
-        <span
-          style={{
-            marginTop: 10,
-            color: "#2b2926",
-            fontSize: 17,
-            lineHeight: 1.45,
-          }}
-        >
-          Building useful technology—and the teams around it.
-        </span>
-      </div>
     </div>
-
-    <div
-      style={{
-        position: "relative",
-        paddingTop: 20,
-        display: "flex",
-        justifyContent: "space-between",
-        borderTop: "1px solid #d8d3cb",
-        color: "#77716a",
-        fontSize: 14,
-      }}
-    >
-      <span>10+ years in engineering · 8 years as CTO</span>
-      <span style={{ color: "#bd574c", fontWeight: 600 }}>vanielle.io ↗</span>
-    </div>
-  </div>
-);
+  );
+};
