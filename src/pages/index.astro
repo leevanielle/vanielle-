@@ -649,11 +649,16 @@ const X_SHARE_URL =
       roomStatus.textContent = selectedTab.dataset.roomLabel ?? roomId;
     }
 
-    selectedTab.scrollIntoView({
-      behavior: reduceMotion ? "auto" : "smooth",
-      block: "nearest",
-      inline: "nearest",
-    });
+    const roomRail = selectedTab.parentElement;
+    if (roomRail && roomRail.scrollWidth > roomRail.clientWidth) {
+      const centeredLeft =
+        selectedTab.offsetLeft -
+        (roomRail.clientWidth - selectedTab.offsetWidth) / 2;
+      roomRail.scrollTo({
+        left: Math.max(0, centeredLeft),
+        behavior: reduceMotion ? "auto" : "smooth",
+      });
+    }
 
     if (!reduceMotion) {
       window.requestAnimationFrame(() => {
