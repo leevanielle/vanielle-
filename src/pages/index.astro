@@ -94,7 +94,7 @@ const agents = [
       <section class="discovery" aria-label="Interactive agent constellation">
         <p class="discovery-hint">
           <span aria-hidden="true">↓</span>
-           Scroll to rearrange the constellation. Tap an agent to jump.
+           Scroll to move the signal through six chapters.
         </p>
         <div class="field-board" data-field-board aria-hidden="true">
           <header>
@@ -178,7 +178,7 @@ const agents = [
           id="detail-host"
           role="tabpanel"
           tabindex="-1"
-          aria-labelledby="agent-host"
+          aria-label="Meet Vanielle"
           data-detail="host"
         >
           <p class="card-agent"><i></i> Mochi found the short version</p>
@@ -201,7 +201,7 @@ const agents = [
           id="detail-build"
           role="tabpanel"
           tabindex="-1"
-          aria-labelledby="agent-build"
+          aria-label="Engineering range"
           data-detail="build"
           hidden
         >
@@ -222,7 +222,7 @@ const agents = [
           id="detail-lead"
           role="tabpanel"
           tabindex="-1"
-          aria-labelledby="agent-lead"
+          aria-label="Leadership experience"
           data-detail="lead"
           hidden
         >
@@ -245,7 +245,7 @@ const agents = [
           id="detail-read"
           role="tabpanel"
           tabindex="-1"
-          aria-labelledby="agent-read"
+          aria-label="Vanielle's book"
           data-detail="read"
           hidden
         >
@@ -271,7 +271,7 @@ const agents = [
           id="detail-notes"
           role="tabpanel"
           tabindex="-1"
-          aria-labelledby="agent-notes"
+          aria-label="Vanielle's field notes"
           data-detail="notes"
           hidden
         >
@@ -292,7 +292,7 @@ const agents = [
           id="detail-talk"
           role="tabpanel"
           tabindex="-1"
-          aria-labelledby="agent-talk"
+          aria-label="Consulting with Vanielle"
           data-detail="talk"
           hidden
         >
@@ -314,38 +314,6 @@ const agents = [
         <strong data-story-name>Meet</strong>
       </p>
     </aside>
-
-    <nav class="agent-dock" role="tablist" aria-label="Choose an agent">
-      {
-        agents.map((agent, index) => (
-          <button
-            type="button"
-            role="tab"
-            id={`agent-${agent.id}`}
-            aria-controls={`detail-${agent.id}`}
-            aria-selected={index === 0 ? "true" : "false"}
-            tabindex={index === 0 ? "0" : "-1"}
-            data-agent-mode={agent.id}
-            data-agent-color={agent.color}
-          >
-            <span
-              class="agent-face"
-              style={`--agent-color:${agent.color}`}
-              aria-hidden="true"
-            >
-              <>
-                <i />
-                <i />
-              </>
-            </span>
-            <span class="agent-name">
-              <small>{agent.name}</small>
-              <strong>{agent.label}</strong>
-            </span>
-          </button>
-        ))
-      }
-    </nav>
 
     <aside
       class="invitation is-open"
@@ -394,7 +362,11 @@ const agents = [
     <div class="scroll-story" aria-hidden="true">
       {
         agents.map((agent, index) => (
-          <section data-scroll-mode={agent.id} data-scroll-index={index}>
+          <section
+            data-scroll-mode={agent.id}
+            data-scroll-label={agent.label}
+            data-scroll-index={index}
+          >
             <span>
               {String(index + 1).padStart(2, "0")} · {agent.label}
             </span>
@@ -407,7 +379,6 @@ const agents = [
 
 <script>
   const shell = document.querySelector("[data-atelier]");
-  const tabs = Array.from(document.querySelectorAll("[data-agent-mode]"));
   const details = Array.from(document.querySelectorAll("[data-detail]"));
   const chapters = Array.from(document.querySelectorAll("[data-scroll-mode]"));
   const storyFill = document.querySelector("[data-story-fill]");
@@ -433,8 +404,8 @@ const agents = [
     balcony: "notes",
     salon: "talk",
   };
-  const ids = tabs.flatMap(tab =>
-    tab.dataset.agentMode ? [tab.dataset.agentMode] : []
+  const ids = chapters.flatMap(chapter =>
+    chapter.dataset.scrollMode ? [chapter.dataset.scrollMode] : []
   );
   let scrollProgress = 0;
   let scrollVelocity = 0;
@@ -461,12 +432,9 @@ const agents = [
   const selectMode = (id, options = {}) => {
     if (!ids.includes(id)) return;
     const activeIndex = ids.indexOf(id);
+    const activeChapter = chapters[activeIndex];
+    const activeLabel = activeChapter?.dataset.scrollLabel ?? "";
     shell?.setAttribute("data-mode", id);
-    tabs.forEach(tab => {
-      const active = tab.dataset.agentMode === id;
-      tab.setAttribute("aria-selected", String(active));
-      tab.tabIndex = active ? 0 : -1;
-    });
     details.forEach(detail => {
       const active = detail.dataset.detail === id;
       detail.hidden = !active;
@@ -474,14 +442,10 @@ const agents = [
     });
     if (storyIndex)
       storyIndex.textContent = String(activeIndex + 1).padStart(2, "0");
-    if (storyName)
-      storyName.textContent =
-        tabs[activeIndex]?.querySelector("strong")?.textContent ?? "";
+    if (storyName) storyName.textContent = activeLabel;
     railStations.forEach(station => {
       station.classList.toggle("is-active", station.dataset.railStation === id);
     });
-    const activeLabel =
-      tabs[activeIndex]?.querySelector("strong")?.textContent ?? "";
     if (boardMode) boardMode.textContent = activeLabel.toUpperCase();
     if (boardIndex)
       boardIndex.textContent = `${String(activeIndex + 1).padStart(
@@ -519,32 +483,6 @@ const agents = [
     scrollHasStarted = id !== "host" || window.scrollY > 8;
     chapter.scrollIntoView({ behavior, block: "start" });
   };
-
-  tabs.forEach((tab, index) => {
-    tab.addEventListener("click", () => {
-      const id = tab.dataset.agentMode;
-      if (id) {
-        selectMode(id);
-        scrollToMode(id);
-      }
-    });
-    tab.addEventListener("keydown", event => {
-      if (
-        !["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)
-      )
-        return;
-      event.preventDefault();
-      const direction =
-        event.key === "ArrowLeft" || event.key === "ArrowUp" ? -1 : 1;
-      const next = tabs[(index + direction + tabs.length) % tabs.length];
-      const id = next?.dataset.agentMode;
-      next?.focus();
-      if (id) {
-        selectMode(id);
-        scrollToMode(id);
-      }
-    });
-  });
 
   document.querySelectorAll("[data-mode-shortcut]").forEach(button => {
     button.addEventListener("click", event => {
@@ -769,7 +707,8 @@ const agents = [
     border: 1px solid var(--ink);
     border-radius: 999px;
     background: var(--ink);
-    color: var(--paper);
+    color: #f2eee4;
+    -webkit-text-fill-color: #f2eee4;
     box-shadow: 4px 4px 0 var(--red);
     cursor: pointer;
     font-size: 0.68rem;
@@ -780,7 +719,7 @@ const agents = [
     inset: 74px 0 0;
     z-index: 5;
     height: calc(100svh - 74px);
-    padding: 4rem clamp(1.4rem, 4vw, 4.5rem) 7rem;
+    padding: 4rem clamp(1.4rem, 4vw, 4.5rem);
     display: grid;
     grid-template-columns: minmax(250px, 0.82fr) minmax(300px, 1.45fr) minmax(
         300px,
@@ -812,13 +751,13 @@ const agents = [
   }
 
   .host-portrait {
-    width: 74px;
-    margin: 0 0 1.1rem;
+    width: min(220px, 100%);
+    margin: 0 0 1.4rem;
   }
 
   .host-portrait img {
-    width: 64px;
-    height: 64px;
+    width: 100%;
+    height: auto;
     display: block;
     border: 2px solid var(--ink);
     border-radius: 4px;
@@ -898,6 +837,11 @@ const agents = [
     text-decoration: none;
   }
 
+  .atelier-shell .intro-actions button {
+    color: #f2eee4;
+    -webkit-text-fill-color: #f2eee4;
+  }
+
   .intro-actions span {
     color: rgba(25, 25, 21, 0.5);
     font-size: 0.58rem;
@@ -931,7 +875,7 @@ const agents = [
     position: absolute;
     top: 50%;
     left: 50%;
-    width: min(100%, 620px);
+    width: min(118%, 690px);
     overflow: hidden;
     border: 2px solid var(--ink);
     border-radius: 4px;
@@ -1315,59 +1259,6 @@ const agents = [
     font-weight: 500;
   }
 
-  .agent-dock {
-    position: fixed;
-    bottom: 1.4rem;
-    left: 50%;
-    z-index: 14;
-    width: max-content;
-    max-width: calc(100vw - 2rem);
-    padding: 0.42rem;
-    display: flex;
-    gap: 0.25rem;
-    overflow-x: auto;
-    border: 2px solid var(--ink);
-    border-radius: 4px;
-    background: var(--ink);
-    box-shadow: 7px 7px 0 var(--red);
-    transform: translateX(-50%);
-    scrollbar-width: none;
-  }
-
-  .agent-dock::-webkit-scrollbar {
-    display: none;
-  }
-
-  .agent-dock button {
-    min-width: 84px;
-    min-height: 54px;
-    padding: 0.4rem 0.55rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    border: 0;
-    border-radius: 2px;
-    background: transparent;
-    color: rgba(242, 238, 228, 0.66);
-    cursor: pointer;
-    font: inherit;
-    text-align: left;
-    transition:
-      background 180ms ease,
-      color 180ms ease,
-      transform 180ms ease;
-  }
-
-  .agent-dock button:hover {
-    background: rgba(242, 238, 228, 0.1);
-    transform: translateY(-2px);
-  }
-
-  .agent-dock button[aria-selected="true"] {
-    background: var(--paper);
-    color: var(--ink);
-  }
-
   .agent-face,
   .invitation-orb {
     position: relative;
@@ -1426,24 +1317,6 @@ const agents = [
     display: block;
     border-radius: 50%;
     background: var(--agent-color);
-  }
-
-  .agent-name small,
-  .agent-name strong {
-    display: block;
-  }
-
-  .agent-name small {
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 0.43rem;
-    font-weight: 500;
-    opacity: 0.62;
-  }
-
-  .agent-name strong {
-    margin-top: 0.05rem;
-    font-size: 0.62rem;
-    font-weight: 700;
   }
 
   .invitation {
@@ -1608,14 +1481,6 @@ const agents = [
     .detail-card {
       min-height: 330px;
     }
-
-    .agent-name small {
-      display: none;
-    }
-
-    .agent-dock button {
-      min-width: 72px;
-    }
   }
 
   @media (max-width: 820px) {
@@ -1687,7 +1552,7 @@ const agents = [
 
     .field-board {
       top: 47%;
-      width: calc(100% - 1.4rem);
+      width: min(640px, calc(100vw - 1.5rem));
       box-shadow: 7px 7px 0 var(--amber);
     }
 
@@ -1703,7 +1568,7 @@ const agents = [
     .detail-deck {
       position: absolute;
       right: 0.8rem;
-      bottom: 5.6rem;
+      bottom: 0.9rem;
       left: 0.8rem;
       z-index: 6;
       width: auto;
@@ -1742,20 +1607,6 @@ const agents = [
       left: auto;
       width: 116px;
       transform: none;
-    }
-
-    .agent-dock {
-      right: 0.5rem;
-      bottom: 0.5rem;
-      left: 0.5rem;
-      width: auto;
-      max-width: none;
-      border-radius: 4px;
-      transform: none;
-    }
-
-    .agent-dock button {
-      min-width: 76px;
     }
 
     .invitation {
@@ -1809,15 +1660,6 @@ const agents = [
 
     .book-card {
       grid-template-columns: 90px 1fr;
-    }
-
-    .agent-dock {
-      overflow-x: auto;
-    }
-
-    .agent-dock button {
-      min-width: 70px;
-      padding-inline: 0.42rem;
     }
 
     .agent-face {
