@@ -8,17 +8,20 @@ export interface Props {
 }
 
 const { activeNav } = Astro.props;
+const basePath = `${import.meta.env.BASE_URL.replace(/\/+$/, "")}/`;
 ---
 
 <header>
   <a id="skip-to-content" href="#main-content">Skip to content</a>
   <div class="nav-container">
     <div class="top-nav-wrap">
-      <a href="/" class="logo whitespace-nowrap">
+      <a href={basePath} class="logo whitespace-nowrap">
         {
           LOGO_IMAGE.enable ? (
             <img
-              src={`/assets/${LOGO_IMAGE.svg ? "logo.svg" : "logo.png"}`}
+              src={`${basePath}assets/${
+                LOGO_IMAGE.svg ? "logo.svg" : "logo.png"
+              }`}
               alt={SITE.title}
               width={LOGO_IMAGE.width}
               height={LOGO_IMAGE.height}
@@ -56,12 +59,18 @@ const { activeNav } = Astro.props;
         </button>
         <ul id="menu-items" class="display-none sm:flex">
           <li>
-            <a href="/posts" class={activeNav === "posts" ? "active" : ""}>
+            <a
+              href={`${basePath}posts`}
+              class={activeNav === "posts" ? "active" : ""}
+            >
               Posts
             </a>
           </li>
           <li>
-            <a href="/tags" class={activeNav === "tags" ? "active" : ""}>
+            <a
+              href={`${basePath}tags`}
+              class={activeNav === "tags" ? "active" : ""}
+            >
               Tags
             </a>
           </li>
@@ -72,7 +81,7 @@ const { activeNav } = Astro.props;
           </li> -->
           <li>
             <LinkButton
-              href="/search"
+              href={`${basePath}search`}
               className={`focus-outline p-3 sm:p-1 ${
                 activeNav === "search" ? "active" : ""
               } flex`}

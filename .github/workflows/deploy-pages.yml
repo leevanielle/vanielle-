@@ -19,6 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ASTRO_TELEMETRY_DISABLED: 1
+      GITHUB_PAGES_BASE: /vanielle-
       PUBLIC_NEWSLETTER_ACTION: ${{ vars.PUBLIC_NEWSLETTER_ACTION }}
     steps:
       - name: Checkout
