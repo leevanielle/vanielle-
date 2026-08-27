@@ -562,6 +562,12 @@ const X_SHARE_URL =
       roomStatus.textContent = selectedTab.dataset.roomLabel ?? roomId;
     }
 
+    selectedTab.scrollIntoView({
+      behavior: reduceMotion ? "auto" : "smooth",
+      block: "nearest",
+      inline: "nearest",
+    });
+
     if (!reduceMotion) {
       window.requestAnimationFrame(() => {
         selectedPanel.classList.add("is-entering");
