@@ -1,174 +1,186 @@
-export default () => {
-  const rows = [
-    ["MODEL", "READY", "96%"],
-    ["SYSTEMS", "ONLINE", "84%"],
-    ["STRATEGY", "MURKY", "67%"],
-    ["ALIGNMENT", "HUMAN", "22%"],
-  ];
+export default () => (
+  <div
+    style={{
+      position: "relative",
+      width: "100%",
+      height: "100%",
+      padding: "46px 52px",
+      display: "flex",
+      flexDirection: "column",
+      overflow: "hidden",
+      background: "#f7f5f2",
+      color: "#2b2926",
+      fontFamily: "IBM Plex Mono",
+    }}
+  >
+    <div
+      style={{
+        position: "absolute",
+        top: -90,
+        right: -10,
+        width: 390,
+        height: 390,
+        display: "flex",
+        borderRadius: "50%",
+        background: "#efe5e2",
+      }}
+    />
+    <div
+      style={{
+        position: "absolute",
+        right: 180,
+        bottom: -130,
+        width: 270,
+        height: 270,
+        display: "flex",
+        borderRadius: "50%",
+        background: "#dfe8e3",
+      }}
+    />
 
-  return (
     <div
       style={{
         position: "relative",
-        width: "100%",
-        height: "100%",
-        padding: "42px 48px 36px",
         display: "flex",
-        flexDirection: "column",
-        background: "#0a0b0a",
-        color: "#eae6db",
-        fontFamily: "IBM Plex Mono",
+        alignItems: "center",
+        justifyContent: "space-between",
+        paddingBottom: 24,
+        borderBottom: "1px solid #d8d3cb",
+        fontSize: 17,
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <span style={{ marginRight: 12, color: "#bd574c" }}>✦</span>
+        <span style={{ fontWeight: 600 }}>Vanielle Lee</span>
+      </div>
+      <span style={{ color: "#77716a", fontSize: 14 }}>
+        AI engineer · Founder · CTO · Author
+      </span>
+    </div>
+
+    <div
+      style={{
+        position: "relative",
+        flex: 1,
+        display: "flex",
+        alignItems: "center",
       }}
     >
       <div
         style={{
+          width: 780,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginBottom: 22,
+            color: "#bd574c",
+            fontSize: 14,
+            fontWeight: 600,
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+          }}
+        >
+          <span
+            style={{
+              width: 19,
+              height: 19,
+              marginRight: 13,
+              display: "flex",
+              border: "1px solid #a98a55",
+              borderRadius: "50%",
+            }}
+          />
+          A quiet tour of the work
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            fontSize: 57,
+            fontWeight: 600,
+            letterSpacing: "-0.055em",
+            lineHeight: 1.08,
+          }}
+        >
+          <span>I make ambitious technology</span>
+          <span style={{ color: "#bd574c" }}>
+            feel clear, human, and possible.
+          </span>
+        </div>
+
+        <div
+          style={{
+            width: 650,
+            marginTop: 28,
+            display: "flex",
+            color: "#68625b",
+            fontSize: 18,
+            lineHeight: 1.5,
+          }}
+        >
+          Agentic AI · product engineering · technical leadership · founder
+          perspective
+        </div>
+      </div>
+
+      <div
+        style={{
           position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          height: 14,
+          right: 28,
+          width: 210,
+          height: 300,
           display: "flex",
-          background: "#d62f24",
-        }}
-      />
-
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          paddingBottom: 18,
-          borderBottom: "2px solid #5c5f58",
-          color: "#f2c84b",
-          fontSize: 18,
-          fontWeight: 600,
-          letterSpacing: "0.05em",
+          flexDirection: "column",
+          justifyContent: "flex-end",
+          padding: "24px 22px",
+          border: "1px solid #d8d3cb",
+          borderRadius: "110px 110px 22px 22px",
+          background: "rgba(255, 254, 250, 0.84)",
+          boxShadow: "0 20px 60px rgba(43, 41, 38, 0.10)",
         }}
       >
-        <span>VANIELLE LEE / OPERATOR MODE</span>
-        <span>FIELD NOTE 001</span>
-      </div>
-
-      <div
-        style={{
-          flex: 1,
-          display: "flex",
-          alignItems: "center",
-          gap: 52,
-        }}
-      >
-        <div
+        <span
           style={{
-            width: 730,
-            display: "flex",
-            flexDirection: "column",
+            color: "#a98a55",
+            fontSize: 13,
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
           }}
         >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              fontSize: 66,
-              fontWeight: 600,
-              letterSpacing: "-0.065em",
-              lineHeight: 0.98,
-            }}
-          >
-            <span>THE MODEL IS RARELY</span>
-            <span>THE BOTTLENECK.</span>
-            <span style={{ marginTop: 12, color: "#e24738", fontSize: 48 }}>
-              THE COMPANY IS.
-            </span>
-          </div>
-
-          <div
-            style={{
-              marginTop: 30,
-              display: "flex",
-              color: "#b8b9b2",
-              fontSize: 20,
-              lineHeight: 1.4,
-            }}
-          >
-            AI ENGINEER · ODECLOUD FOUNDER/CTO · AUTHOR
-          </div>
-        </div>
-
-        <div
+          Current view
+        </span>
+        <span
           style={{
-            width: 320,
-            padding: "20px 22px",
-            display: "flex",
-            flexDirection: "column",
-            border: "2px solid #686a63",
-            background: "#11130f",
-            boxShadow: "10px 10px 0 #f2c84b",
+            marginTop: 10,
+            color: "#2b2926",
+            fontSize: 17,
+            lineHeight: 1.45,
           }}
         >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              paddingBottom: 14,
-              borderBottom: "1px solid #4e504a",
-              color: "#72d5b6",
-              fontSize: 14,
-              fontWeight: 600,
-            }}
-          >
-            <span>COMPANY DIAGNOSTIC</span>
-            <span>LIVE</span>
-          </div>
-
-          {rows.map(([label, status, score], index) => (
-            <div
-              style={{
-                height: 58,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                borderBottom: "1px solid #343630",
-                fontSize: 15,
-              }}
-            >
-              <span style={{ color: "#676962" }}>0{index + 1}</span>
-              <span style={{ width: 112 }}>{label}</span>
-              <span style={{ color: index > 1 ? "#f2c84b" : "#72d5b6" }}>
-                {status}
-              </span>
-              <span style={{ color: "#8d8f87" }}>{score}</span>
-            </div>
-          ))}
-
-          <div
-            style={{
-              marginTop: 16,
-              padding: "12px 14px",
-              display: "flex",
-              background: "#d62f24",
-              color: "white",
-              fontSize: 14,
-              fontWeight: 600,
-            }}
-          >
-            RUN THE ORGANIZATION →
-          </div>
-        </div>
-      </div>
-
-      <div
-        style={{
-          paddingTop: 16,
-          display: "flex",
-          justifyContent: "space-between",
-          borderTop: "2px solid #5c5f58",
-          color: "#9b9c94",
-          fontSize: 16,
-        }}
-      >
-        <span>10+ YEARS IN ENGINEERING / 8 YEARS AS CTO</span>
-        <span style={{ color: "#f2c84b" }}>VANIELLE.IO ↗</span>
+          Building useful technology—and the teams around it.
+        </span>
       </div>
     </div>
-  );
-};
+
+    <div
+      style={{
+        position: "relative",
+        paddingTop: 20,
+        display: "flex",
+        justifyContent: "space-between",
+        borderTop: "1px solid #d8d3cb",
+        color: "#77716a",
+        fontSize: 14,
+      }}
+    >
+      <span>10+ years in engineering · 8 years as CTO</span>
+      <span style={{ color: "#bd574c", fontWeight: 600 }}>vanielle.io ↗</span>
+    </div>
+  </div>
+);
