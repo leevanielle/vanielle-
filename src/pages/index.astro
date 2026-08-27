@@ -57,9 +57,9 @@ const agents = [
         <span aria-hidden="true">✦</span>
          Vanielle Lee
       </a>
-      <button class="guestbook-trigger" type="button" data-invite-open>
-        Join the field notes
-      </button>
+      <div class="header-signup">
+        <NewsletterSignup compact />
+      </div>
     </header>
 
     <main class="studio-grid">
@@ -82,7 +82,7 @@ const agents = [
           decisions people can trust.
         </p>
         <div class="intro-actions">
-          <button type="button" data-invite-open>Start with a note</button>
+          <a href="#newsletter-form">Get the field notes</a>
           <span>or see the work ↓</span>
         </div>
       </section>
@@ -221,9 +221,9 @@ const agents = [
             <span>The industry playbook</span>
             <span>Building across cultures</span>
           </div>
-          <button type="button" data-invite-open>
-            Get the next note <span aria-hidden="true">→</span>
-          </button>
+          <a href="#newsletter-form">
+            Join the field notes <span aria-hidden="true">→</span>
+          </a>
         </article>
 
         <article
@@ -241,31 +241,6 @@ const agents = [
         </article>
       </section>
     </main>
-
-    <aside
-      class="invitation is-open"
-      role="dialog"
-      aria-modal="false"
-      aria-labelledby="invitation-title"
-      data-invitation
-    >
-      <button
-        class="invitation-close"
-        type="button"
-        aria-label="Explore first"
-        data-invite-close
-      >
-        Explore first <span aria-hidden="true">×</span>
-      </button>
-      <div class="invitation-orb" aria-hidden="true"><i></i><i></i></div>
-      <p class="invitation-label">A note from Vanielle</p>
-      <h2 id="invitation-title">Leave your email with the agents.</h2>
-      <p>
-        They’ll deliver practical notes on AI, careers, leadership, and
-        cross-cultural founder life.
-      </p>
-      <NewsletterSignup />
-    </aside>
 
     <footer class="atelier-footer">
       <span>© {new Date().getFullYear()} Vanielle Lee</span>
@@ -289,33 +264,14 @@ const agents = [
 </Layout>
 
 <script>
-  const invitation = document.querySelector("[data-invitation]");
-  const reduceMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
-
-  const closeInvitation = () => {
-    invitation?.classList.remove("is-open");
-    invitation?.setAttribute("aria-hidden", "true");
-  };
-
-  const openInvitation = () => {
-    invitation?.classList.add("is-open");
-    invitation?.removeAttribute("aria-hidden");
-    window.setTimeout(
-      () => {
-        document.querySelector("#newsletter-email")?.focus();
-      },
-      reduceMotion ? 0 : 420
-    );
-  };
-
   document
-    .querySelectorAll("[data-invite-open]")
-    .forEach(button => button.addEventListener("click", openInvitation));
-  document
-    .querySelector("[data-invite-close]")
-    ?.addEventListener("click", closeInvitation);
+    .querySelectorAll<HTMLAnchorElement>('a[href="#newsletter-form"]')
+    .forEach(link => {
+      link.addEventListener("click", event => {
+        event.preventDefault();
+        document.querySelector<HTMLInputElement>("#newsletter-email")?.focus();
+      });
+    });
 
   const centerHashTarget = () => {
     const id = window.location.hash.slice(1);
@@ -328,10 +284,8 @@ const agents = [
     });
   };
 
-  if (window.location.hash && window.location.hash !== "#host") {
-    closeInvitation();
+  if (window.location.hash && window.location.hash !== "#host")
     centerHashTarget();
-  }
   window.addEventListener("hashchange", centerHashTarget);
 </script>
 
@@ -411,7 +365,7 @@ const agents = [
 
   .wordmark,
   .atelier-header button,
-  .intro button,
+  .intro-actions > a,
   .detail-card a,
   .detail-card button {
     color: inherit;
@@ -572,7 +526,7 @@ const agents = [
     gap: 0.8rem;
   }
 
-  .intro-actions button,
+  .intro-actions > a,
   .detail-card > button,
   .detail-card a {
     min-height: 42px;
@@ -592,7 +546,7 @@ const agents = [
     text-decoration: none;
   }
 
-  .atelier-shell .intro-actions button {
+  .atelier-shell .intro-actions > a {
     color: #f2eee4;
     -webkit-text-fill-color: #f2eee4;
   }
@@ -1464,7 +1418,50 @@ const agents = [
   .simple-flow .atelier-header {
     position: sticky;
     top: 0;
-    grid-template-columns: 1fr auto;
+    min-height: 76px;
+    grid-template-columns: 1fr minmax(430px, 620px);
+  }
+
+  .header-signup {
+    position: relative;
+    width: 100%;
+    justify-self: end;
+  }
+
+  :global(.header-signup .newsletter-form) {
+    color: var(--ink);
+  }
+
+  :global(.header-signup .field-row) {
+    grid-template-columns: minmax(150px, 1fr) auto;
+    gap: 0.45rem;
+  }
+
+  :global(.header-signup .field-row input),
+  :global(.header-signup .field-row button) {
+    min-height: 44px;
+  }
+
+  :global(.header-signup .form-meta) {
+    display: none;
+  }
+
+  :global(.header-signup .status) {
+    position: absolute;
+    top: calc(100% + 0.65rem);
+    right: 0;
+    z-index: 40;
+    width: min(360px, 90vw);
+    min-height: 0;
+    margin: 0;
+    padding: 0.65rem 0.8rem;
+    border: 1px solid var(--ink);
+    background: var(--paper-bright);
+    box-shadow: 4px 4px 0 var(--red);
+  }
+
+  :global(.header-signup .status:empty) {
+    display: none;
   }
 
   .simple-flow .studio-grid {
@@ -1613,6 +1610,25 @@ const agents = [
   }
 
   @media (max-width: 820px) {
+    .simple-flow .atelier-header {
+      min-height: 0;
+      padding: 0.75rem 1rem 1rem;
+      grid-template-columns: 1fr;
+      gap: 0.7rem;
+    }
+
+    .header-signup {
+      width: 100%;
+    }
+
+    :global(.header-signup .newsletter-form) {
+      grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    :global(.header-signup .field-row) {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+
     .simple-flow .studio-grid {
       position: relative;
       inset: auto;
