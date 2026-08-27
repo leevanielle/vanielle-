@@ -3,7 +3,7 @@ import type { Site, SocialObjects } from "./types";
 export const SITE: Site = {
   website: "https://vanielle.io/",
   author: "Vanielle Lee",
-  desc: "Founder, AI engineer, and author building from Tokyo.",
+  desc: "Silicon Valley engineer, CTO, and author building AI infrastructure and global technical teams.",
   title: "Vanielle Lee",
   ogImage: "astropaper-og.jpg",
   lightAndDarkMode: true,
