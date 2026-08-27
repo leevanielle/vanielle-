@@ -1,5 +1,12 @@
-export default (lobbyImage: string) => {
-  const rooms = ["LOBBY", "LAB", "BOARDROOM", "LIBRARY", "BALCONY", "SALON"];
+export default () => {
+  const agents = [
+    { name: "MEET", color: "#f0c8bc", x: 785, y: 148 },
+    { name: "BUILD", color: "#a9d8cb", x: 953, y: 184 },
+    { name: "LEAD", color: "#e3bd74", x: 1012, y: 330 },
+    { name: "BOOK", color: "#c7bce8", x: 910, y: 455 },
+    { name: "NOTES", color: "#a8c9e8", x: 742, y: 438 },
+    { name: "TALK", color: "#e9a4a0", x: 690, y: 278 },
+  ];
 
   return (
     <div
@@ -9,159 +16,169 @@ export default (lobbyImage: string) => {
         height: "100%",
         display: "flex",
         overflow: "hidden",
-        background: "#101713",
-        color: "#f8f3e9",
+        background:
+          "radial-gradient(circle at 72% 50%, #254138 0%, #111b18 30%, #0b1110 66%)",
+        color: "#f7f3eb",
         fontFamily: "IBM Plex Mono",
       }}
     >
-      <img
-        src={lobbyImage}
-        width="1200"
-        height="630"
-        alt=""
-        style={{
-          position: "absolute",
-          inset: 0,
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-        }}
-      />
-
       <div
         style={{
           position: "absolute",
-          inset: 0,
+          top: 28,
+          left: 36,
+          right: 36,
           display: "flex",
-          background:
-            "linear-gradient(90deg, rgba(7,12,10,.94) 0%, rgba(7,12,10,.78) 47%, rgba(7,12,10,.12) 100%)",
+          alignItems: "center",
+          justifyContent: "space-between",
         }}
-      />
+      >
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <span style={{ marginRight: 12, color: "#e3bd74" }}>+</span>
+          <span style={{ fontSize: 18, fontWeight: 600 }}>Vanielle Lee</span>
+        </div>
+        <span
+          style={{
+            padding: "9px 13px",
+            border: "1px solid rgba(255,255,255,.2)",
+            borderRadius: 999,
+            color: "#a9d8cb",
+            fontSize: 10,
+          }}
+        >
+          SIX AGENTS ARE AWAKE
+        </span>
+      </div>
 
       <div
         style={{
-          position: "relative",
-          zIndex: 1,
-          width: "100%",
-          padding: "36px 42px 32px",
+          position: "absolute",
+          top: 135,
+          left: 42,
+          width: 560,
           display: "flex",
           flexDirection: "column",
         }}
       >
-        <div
+        <span
           style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
+            color: "#e3bd74",
+            fontSize: 12,
+            fontWeight: 600,
+            letterSpacing: "0.08em",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <span style={{ marginRight: 12, color: "#e4bd78" }}>✦</span>
-            <span style={{ fontSize: 19, fontWeight: 600 }}>Vanielle Lee</span>
-          </div>
-          <span
-            style={{
-              padding: "10px 14px",
-              border: "1px solid rgba(255,255,255,.28)",
-              borderRadius: 999,
-              background: "rgba(10,16,13,.68)",
-              color: "#f6e8c9",
-              fontSize: 11,
-              letterSpacing: "0.06em",
-            }}
-          >
-            SAIGON · AFTER RAIN
-          </span>
-        </div>
+          AI ENGINEER · FOUNDER · CTO · AUTHOR
+        </span>
+        <span
+          style={{
+            marginTop: 22,
+            fontSize: 47,
+            fontWeight: 600,
+            letterSpacing: "-0.055em",
+            lineHeight: 1.14,
+          }}
+        >
+          I make ambitious technology feel possible.
+        </span>
+        <span
+          style={{
+            width: 525,
+            marginTop: 23,
+            color: "rgba(247,243,235,.68)",
+            fontSize: 15,
+            lineHeight: 1.55,
+          }}
+        >
+          Discover the systems, leadership, book, field notes, and human behind
+          the work.
+        </span>
+      </div>
 
+      <div
+        style={{
+          position: "absolute",
+          left: 840,
+          top: 250,
+          width: 130,
+          height: 130,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          border: "1px solid rgba(169,216,203,.36)",
+          borderRadius: "50%",
+          background: "radial-gradient(circle at 35% 28%, #fff8e9, #d9e5dc 54%, #8fc5b7)",
+          boxShadow: "0 0 80px rgba(169,216,203,.34)",
+          color: "#18201d",
+          fontSize: 22,
+        }}
+      >
+        +
+      </div>
+
+      {agents.map(agent => (
         <div
           style={{
-            flex: 1,
-            width: 680,
+            position: "absolute",
+            left: agent.x,
+            top: agent.y,
             display: "flex",
             flexDirection: "column",
-            justifyContent: "center",
-          }}
-        >
-          <span
-            style={{
-              color: "#e4bd78",
-              fontSize: 13,
-              fontWeight: 600,
-              letterSpacing: "0.09em",
-            }}
-          >
-            WELCOME TO THE PENTHOUSE
-          </span>
-          <div
-            style={{
-              marginTop: 20,
-              display: "flex",
-              flexDirection: "column",
-              fontSize: 48,
-              fontWeight: 600,
-              letterSpacing: "-0.055em",
-              lineHeight: 1.11,
-            }}
-          >
-            <span>Technology gets complicated.</span>
-            <span style={{ marginTop: 8, color: "#ef8f7f", fontSize: 40 }}>
-              I make it easier to lead.
-            </span>
-          </div>
-          <div
-            style={{
-              width: 610,
-              marginTop: 22,
-              display: "flex",
-              color: "rgba(248,243,233,.78)",
-              fontSize: 16,
-              lineHeight: 1.5,
-            }}
-          >
-            Tour the lab, boardroom, library, balcony, and salon of an AI
-            engineer, founder, CTO, and author.
-          </div>
-        </div>
-
-        <div
-          style={{
-            display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
           }}
         >
-          <div style={{ display: "flex" }}>
-            {rooms.map((room, index) => (
-              <span
-                style={{
-                  marginRight: 7,
-                  padding: "7px 9px",
-                  border: "1px solid rgba(255,255,255,.2)",
-                  borderRadius: 999,
-                  background:
-                    index === 0 ? "#c75d4e" : "rgba(10,16,13,.62)",
-                  color: "#f8f3e9",
-                  fontSize: 9,
-                }}
-              >
-                {room}
-              </span>
-            ))}
-          </div>
-          <span
+          <div
             style={{
-              padding: "10px 14px",
-              borderRadius: 999,
-              background: "#f2e7d2",
-              color: "#17231d",
-              fontSize: 11,
-              fontWeight: 600,
+              position: "relative",
+              width: 54,
+              height: 54,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: "50%",
+              background: agent.color,
+              boxShadow: `0 0 34px ${agent.color}55`,
             }}
           >
-            SIGN THE GUESTBOOK →
+            <span
+              style={{
+                width: 4,
+                height: 6,
+                marginRight: 7,
+                borderRadius: "50%",
+                background: "#17201d",
+              }}
+            />
+            <span
+              style={{
+                width: 4,
+                height: 6,
+                borderRadius: "50%",
+                background: "#17201d",
+              }}
+            />
+          </div>
+          <span style={{ marginTop: 7, color: "rgba(247,243,235,.72)", fontSize: 9 }}>
+            {agent.name}
           </span>
         </div>
+      ))}
+
+      <div
+        style={{
+          position: "absolute",
+          right: 36,
+          bottom: 30,
+          padding: "11px 15px",
+          display: "flex",
+          borderRadius: 999,
+          background: "#f7f3eb",
+          color: "#17201d",
+          fontSize: 11,
+          fontWeight: 600,
+        }}
+      >
+        COME MEET THE AGENTS →
       </div>
     </div>
   );

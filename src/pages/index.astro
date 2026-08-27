@@ -6,748 +6,634 @@ const AMAZON_URL = "https://www.amazon.com/dp/B0HF6JW33T";
 const LINKEDIN_URL = "https://linkedin.com/in/vanielle";
 const FORBES_URL =
   "https://www.forbes.com/sites/jonyounger/2020/11/23/meet-another-freelance-innovator-odecloud-a-netsuite-expert-community/";
-const LIVE_URL = "https://leevanielle.github.io/vanielle-/";
-const X_SHARE_URL =
-  "https://twitter.com/intent/tweet?text=" +
-  encodeURIComponent(
-    "A rainy-night Saigon penthouse tour through AI, engineering leadership, and building across cultures."
-  ) +
-  "&url=" +
-  encodeURIComponent(LIVE_URL) +
-  "&via=lee_vanielle";
+
+const agents = [
+  { id: "host", name: "Mochi", label: "Meet", color: "#f0c8bc" },
+  { id: "build", name: "Pixel", label: "Build", color: "#a9d8cb" },
+  { id: "lead", name: "Atlas", label: "Lead", color: "#e3bd74" },
+  { id: "read", name: "Quill", label: "Book", color: "#c7bce8" },
+  { id: "notes", name: "Scout", label: "Notes", color: "#a8c9e8" },
+  { id: "talk", name: "Miso", label: "Talk", color: "#e9a4a0" },
+];
 ---
 
 <Layout
   title="Vanielle Lee — AI Engineer, Founder & CTO"
-  description="Step inside Vanielle Lee’s interactive Saigon penthouse—a room-by-room tour through agentic AI, engineering leadership, her book, and founder life."
+  description="Meet Vanielle Lee through a playful constellation of AI, engineering leadership, writing, and founder work."
 >
-  <div class="penthouse-shell">
-    <div class="skyline" aria-hidden="true">
-      <span></span><span></span><span></span><span></span><span></span>
-    </div>
+  <div class="atelier-shell" data-atelier>
+    <canvas
+      class="atelier-canvas"
+      data-agent-canvas
+      aria-hidden="true"
+    ></canvas>
+    <div class="aurora" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
 
-    <header class="penthouse-header">
-      <a class="wordmark" href="#lobby" data-room-shortcut="lobby">
-        <span class="wordmark-gem" aria-hidden="true">✦</span>
-        <span>Vanielle Lee</span>
+    <header class="atelier-header">
+      <a class="wordmark" href="#host" data-mode-shortcut="host">
+        <span aria-hidden="true">✦</span>
+        Vanielle Lee
       </a>
-
-      <p class="building-title">
-        <span>Saigon · after rain</span>
-        Private residence · AI engineer · Founder · CTO
+      <p class="atelier-status">
+        <i aria-hidden="true"></i>
+        Six agents are awake
       </p>
-
-      <div class="header-actions">
-        <a href={AMAZON_URL} target="_blank" rel="noopener noreferrer">
-          The book
-        </a>
-        <a class="guestbook-shortcut" href="#guestbook" data-focus-newsletter>
-          Sign the guestbook
-        </a>
-      </div>
+      <button class="guestbook-trigger" type="button" data-invite-open>
+        Join the field notes
+      </button>
     </header>
 
-    <main class="residence">
-      <aside class="floor-plan" aria-labelledby="floor-plan-heading">
-        <div class="floor-plan-heading">
-          <p id="floor-plan-heading">Penthouse directory</p>
-          <span>PH</span>
-        </div>
-
-        <div class="elevator-status" aria-live="polite">
-          <span aria-hidden="true"></span>
-          <p>
-            Now viewing
-            <strong data-room-status>The lobby</strong>
-          </p>
-        </div>
-
-        <div class="room-map" role="tablist" aria-label="Explore the penthouse">
-          <button
-            class="room-key room-key-lobby"
-            type="button"
-            role="tab"
-            id="tab-lobby"
-            aria-controls="panel-lobby"
-            aria-selected="true"
-            tabindex="0"
-            data-room-tab="lobby"
-            data-room-label="The lobby"
-          >
-            <span>Welcome</span>
-            <strong>Lobby</strong>
-          </button>
-          <button
-            class="room-key room-key-lab"
-            type="button"
-            role="tab"
-            id="tab-lab"
-            aria-controls="panel-lab"
-            aria-selected="false"
-            tabindex="-1"
-            data-room-tab="lab"
-            data-room-label="The lab"
-          >
-            <span>Build</span>
-            <strong>Lab</strong>
-          </button>
-          <button
-            class="room-key room-key-boardroom"
-            type="button"
-            role="tab"
-            id="tab-boardroom"
-            aria-controls="panel-boardroom"
-            aria-selected="false"
-            tabindex="-1"
-            data-room-tab="boardroom"
-            data-room-label="The boardroom"
-          >
-            <span>Lead</span>
-            <strong>Boardroom</strong>
-          </button>
-          <button
-            class="room-key room-key-library"
-            type="button"
-            role="tab"
-            id="tab-library"
-            aria-controls="panel-library"
-            aria-selected="false"
-            tabindex="-1"
-            data-room-tab="library"
-            data-room-label="The library"
-          >
-            <span>Read</span>
-            <strong>Library</strong>
-          </button>
-          <button
-            class="room-key room-key-balcony"
-            type="button"
-            role="tab"
-            id="tab-balcony"
-            aria-controls="panel-balcony"
-            aria-selected="false"
-            tabindex="-1"
-            data-room-tab="balcony"
-            data-room-label="The balcony"
-          >
-            <span>Think</span>
-            <strong>Balcony</strong>
-          </button>
-          <button
-            class="room-key room-key-salon"
-            type="button"
-            role="tab"
-            id="tab-salon"
-            aria-controls="panel-salon"
-            aria-selected="false"
-            tabindex="-1"
-            data-room-tab="salon"
-            data-room-label="The salon"
-          >
-            <span>Talk</span>
-            <strong>Salon</strong>
-          </button>
-        </div>
-
-        <p class="map-hint">
-          Choose a room. Your place in the tour will be remembered in the URL.
+    <main class="studio-grid">
+      <section class="intro" aria-labelledby="intro-title">
+        <figure class="host-portrait">
+          <img
+            src="assets/vanielle-profile.jpg"
+            width="894"
+            height="547"
+            alt="Vanielle Lee smiling in a dark turtleneck"
+            loading="eager"
+            fetchpriority="high"
+          />
+          <figcaption>Human in the loop</figcaption>
+        </figure>
+        <p class="intro-label">AI engineer · Founder · CTO · Author</p>
+        <h1 id="intro-title">I make ambitious technology feel possible.</h1>
+        <p class="intro-copy">
+          Ten years turning hard technical bets into products, teams, and
+          decisions people can trust.
         </p>
-      </aside>
+        <div class="intro-actions">
+          <button type="button" data-invite-open>Start with a note</button>
+          <span>or choose an agent ↓</span>
+        </div>
+      </section>
 
-      <section
-        class="room-stage"
-        aria-label="Penthouse room"
-        data-room-stage
-        data-active-room="lobby"
-      >
+      <section class="discovery" aria-label="Interactive agent constellation">
+        <p class="discovery-hint">
+          <span aria-hidden="true">↗</span>
+          Tap the agents. They know different parts of my story.
+        </p>
+        <div class="scene-fallback" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span
+          ><span></span>
+        </div>
+      </section>
+
+      <section class="detail-deck" aria-live="polite" data-detail-deck>
         <article
-          class="room-panel lobby-panel is-active"
-          id="panel-lobby"
+          class="detail-card host-card is-active"
+          id="detail-host"
           role="tabpanel"
-          tabindex="0"
-          aria-labelledby="tab-lobby"
-          data-room-panel="lobby"
+          tabindex="-1"
+          aria-labelledby="agent-host"
+          data-detail="host"
         >
-          <div class="room-scene" aria-hidden="true">
-            <img
-              src="assets/rooms/lobby.jpg"
-              width="1672"
-              height="941"
-              alt=""
-              loading="eager"
-              fetchpriority="high"
-            />
-            <span class="monsoon-haze haze-one"></span>
-            <span class="monsoon-haze haze-two"></span>
+          <p class="card-agent"><i></i> Mochi found the short version</p>
+          <h2>Engineer brain.<br />Founder nerve.</h2>
+          <p>
+            Full-stack technical depth with a C-suite view of what the company
+            actually needs.
+          </p>
+          <div class="proof-pills">
+            <span><strong>10+</strong> years building</span>
+            <span><strong>8</strong> years CTO</span>
           </div>
-
-          <div class="panel-kicker">
-            <span>Welcome upstairs · Ho Chi Minh City</span>
-            <i>Monsoon dusk</i>
-          </div>
-
-          <div class="lobby-layout">
-            <div class="lobby-copy">
-              <p class="room-eyebrow">The lobby · begin here</p>
-              <h1>
-                Technology gets complicated.
-                <em>I make it easier to lead.</em>
-              </h1>
-              <p class="lobby-intro">
-                I’m Vanielle—an AI engineer, founder, CTO, and author. I’ve
-                spent 10+ years building across the stack and translating
-                difficult technology into decisions people can actually make.
-              </p>
-
-              <div class="lobby-proof" aria-label="Career highlights">
-                <span><strong>10+</strong> years engineering</span>
-                <span><strong>8</strong> years as CTO</span>
-                <a href={FORBES_URL} target="_blank" rel="noopener noreferrer">
-                  <strong>Forbes</strong> featured ↗
-                </a>
-              </div>
-
-              <div class="lobby-actions">
-                <a
-                  class="next-room guestbook-entry"
-                  href="#guestbook"
-                  data-focus-newsletter
-                >
-                  Sign the guestbook <span aria-hidden="true">↓</span>
-                </a>
-                <button
-                  class="quiet-room-link"
-                  type="button"
-                  data-room-shortcut="lab"
-                >
-                  Then enter the lab <span aria-hidden="true">→</span>
-                </button>
-              </div>
-            </div>
-
-            <figure class="portrait-window">
-              <div class="window-glow" aria-hidden="true"></div>
-              <img
-                src="assets/vanielle-profile.jpg"
-                width="894"
-                height="547"
-                alt="Vanielle Lee smiling in a dark turtleneck"
-                loading="eager"
-                fetchpriority="high"
-              />
-              <figcaption>
-                <span>Host</span>
-                <strong>Vanielle Lee</strong>
-                <i>Agentic AI · product · people</i>
-              </figcaption>
-            </figure>
-          </div>
+          <a href={FORBES_URL} target="_blank" rel="noopener noreferrer">
+            Featured in Forbes <span aria-hidden="true">↗</span>
+          </a>
         </article>
 
         <article
-          class="room-panel lab-panel"
-          id="panel-lab"
+          class="detail-card"
+          id="detail-build"
           role="tabpanel"
-          tabindex="0"
-          aria-labelledby="tab-lab"
-          data-room-panel="lab"
+          tabindex="-1"
+          aria-labelledby="agent-build"
+          data-detail="build"
           hidden
         >
-          <div class="room-scene" aria-hidden="true">
-            <img
-              src="assets/rooms/lab.jpg"
-              width="1672"
-              height="941"
-              alt=""
-              loading="lazy"
-            />
-            <span class="monsoon-haze haze-one"></span>
-            <span class="monsoon-haze haze-two"></span>
+          <p class="card-agent"><i></i> Pixel opened the workbench</p>
+          <h2>Across the whole machine.</h2>
+          <p>From the first interface to the agents running underneath it.</p>
+          <div class="skill-cloud">
+            <span>Agentic AI</span><span>Frontend</span><span>Backend</span
+            ><span>Infrastructure</span><span>Data</span><span>Product</span>
           </div>
-
-          <div class="panel-kicker">
-            <span>The lab</span>
-            <i>Systems under construction</i>
-          </div>
-
-          <div class="panel-heading">
-            <p class="room-eyebrow">Where the ideas become systems</p>
-            <h2>I work across the whole machine.</h2>
-            <p>
-              Not only the model. The product, infrastructure, data, and human
-              systems required to make it useful.
-            </p>
-          </div>
-
-          <div
-            class="system-specimen"
-            aria-label="Vanielle’s engineering range"
-          >
-            <div class="system-node node-model">
-              <span>01</span>
-              <strong>Agentic AI</strong>
-              <p>LLMs, agents, evaluation, and AI product strategy.</p>
-            </div>
-            <div class="system-connector" aria-hidden="true">
-              <i></i><i></i><i></i>
-            </div>
-            <div class="system-node node-product">
-              <span>02</span>
-              <strong>Product engineering</strong>
-              <p>Frontend, backend, APIs, and product architecture.</p>
-            </div>
-            <div class="system-connector" aria-hidden="true">
-              <i></i><i></i><i></i>
-            </div>
-            <div class="system-node node-platform">
-              <span>03</span>
-              <strong>Platform</strong>
-              <p>Cloud, infrastructure, reliability, and data systems.</p>
-            </div>
-          </div>
-
-          <aside class="lab-note">
-            <span>Working principle</span>
-            <p>
-              The best technical answer is the one the company can understand,
-              operate, and improve.
-            </p>
-          </aside>
+          <button type="button" data-mode-shortcut="lead">
+            Follow the system <span aria-hidden="true">→</span>
+          </button>
         </article>
 
         <article
-          class="room-panel boardroom-panel"
-          id="panel-boardroom"
+          class="detail-card"
+          id="detail-lead"
           role="tabpanel"
-          tabindex="0"
-          aria-labelledby="tab-boardroom"
-          data-room-panel="boardroom"
+          tabindex="-1"
+          aria-labelledby="agent-lead"
+          data-detail="lead"
           hidden
         >
-          <div class="room-scene" aria-hidden="true">
-            <img
-              src="assets/rooms/boardroom.jpg"
-              width="1672"
-              height="941"
-              alt=""
-              loading="lazy"
-            />
-            <span class="monsoon-haze haze-one"></span>
-            <span class="monsoon-haze haze-two"></span>
+          <p class="card-agent"><i></i> Atlas brought the company map</p>
+          <h2>From codebase to company.</h2>
+          <p>Founder and CTO at OdeCloud, translating uncertainty into a bet.</p>
+          <div class="client-line">
+            <span>JVC Kenwood</span><span>Coinbase</span><span>WarnerMedia</span>
           </div>
+          <a href={FORBES_URL} target="_blank" rel="noopener noreferrer">
+            Read the OdeCloud feature <span aria-hidden="true">↗</span>
+          </a>
+        </article>
 
-          <div class="panel-kicker">
-            <span>The boardroom</span>
-            <i>Code · company · people</i>
-          </div>
-
-          <div class="boardroom-layout">
-            <div class="panel-heading">
-              <p class="room-eyebrow">The decisions behind the technology</p>
-              <h2>From codebase to company.</h2>
-              <p>
-                At OdeCloud, I’ve spent eight years as CTO and founder,
-                translating what the business needs into systems teams can build
-                and grow.
-              </p>
-            </div>
-
-            <div class="decision-table" aria-label="Leadership experience">
-              <div>
-                <span>Scale</span>
-                <strong>Build the system before the bottleneck arrives.</strong>
-              </div>
-              <div>
-                <span>People</span>
-                <strong>Give teams context—not just instructions.</strong>
-              </div>
-              <div>
-                <span>Strategy</span>
-                <strong>Turn technical uncertainty into a clear bet.</strong>
-              </div>
-            </div>
-          </div>
-
-          <div class="client-shelf">
-            <p>Enterprise work includes</p>
-            <span>JVC Kenwood</span>
-            <span>Coinbase</span>
-            <span>WarnerMedia</span>
-            <a href={FORBES_URL} target="_blank" rel="noopener noreferrer">
-              OdeCloud in Forbes ↗
+        <article
+          class="detail-card book-card"
+          id="detail-read"
+          role="tabpanel"
+          tabindex="-1"
+          aria-labelledby="agent-read"
+          data-detail="read"
+          hidden
+        >
+          <img
+            src="assets/book-cover.jpg?v=3"
+            width="1600"
+            height="2560"
+            alt="Cover of Emperors, Prophets, and Product Managers"
+            loading="lazy"
+          />
+          <div>
+            <p class="card-agent"><i></i> Quill saved your place</p>
+            <h2>Leadership is ancient chaos.</h2>
+            <p>A field guide for the people building through it.</p>
+            <a href={AMAZON_URL} target="_blank" rel="noopener noreferrer">
+              Read the book <span aria-hidden="true">↗</span>
             </a>
           </div>
         </article>
 
         <article
-          class="room-panel library-panel"
-          id="panel-library"
+          class="detail-card"
+          id="detail-notes"
           role="tabpanel"
-          tabindex="0"
-          aria-labelledby="tab-library"
-          data-room-panel="library"
+          tabindex="-1"
+          aria-labelledby="agent-notes"
+          data-detail="notes"
           hidden
         >
-          <div class="room-scene" aria-hidden="true">
-            <img
-              src="assets/rooms/library.jpg"
-              width="1672"
-              height="941"
-              alt=""
-              loading="lazy"
-            />
-            <span class="monsoon-haze haze-one"></span>
-            <span class="monsoon-haze haze-two"></span>
+          <p class="card-agent"><i></i> Scout found three useful trails</p>
+          <h2>Notes worth keeping.</h2>
+          <div class="note-trails">
+            <span>AI without the theater</span>
+            <span>The industry playbook</span>
+            <span>Building across cultures</span>
           </div>
-
-          <div class="panel-kicker">
-            <span>The library</span>
-            <i>Prophet’s guides · № 001</i>
-          </div>
-
-          <div class="library-layout">
-            <figure class="book-object">
-              <span aria-hidden="true"></span>
-              <img
-                src="assets/book-cover.jpg?v=3"
-                width="1600"
-                height="2560"
-                alt="Cover of Emperors, Prophets, and Product Managers by Vanielle Lee"
-                loading="lazy"
-              />
-            </figure>
-
-            <div class="library-copy">
-              <p class="room-eyebrow">Now on the reading table</p>
-              <h2>Leadership has always been chaos.</h2>
-              <p>
-                <cite>Emperors, Prophets, and Product Managers</cite> is my
-                field guide to engineering leadership, management, power,
-                prediction, and the recurring human patterns behind technical
-                work.
-              </p>
-              <div class="book-facts">
-                <span><strong>12</strong> chapters</span>
-                <span><strong>6</strong> frameworks</span>
-                <span><strong>1</strong> honest manual</span>
-              </div>
-              <a
-                class="room-action"
-                href={AMAZON_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Read the book <span aria-hidden="true">↗</span>
-              </a>
-            </div>
-          </div>
+          <button type="button" data-invite-open>
+            Get the next note <span aria-hidden="true">→</span>
+          </button>
         </article>
 
         <article
-          class="room-panel balcony-panel"
-          id="panel-balcony"
+          class="detail-card talk-card"
+          id="detail-talk"
           role="tabpanel"
-          tabindex="0"
-          aria-labelledby="tab-balcony"
-          data-room-panel="balcony"
+          tabindex="-1"
+          aria-labelledby="agent-talk"
+          data-detail="talk"
           hidden
         >
-          <div class="room-scene" aria-hidden="true">
-            <img
-              src="assets/rooms/balcony.jpg"
-              width="1672"
-              height="941"
-              alt=""
-              loading="lazy"
-            />
-            <span class="monsoon-haze haze-one"></span>
-            <span class="monsoon-haze haze-two"></span>
-          </div>
-
-          <div class="panel-kicker">
-            <span>The balcony</span>
-            <i>Field notes from the edge</i>
-          </div>
-
-          <div class="balcony-view">
-            <div class="panel-heading">
-              <p class="room-eyebrow">A wider point of view</p>
-              <h2>Notes for thoughtful builders.</h2>
-              <p>
-                The practical memo behind the hot take—written for technical and
-                non-technical people alike.
-              </p>
-            </div>
-
-            <div class="note-stack">
-              <article>
-                <span>AI</span>
-                <h3>Practical AI, without the theater</h3>
-                <p>What works, what breaks, and what it takes to ship.</p>
-              </article>
-              <article>
-                <span>Career</span>
-                <h3>The unspoken industry playbook</h3>
-                <p>Getting hired, building leverage, and choosing well.</p>
-              </article>
-              <article>
-                <span>Culture</span>
-                <h3>Building across borders</h3>
-                <p>Founder notes from countries, cultures, and expectations.</p>
-              </article>
-            </div>
-          </div>
-
-          <a
-            class="balcony-share"
-            href={X_SHARE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Share the penthouse on X <span aria-hidden="true">↗</span>
+          <p class="card-agent"><i></i> Miso reserved thirty minutes</p>
+          <h2>Bring one hard decision.</h2>
+          <p>AI, architecture, product, or the team around it.</p>
+          <strong>From $300/hr</strong>
+          <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer">
+            Start a conversation <span aria-hidden="true">↗</span>
           </a>
         </article>
-
-        <article
-          class="room-panel salon-panel"
-          id="panel-salon"
-          role="tabpanel"
-          tabindex="0"
-          aria-labelledby="tab-salon"
-          data-room-panel="salon"
-          hidden
-        >
-          <div class="room-scene" aria-hidden="true">
-            <img
-              src="assets/rooms/salon.jpg"
-              width="1672"
-              height="941"
-              alt=""
-              loading="lazy"
-            />
-            <span class="monsoon-haze haze-one"></span>
-            <span class="monsoon-haze haze-two"></span>
-          </div>
-
-          <div class="panel-kicker">
-            <span>The salon</span>
-            <i>Private conversation</i>
-          </div>
-
-          <div class="salon-layout">
-            <div class="salon-copy">
-              <p class="room-eyebrow">Bring one hard decision</p>
-              <h2>Let’s make the next move clear.</h2>
-              <p>
-                Bring an AI bet, architecture question, product tradeoff, or
-                team problem. We’ll leave the room with a practical next move.
-              </p>
-            </div>
-
-            <div class="consulting-menu">
-              <span>Decision session</span>
-              <strong>From $300/hr</strong>
-              <p>Projects, speaking, and retainers are scoped separately.</p>
-              <a
-                class="room-action"
-                href={LINKEDIN_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Start a conversation <span aria-hidden="true">↗</span>
-              </a>
-            </div>
-          </div>
-        </article>
       </section>
-
-      <aside class="guestbook" id="guestbook" aria-labelledby="guestbook-title">
-        <span class="start-here">Your first stop</span>
-        <div class="guestbook-key" aria-hidden="true">
-          <span></span><i></i>
-        </div>
-        <p class="guestbook-label">Welcome upstairs</p>
-        <h2 id="guestbook-title">Sign the guestbook.</h2>
-        <p class="guestbook-copy">
-          Get my field notes on AI, engineering leadership, careers, and
-          building across cultures.
-        </p>
-        <NewsletterSignup />
-        <div class="guestbook-footer">
-          <span>A useful note, now and then.</span>
-          <i>No spam · unsubscribe anytime</i>
-        </div>
-      </aside>
     </main>
 
-    <footer class="residence-footer">
-      <p>© {new Date().getFullYear()} Vanielle Lee</p>
+    <nav class="agent-dock" role="tablist" aria-label="Choose an agent">
+      {
+        agents.map((agent, index) => (
+          <button
+            type="button"
+            role="tab"
+            id={`agent-${agent.id}`}
+            aria-controls={`detail-${agent.id}`}
+            aria-selected={index === 0 ? "true" : "false"}
+            tabindex={index === 0 ? "0" : "-1"}
+            data-agent-mode={agent.id}
+            data-agent-color={agent.color}
+          >
+            <span
+              class="agent-face"
+              style={`--agent-color:${agent.color}`}
+              aria-hidden="true"
+            >
+              <i></i><i></i>
+            </span>
+            <span class="agent-name">
+              <small>{agent.name}</small>
+              <strong>{agent.label}</strong>
+            </span>
+          </button>
+        ))
+      }
+    </nav>
+
+    <aside
+      class="invitation is-open"
+      role="dialog"
+      aria-modal="false"
+      aria-labelledby="invitation-title"
+      data-invitation
+    >
+      <button
+        class="invitation-close"
+        type="button"
+        aria-label="Explore first"
+        data-invite-close
+      >
+        Explore first <span aria-hidden="true">×</span>
+      </button>
+      <div class="invitation-orb" aria-hidden="true"><i></i><i></i></div>
+      <p class="invitation-label">A note from Vanielle</p>
+      <h2 id="invitation-title">Leave your email with the agents.</h2>
+      <p>
+        They’ll deliver practical notes on AI, careers, leadership, and
+        cross-cultural founder life.
+      </p>
+      <NewsletterSignup />
+    </aside>
+
+    <footer class="atelier-footer">
+      <span>© {new Date().getFullYear()} Vanielle Lee</span>
       <nav aria-label="Social links">
-        <a
-          href="https://x.com/lee_vanielle"
-          target="_blank"
-          rel="noopener noreferrer">X</a
-        >
-        <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer"
-          >LinkedIn</a
-        >
-        <a
-          href="https://github.com/leevanielle"
-          target="_blank"
-          rel="noopener noreferrer">GitHub</a
-        >
+        <a href="https://x.com/lee_vanielle" target="_blank" rel="noopener noreferrer">X</a>
+        <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://github.com/leevanielle" target="_blank" rel="noopener noreferrer">GitHub</a>
       </nav>
-      <p>Built from the top floor.</p>
     </footer>
   </div>
 </Layout>
 
 <script>
+  import * as THREE from "three";
+
+  const shell = document.querySelector("[data-atelier]");
+  const canvas = document.querySelector("[data-agent-canvas]");
   const tabs = Array.from(
-    document.querySelectorAll<HTMLButtonElement>("[data-room-tab]")
+    document.querySelectorAll("[data-agent-mode]")
   );
-  const panels = Array.from(
-    document.querySelectorAll<HTMLElement>("[data-room-panel]")
+  const details = Array.from(
+    document.querySelectorAll("[data-detail]")
   );
-  const shortcuts = document.querySelectorAll<HTMLElement>(
-    "[data-room-shortcut]"
+  const deck = document.querySelector("[data-detail-deck]");
+  const invitation = document.querySelector("[data-invitation]");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const aliases = {
+    lobby: "host",
+    lab: "build",
+    boardroom: "lead",
+    library: "read",
+    balcony: "notes",
+    salon: "talk",
+  };
+  const ids = tabs.flatMap(tab =>
+    tab.dataset.agentMode ? [tab.dataset.agentMode] : []
   );
-  const stage = document.querySelector<HTMLElement>("[data-room-stage]");
-  const roomStatus = document.querySelector<HTMLElement>("[data-room-status]");
-  const reduceMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
+  let selectedMode = "host";
+  let renderStill;
 
-  const roomIds = tabs.flatMap(tab =>
-    tab.dataset.roomTab ? [tab.dataset.roomTab] : []
-  );
+  const closeInvitation = () => {
+    invitation?.classList.remove("is-open");
+    invitation?.setAttribute("aria-hidden", "true");
+  };
 
-  const selectRoom = (roomId, options = {}) => {
-    if (!roomIds.includes(roomId)) return;
+  const openInvitation = () => {
+    invitation?.classList.add("is-open");
+    invitation?.removeAttribute("aria-hidden");
+    window.setTimeout(() => {
+      document.querySelector("#newsletter-email")?.focus();
+    }, reduceMotion ? 0 : 420);
+  };
 
-    const selectedTab = tabs.find(tab => tab.dataset.roomTab === roomId);
-    const selectedPanel = panels.find(
-      panel => panel.dataset.roomPanel === roomId
-    );
-    if (!selectedTab || !selectedPanel) return;
-
+  const selectMode = (id, options = {}) => {
+    if (!ids.includes(id)) return;
+    selectedMode = id;
     tabs.forEach(tab => {
-      const selected = tab === selectedTab;
-      tab.setAttribute("aria-selected", String(selected));
-      tab.tabIndex = selected ? 0 : -1;
+      const active = tab.dataset.agentMode === id;
+      tab.setAttribute("aria-selected", String(active));
+      tab.tabIndex = active ? 0 : -1;
     });
-
-    panels.forEach(panel => {
-      const selected = panel === selectedPanel;
-      panel.hidden = !selected;
-      panel.classList.toggle("is-active", selected);
-      panel.classList.remove("is-entering");
+    details.forEach(detail => {
+      const active = detail.dataset.detail === id;
+      detail.hidden = !active;
+      detail.classList.toggle("is-active", active);
     });
-
-    stage?.setAttribute("data-active-room", roomId);
-    if (roomStatus) {
-      roomStatus.textContent = selectedTab.dataset.roomLabel ?? roomId;
-    }
-
-    const roomRail = selectedTab.parentElement;
-    if (roomRail && roomRail.scrollWidth > roomRail.clientWidth) {
-      const centeredLeft =
-        selectedTab.offsetLeft -
-        (roomRail.clientWidth - selectedTab.offsetWidth) / 2;
-      roomRail.scrollTo({
-        left: Math.max(0, centeredLeft),
-        behavior: reduceMotion ? "auto" : "smooth",
-      });
-    }
-
-    if (!reduceMotion) {
-      window.requestAnimationFrame(() => {
-        selectedPanel.classList.add("is-entering");
-      });
-    }
-
     if (options.updateUrl !== false) {
-      window.history.replaceState(null, "", "#" + roomId);
+      window.history.replaceState(null, "", `#${id}`);
     }
+    if (options.reveal !== false) closeInvitation();
     if (options.focus) {
-      selectedPanel.focus({ preventScroll: true });
+      document.querySelector(`[data-detail="${id}"]`)?.focus({
+        preventScroll: true,
+      });
     }
+    if (window.innerWidth <= 820 && options.reveal !== false) {
+      window.setTimeout(
+        () => deck?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" }),
+        reduceMotion ? 0 : 180
+      );
+    }
+    renderStill?.();
   };
 
   tabs.forEach((tab, index) => {
     tab.addEventListener("click", () => {
-      const roomId = tab.dataset.roomTab;
-      if (roomId) selectRoom(roomId, { focus: true });
+      const id = tab.dataset.agentMode;
+      if (id) selectMode(id, { focus: true });
     });
-
     tab.addEventListener("keydown", event => {
-      if (
-        !["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight"].includes(event.key)
-      ) {
-        return;
-      }
+      if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) return;
       event.preventDefault();
-      const direction =
-        event.key === "ArrowDown" || event.key === "ArrowRight" ? 1 : -1;
-      const nextIndex = (index + direction + tabs.length) % tabs.length;
-      const nextTab = tabs[nextIndex];
-      const roomId = nextTab?.dataset.roomTab;
-      if (roomId) {
-        nextTab.focus();
-        selectRoom(roomId);
-      }
+      const direction = event.key === "ArrowLeft" || event.key === "ArrowUp" ? -1 : 1;
+      const next = tabs[(index + direction + tabs.length) % tabs.length];
+      const id = next?.dataset.agentMode;
+      next?.focus();
+      if (id) selectMode(id);
     });
   });
 
-  shortcuts.forEach(shortcut => {
-    shortcut.addEventListener("click", event => {
-      const roomId = shortcut.dataset.roomShortcut;
-      if (!roomId) return;
+  document.querySelectorAll("[data-mode-shortcut]").forEach(button => {
+    button.addEventListener("click", event => {
       event.preventDefault();
-      selectRoom(roomId, { focus: true });
+      const id = button.dataset.modeShortcut;
+      if (id) selectMode(id, { focus: true });
     });
   });
+  document.querySelectorAll("[data-invite-open]").forEach(button =>
+    button.addEventListener("click", openInvitation)
+  );
+  document.querySelector("[data-invite-close]")?.addEventListener("click", closeInvitation);
 
-  document
-    .querySelectorAll<HTMLAnchorElement>("[data-focus-newsletter]")
-    .forEach(link => {
-      link.addEventListener("click", () => {
-        window.setTimeout(
-          () => {
-            document
-              .querySelector<HTMLInputElement>("#newsletter-email")
-              ?.focus({ preventScroll: true });
-          },
-          reduceMotion ? 0 : 450
-        );
-      });
-    });
-
-  const initialRoom = window.location.hash.replace("#", "");
-  selectRoom(roomIds.includes(initialRoom) ? initialRoom : "lobby", {
+  const rawHash = window.location.hash.slice(1);
+  const initialId = (ids.includes(rawHash)
+    ? rawHash
+    : aliases[rawHash]);
+  selectMode(initialId ?? "host", {
     updateUrl: false,
+    reveal: Boolean(initialId),
   });
+  if (initialId) closeInvitation();
 
   window.addEventListener("hashchange", () => {
-    const roomId = window.location.hash.replace("#", "");
-    if (roomIds.includes(roomId)) {
-      selectRoom(roomId, { updateUrl: false });
-    }
+    const raw = window.location.hash.slice(1);
+    const id = ids.includes(raw) ? raw : aliases[raw];
+    if (id) selectMode(id, { updateUrl: false });
   });
+
+  if (canvas && shell) {
+    try {
+      const renderer = new THREE.WebGLRenderer({
+        canvas,
+        antialias: true,
+        alpha: true,
+        powerPreference: "high-performance",
+      });
+      renderer.setClearColor(0x000000, 0);
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.15;
+
+      const scene = new THREE.Scene();
+      scene.fog = new THREE.FogExp2(0x0b1110, 0.065);
+      const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+      camera.position.set(0, 0.25, 8.4);
+
+      scene.add(new THREE.HemisphereLight(0xf8f1df, 0x19352e, 2.1));
+      const key = new THREE.PointLight(0xffd7bc, 17, 20);
+      key.position.set(-3, 4, 5);
+      scene.add(key);
+      const mint = new THREE.PointLight(0x8bd7c7, 13, 18);
+      mint.position.set(4, -2, 4);
+      scene.add(mint);
+
+      const core = new THREE.Group();
+      const coreMesh = new THREE.Mesh(
+        new THREE.IcosahedronGeometry(1.05, 5),
+        new THREE.MeshPhysicalMaterial({
+          color: 0xf5eadc,
+          roughness: 0.13,
+          metalness: 0.02,
+          clearcoat: 1,
+          clearcoatRoughness: 0.12,
+          transmission: 0.2,
+          thickness: 1.5,
+          iridescence: 0.5,
+          iridescenceIOR: 1.3,
+        })
+      );
+      const coreGlow = new THREE.Mesh(
+        new THREE.SphereGeometry(1.22, 48, 48),
+        new THREE.MeshBasicMaterial({
+          color: 0xbce7dc,
+          transparent: true,
+          opacity: 0.055,
+          side: THREE.BackSide,
+        })
+      );
+      core.add(coreMesh, coreGlow);
+      scene.add(core);
+
+      const configs = [
+        { id: "host", color: 0xf0c8bc, angle: 0.1, speed: 0.12 },
+        { id: "build", color: 0xa9d8cb, angle: 1.1, speed: 0.1 },
+        { id: "lead", color: 0xe3bd74, angle: 2.15, speed: 0.085 },
+        { id: "read", color: 0xc7bce8, angle: 3.15, speed: 0.11 },
+        { id: "notes", color: 0xa8c9e8, angle: 4.2, speed: 0.09 },
+        { id: "talk", color: 0xe9a4a0, angle: 5.25, speed: 0.105 },
+      ];
+      const bodies = [];
+
+      configs.forEach(config => {
+        const group = new THREE.Group();
+        group.userData.agentId = config.id;
+        const body = new THREE.Mesh(
+          new THREE.SphereGeometry(0.34, 32, 32),
+          new THREE.MeshPhysicalMaterial({
+            color: config.color,
+            roughness: 0.22,
+            clearcoat: 1,
+            clearcoatRoughness: 0.08,
+          })
+        );
+        body.userData.agentId = config.id;
+        bodies.push(body);
+
+        const eyeMaterial = new THREE.MeshStandardMaterial({ color: 0x17201d, roughness: 0.4 });
+        const eyes = [-0.1, 0.1].map(x => {
+          const eye = new THREE.Mesh(new THREE.SphereGeometry(0.042, 16, 16), eyeMaterial);
+          eye.position.set(x, 0.055, 0.32);
+          return eye;
+        });
+        const antenna = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.012, 0.012, 0.21, 10),
+          new THREE.MeshStandardMaterial({ color: config.color, metalness: 0.2, roughness: 0.3 })
+        );
+        antenna.position.y = 0.41;
+        antenna.rotation.z = -0.18;
+        const antennaTip = new THREE.Mesh(
+          new THREE.SphereGeometry(0.055, 16, 16),
+          new THREE.MeshBasicMaterial({ color: config.color })
+        );
+        antennaTip.position.set(0.035, 0.52, 0);
+        const halo = new THREE.Mesh(
+          new THREE.TorusGeometry(0.48, 0.012, 12, 72),
+          new THREE.MeshBasicMaterial({ color: config.color, transparent: true, opacity: 0.42 })
+        );
+        halo.rotation.x = Math.PI / 2.4;
+        group.add(body, ...eyes, antenna, antennaTip, halo);
+        scene.add(group);
+        config.group = group;
+        config.eyes = eyes;
+        config.body = body;
+      });
+
+      const dustGeometry = new THREE.BufferGeometry();
+      const dustPositions = new Float32Array(240 * 3);
+      for (let i = 0; i < dustPositions.length; i += 3) {
+        dustPositions[i] = (Math.random() - 0.5) * 12;
+        dustPositions[i + 1] = (Math.random() - 0.5) * 7;
+        dustPositions[i + 2] = (Math.random() - 0.5) * 5 - 1;
+      }
+      dustGeometry.setAttribute("position", new THREE.BufferAttribute(dustPositions, 3));
+      scene.add(
+        new THREE.Points(
+          dustGeometry,
+          new THREE.PointsMaterial({ color: 0xf7e7c5, size: 0.024, transparent: true, opacity: 0.34 })
+        )
+      );
+
+      const connectionPositions = new Float32Array(configs.length * 6);
+      const connections = new THREE.LineSegments(
+        new THREE.BufferGeometry().setAttribute(
+          "position",
+          new THREE.BufferAttribute(connectionPositions, 3)
+        ),
+        new THREE.LineBasicMaterial({ color: 0x9bcfc2, transparent: true, opacity: 0.14 })
+      );
+      scene.add(connections);
+
+      const pointer = new THREE.Vector2(4, 4);
+      const pointerEase = new THREE.Vector2(0, 0);
+      const raycaster = new THREE.Raycaster();
+      const clock = new THREE.Clock();
+
+      const resize = () => {
+        const width = canvas.clientWidth;
+        const height = canvas.clientHeight;
+        if (!width || !height) return;
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.65));
+        renderer.setSize(width, height, false);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+      };
+      resize();
+      new ResizeObserver(() => {
+        resize();
+        if (reduceMotion) draw(0);
+      }).observe(canvas);
+
+      const draw = elapsed => {
+        pointerEase.lerp(pointer, 0.035);
+        core.rotation.x = reduceMotion ? 0.15 : elapsed * 0.12;
+        core.rotation.y = reduceMotion ? -0.25 : elapsed * 0.16;
+        core.position.y = reduceMotion ? 0 : Math.sin(elapsed * 0.8) * 0.08;
+
+        configs.forEach((config, index) => {
+          if (!config.group) return;
+          const active = config.id === selectedMode;
+          const angle = config.angle + (reduceMotion ? 0 : elapsed * config.speed);
+          const radius = active ? 1.62 : 2.48;
+          const target = new THREE.Vector3(
+            Math.cos(angle) * radius,
+            Math.sin(angle) * radius * 0.58,
+            active ? 1.05 : Math.sin(angle * 1.7) * 0.42
+          );
+          if (active) {
+            target.x *= 0.62;
+            target.y *= 0.62;
+          }
+          config.group.position.lerp(target, reduceMotion ? 1 : 0.055);
+          const scale = active ? 1.38 : 0.92;
+          config.group.scale.lerp(new THREE.Vector3(scale, scale, scale), reduceMotion ? 1 : 0.08);
+          config.group.rotation.y = reduceMotion ? 0 : Math.sin(elapsed * 0.7 + index) * 0.14;
+          config.group.rotation.z = reduceMotion ? 0 : Math.sin(elapsed * 0.9 + index) * 0.09;
+          config.eyes?.forEach(eye => {
+            const blink = Math.sin(elapsed * 0.75 + index * 2.2) > 0.985 ? 0.12 : 1;
+            eye.scale.y = blink;
+          });
+          const offset = index * 6;
+          connectionPositions[offset] = 0;
+          connectionPositions[offset + 1] = core.position.y;
+          connectionPositions[offset + 2] = 0;
+          connectionPositions[offset + 3] = config.group.position.x;
+          connectionPositions[offset + 4] = config.group.position.y;
+          connectionPositions[offset + 5] = config.group.position.z;
+        });
+        connections.geometry.attributes.position.needsUpdate = true;
+        camera.position.x += (pointerEase.x * 0.34 - camera.position.x) * 0.025;
+        camera.position.y += (0.25 + pointerEase.y * 0.24 - camera.position.y) * 0.025;
+        camera.lookAt(0, 0, 0);
+        renderer.render(scene, camera);
+      };
+
+      const animate = () => {
+        draw(clock.getElapsedTime());
+        if (!reduceMotion) window.requestAnimationFrame(animate);
+      };
+      renderStill = () => draw(clock.getElapsedTime());
+      animate();
+
+      canvas.addEventListener("pointermove", event => {
+        const rect = canvas.getBoundingClientRect();
+        pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+        pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+        raycaster.setFromCamera(pointer, camera);
+        const hovered = raycaster.intersectObjects(bodies, false)[0]?.object;
+        canvas.style.cursor = hovered?.userData.agentId ? "pointer" : "default";
+      });
+      canvas.addEventListener("pointerleave", () => {
+        pointer.set(4, 4);
+        canvas.style.cursor = "default";
+      });
+      canvas.addEventListener("click", event => {
+        const rect = canvas.getBoundingClientRect();
+        pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+        pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+        raycaster.setFromCamera(pointer, camera);
+        const hit = raycaster.intersectObjects(bodies, false)[0]?.object;
+        const id = hit?.userData.agentId;
+        if (id) document.querySelector(`[data-agent-mode="${id}"]`)?.click();
+      });
+    } catch {
+      shell.classList.add("no-webgl");
+    }
+  }
 </script>
 
 <style>
   :global(html) {
-    background: #101713;
+    background: #0b1110;
     scroll-behavior: smooth;
   }
 
   :global(body) {
     margin: 0;
-    background: #101713;
-    color: #25292c;
-    font-family: "DM Sans", "Instrument Sans", ui-sans-serif, system-ui,
-      sans-serif;
+    background: #0b1110;
+    color: #f7f3eb;
+    font-family: "Manrope", "DM Sans", sans-serif;
   }
 
   :global(*) {
@@ -758,118 +644,75 @@ const X_SHARE_URL =
     display: none !important;
   }
 
-  .penthouse-shell {
-    --night: #111916;
-    --night-soft: #1d2a24;
-    --sky: #667b79;
-    --pearl: #f2ede3;
-    --glass: #e2e8e0;
-    --blush: #d8c6b5;
-    --coral: #c75d4e;
-    --brass: #c5a66e;
-    --ink: #20241f;
-    --muted: #716e66;
-    --line: rgba(37, 41, 44, 0.16);
+  .atelier-shell {
+    --ink: #0b1110;
+    --lacquer: #111a17;
+    --porcelain: #f7f3eb;
+    --jade: #a9d8cb;
+    --rose: #e9a4a0;
+    --brass: #e3bd74;
     position: relative;
-    height: 100svh;
-    min-height: 680px;
-    padding: 0.75rem;
-    display: grid;
-    grid-template-rows: 64px minmax(0, 1fr) 30px;
-    gap: 0.7rem;
+    min-height: 100svh;
     overflow: hidden;
-    background: radial-gradient(
-        circle at 72% 0%,
-        rgba(94, 124, 117, 0.42),
-        transparent 34%
-      ),
-      radial-gradient(circle at 24% 108%, rgba(168, 128, 84, 0.22), transparent 31%),
-      linear-gradient(145deg, #21302a 0%, var(--night) 58%, #0b100e 100%);
+    background:
+      radial-gradient(circle at 50% 47%, rgba(94, 147, 133, 0.21), transparent 28%),
+      radial-gradient(circle at 82% 14%, rgba(116, 92, 145, 0.15), transparent 24%),
+      linear-gradient(145deg, #101a17, #0a0f0e 68%);
   }
 
-  .skyline {
+  .atelier-canvas,
+  .aurora,
+  .grain {
     position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    height: 28%;
-    pointer-events: none;
-    opacity: 0.16;
-    filter: blur(1px);
+    inset: 0;
+    width: 100%;
+    height: 100%;
   }
 
-  .skyline span {
-    position: absolute;
-    bottom: 0;
+  .atelier-canvas {
+    z-index: 1;
     display: block;
-    background: #0f151b;
   }
 
-  .skyline span::after {
-    content: "";
-    position: absolute;
-    inset: 10% 16%;
-    background: repeating-linear-gradient(
-      90deg,
-      rgba(231, 204, 147, 0.55) 0 3px,
-      transparent 3px 18px
-    );
-    mask-image: repeating-linear-gradient(
-      0deg,
-      black 0 3px,
-      transparent 3px 16px
-    );
+  .aurora {
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse at 48% 53%, rgba(169, 216, 203, 0.16), transparent 25%),
+      radial-gradient(ellipse at 50% 58%, rgba(227, 189, 116, 0.09), transparent 38%);
+    filter: blur(22px);
+    animation: breathe 8s ease-in-out infinite alternate;
   }
 
-  .skyline span:nth-child(1) {
-    left: 2%;
-    width: 16%;
-    height: 52%;
+  .grain {
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0.08;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+    mix-blend-mode: soft-light;
   }
 
-  .skyline span:nth-child(2) {
-    left: 20%;
-    width: 19%;
-    height: 74%;
-  }
-
-  .skyline span:nth-child(3) {
-    left: 42%;
-    width: 12%;
-    height: 43%;
-  }
-
-  .skyline span:nth-child(4) {
-    left: 57%;
-    width: 23%;
-    height: 62%;
-  }
-
-  .skyline span:nth-child(5) {
-    right: 2%;
-    width: 16%;
-    height: 85%;
-  }
-
-  .penthouse-header,
-  .floor-plan,
-  .room-stage,
-  .guestbook {
+  .atelier-header {
     position: relative;
-    z-index: 2;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 18px 60px rgba(7, 12, 17, 0.2);
-  }
-
-  .penthouse-header {
-    padding: 0.45rem 0.55rem 0.45rem 1rem;
+    z-index: 10;
+    min-height: 74px;
+    padding: 0 1.6rem;
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
     gap: 1rem;
-    border-radius: 18px;
-    background: rgba(246, 243, 236, 0.94);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(9, 15, 13, 0.46);
     backdrop-filter: blur(18px);
+  }
+
+  .wordmark,
+  .atelier-header button,
+  .intro button,
+  .detail-card a,
+  .detail-card button {
+    color: inherit;
+    font: inherit;
   }
 
   .wordmark {
@@ -877,1369 +720,780 @@ const X_SHARE_URL =
     display: flex;
     align-items: center;
     gap: 0.65rem;
-    color: var(--ink);
-    font-family: "Newsreader", Georgia, serif;
-    font-size: 1.08rem;
-    font-weight: 500;
+    color: var(--porcelain);
+    font-size: 0.82rem;
+    font-weight: 650;
     text-decoration: none;
   }
 
-  .wordmark-gem {
-    color: var(--coral);
-    font-size: 0.8rem;
+  .wordmark span {
+    color: var(--brass);
   }
 
-  .building-title {
+  .atelier-status {
     margin: 0;
-    color: #716f68;
-    font-size: 0.62rem;
-    letter-spacing: 0.07em;
-    text-align: center;
-    text-transform: uppercase;
-  }
-
-  .building-title span {
-    margin-right: 0.55rem;
-    color: var(--coral);
-    font-weight: 600;
-  }
-
-  .header-actions {
-    justify-self: end;
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-  }
-
-  .header-actions a {
-    min-height: 40px;
-    padding: 0.65rem 0.85rem;
-    display: inline-flex;
-    align-items: center;
-    border-radius: 999px;
-    color: #5f5d58;
-    font-size: 0.68rem;
-    font-weight: 600;
-    text-decoration: none;
-  }
-
-  .header-actions .guestbook-shortcut {
-    background: var(--ink);
-    color: white;
-  }
-
-  .residence {
-    position: relative;
-    z-index: 2;
-    min-height: 0;
-    display: grid;
-    grid-template-columns: minmax(188px, 0.55fr) minmax(520px, 2fr) minmax(
-        260px,
-        0.8fr
-      );
-    gap: 0.7rem;
-  }
-
-  .floor-plan {
-    min-height: 0;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    border-radius: 22px;
-    background: rgba(20, 30, 26, 0.93);
-    color: #f4efe4;
-    backdrop-filter: blur(18px);
-  }
-
-  .floor-plan-heading {
-    padding-bottom: 0.75rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.13);
-  }
-
-  .floor-plan-heading p,
-  .floor-plan-heading span {
-    margin: 0;
-    font-size: 0.58rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .floor-plan-heading span {
-    width: 28px;
-    height: 28px;
-    display: grid;
-    place-items: center;
-    border-radius: 50%;
-    background: var(--brass);
-    color: #141a16;
-  }
-
-  .elevator-status {
-    margin: 0.75rem 0;
-    padding: 0.65rem 0.7rem;
     display: flex;
     align-items: center;
     gap: 0.55rem;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.07);
+    color: rgba(247, 243, 235, 0.56);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
   }
 
-  .elevator-status > span {
+  .atelier-status i {
     width: 7px;
     height: 7px;
-    flex: 0 0 auto;
-    border-radius: 50%;
-    background: #79a88f;
-    box-shadow: 0 0 0 4px rgba(121, 168, 143, 0.13);
-  }
-
-  .elevator-status p {
-    margin: 0;
-    color: #9faaa3;
-    font-size: 0.52rem;
-    line-height: 1.4;
-    text-transform: uppercase;
-  }
-
-  .elevator-status strong {
     display: block;
-    color: #f4efe4;
-    font-size: 0.66rem;
-    font-weight: 600;
-    text-transform: none;
+    border-radius: 50%;
+    background: var(--jade);
+    box-shadow: 0 0 0 5px rgba(169, 216, 203, 0.1), 0 0 16px var(--jade);
   }
 
-  .room-map {
-    min-height: 0;
-    flex: 1;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 0.82fr 1fr 1fr;
-    gap: 4px;
-    border: 1px solid rgba(197, 166, 110, 0.42);
-    background: rgba(197, 166, 110, 0.42);
-  }
-
-  .room-key {
-    min-width: 0;
-    padding: 0.65rem;
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-end;
-    flex-direction: column;
-    border: 0;
-    border-radius: 0;
-    background: #26352e;
-    color: #f4efe4;
+  .guestbook-trigger {
+    justify-self: end;
+    min-height: 42px;
+    padding: 0 0.95rem;
+    border: 1px solid rgba(255, 255, 255, 0.19);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.07);
+    color: var(--porcelain);
     cursor: pointer;
-    text-align: left;
-    transition:
-      background 180ms ease,
-      color 180ms ease,
-      transform 180ms ease;
+    font-size: 0.68rem;
   }
 
-  .room-key-lobby {
-    grid-column: 1 / -1;
-  }
-
-  .room-key span,
-  .room-key strong {
-    display: block;
-  }
-
-  .room-key span {
-    color: #9dac9f;
-    font-size: 0.48rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .room-key strong {
-    margin-top: 0.15rem;
-    font-family: "Newsreader", Georgia, serif;
-    font-size: clamp(0.9rem, 1.35vw, 1.3rem);
-    font-weight: 400;
-    line-height: 1;
-  }
-
-  .room-key:hover {
-    background: #35483f;
-  }
-
-  .room-key[aria-selected="true"] {
+  .studio-grid {
     position: relative;
-    z-index: 2;
-    background: #0d1511;
-    color: white;
-    box-shadow: inset 0 0 0 2px var(--brass);
-  }
-
-  .room-key[aria-selected="true"] span {
-    color: #cfb985;
-  }
-
-  .map-hint {
-    margin: 0.75rem 0 0;
-    color: #9caaa2;
-    font-size: 0.53rem;
-    line-height: 1.45;
-  }
-
-  .room-stage {
-    min-width: 0;
-    min-height: 0;
-    overflow: hidden;
-    border-radius: 24px;
-    background: #101512;
-  }
-
-  .room-stage::before {
-    display: none;
-  }
-
-  .room-panel {
-    position: relative;
-    z-index: 1;
-    height: 100%;
-    padding: clamp(1.25rem, 2.7vw, 2.3rem);
-    overflow: auto;
-    outline: none;
-    scrollbar-color: rgba(37, 41, 44, 0.25) transparent;
-    color: #f8f3e9;
-    isolation: isolate;
-  }
-
-  .room-panel::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 1;
+    z-index: 5;
+    min-height: calc(100svh - 74px);
+    padding: 4rem clamp(1.4rem, 4vw, 4.5rem) 7rem;
+    display: grid;
+    grid-template-columns: minmax(250px, 0.82fr) minmax(300px, 1.45fr) minmax(300px, 0.92fr);
+    gap: clamp(1rem, 3vw, 3.2rem);
     pointer-events: none;
-    background: linear-gradient(
-      90deg,
-      rgba(7, 12, 10, 0.9) 0%,
-      rgba(7, 12, 10, 0.64) 44%,
-      rgba(7, 12, 10, 0.13) 100%
-    );
   }
 
-  .room-panel > :not(.room-scene) {
-    position: relative;
-    z-index: 2;
+  .intro,
+  .detail-deck,
+  .discovery-hint {
+    pointer-events: auto;
   }
 
-  .room-scene {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    overflow: hidden;
-    background: #101512;
+  .intro {
+    align-self: center;
+    max-width: 360px;
   }
 
-  .room-scene img {
-    width: 100%;
-    height: 100%;
+  .host-portrait {
+    width: 74px;
+    margin: 0 0 1.1rem;
+  }
+
+  .host-portrait img {
+    width: 64px;
+    height: 64px;
     display: block;
-    object-fit: cover;
-    object-position: center;
-    filter: saturate(0.88) contrast(1.04) brightness(0.88);
-    transform: scale(1.025);
-    transition: transform 9s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .room-panel.is-active .room-scene img {
-    transform: scale(1.07);
-  }
-
-  .room-scene::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.2;
-    background: repeating-linear-gradient(
-      102deg,
-      transparent 0 21px,
-      rgba(226, 238, 234, 0.16) 22px,
-      transparent 23px 47px
-    );
-    mix-blend-mode: screen;
-  }
-
-  .monsoon-haze {
-    position: absolute;
-    z-index: 1;
-    width: 55%;
-    height: 32%;
+    border: 2px solid rgba(247, 243, 235, 0.8);
     border-radius: 50%;
-    pointer-events: none;
-    background: rgba(194, 212, 209, 0.22);
-    filter: blur(44px);
-    opacity: 0.38;
-    animation: haze-drift 18s ease-in-out infinite alternate;
+    object-fit: cover;
+    filter: saturate(0.72);
+    box-shadow: 0 0 0 6px rgba(169, 216, 203, 0.1);
   }
 
-  .haze-one {
-    right: -18%;
-    bottom: 13%;
-  }
-
-  .haze-two {
-    bottom: -6%;
-    left: 18%;
-    width: 42%;
-    opacity: 0.2;
-    animation-delay: -8s;
-  }
-
-  .room-panel.is-entering {
-    animation: room-arrival 520ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .panel-kicker {
-    padding-bottom: 0.75rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.22);
-    color: rgba(248, 243, 233, 0.76);
-    font-size: 0.54rem;
-    letter-spacing: 0.08em;
+  .host-portrait figcaption {
+    width: max-content;
+    margin-top: 0.45rem;
+    color: rgba(247, 243, 235, 0.48);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.48rem;
     text-transform: uppercase;
   }
 
-  .panel-kicker i {
-    color: #e0bf82;
-    font-style: normal;
-  }
-
-  .room-eyebrow {
-    margin: 0 0 0.7rem;
-    color: #e4bd78;
-    font-size: 0.6rem;
+  .intro-label,
+  .card-agent,
+  .invitation-label {
+    margin: 0;
+    color: var(--brass);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.58rem;
     font-weight: 600;
-    letter-spacing: 0.11em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
   }
 
   h1,
-  h2,
-  h3 {
+  h2 {
     margin: 0;
-    font-family: "Newsreader", Georgia, serif;
-    font-weight: 400;
+    font-family: "Bodoni Moda", "Newsreader", Georgia, serif;
+    font-weight: 500;
     text-wrap: balance;
   }
 
   h1 {
-    max-width: 670px;
-    font-size: clamp(2.75rem, 4.7vw, 4.8rem);
+    margin-top: 0.8rem;
+    font-size: clamp(2.55rem, 4.1vw, 4.35rem);
     letter-spacing: -0.055em;
     line-height: 0.98;
   }
 
-  h1 em {
-    display: block;
-    color: #ef8f7f;
-    font-weight: 400;
-  }
-
-  h2 {
-    font-size: clamp(2.45rem, 4vw, 4rem);
-    letter-spacing: -0.05em;
-    line-height: 1;
-  }
-
-  .lobby-layout {
-    min-height: calc(100% - 2rem);
-    padding-top: clamp(1.5rem, 4vh, 3rem);
-    display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(200px, 0.65fr);
-    align-items: center;
-    gap: clamp(1.5rem, 4vw, 4rem);
-  }
-
-  .lobby-copy,
-  .lab-panel .panel-heading,
-  .boardroom-panel .panel-heading,
-  .library-copy,
-  .balcony-panel .panel-heading,
-  .salon-copy {
-    padding: clamp(1rem, 2vw, 1.5rem);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: 20px;
-    background: rgba(10, 16, 13, 0.68);
-    box-shadow: 0 20px 70px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(15px) saturate(0.9);
-  }
-
-  .lobby-intro {
-    max-width: 630px;
+  .intro-copy {
+    max-width: 340px;
     margin: 1.1rem 0 0;
-    color: rgba(248, 243, 233, 0.78);
-    font-size: clamp(0.9rem, 1.2vw, 1.04rem);
+    color: rgba(247, 243, 235, 0.68);
+    font-size: clamp(0.82rem, 1vw, 0.98rem);
     line-height: 1.68;
   }
 
-  .lobby-proof {
-    margin-top: 1.3rem;
+  .intro-actions {
+    margin-top: 1.35rem;
     display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-  }
-
-  .lobby-proof > * {
-    min-height: 48px;
-    padding: 0.55rem 0.7rem;
-    display: flex;
-    align-items: baseline;
-    gap: 0.35rem;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.08);
-    color: rgba(248, 243, 233, 0.7);
-    font-size: 0.59rem;
-    text-decoration: none;
-  }
-
-  .lobby-proof strong {
-    color: #fffaf0;
-    font-family: "Newsreader", Georgia, serif;
-    font-size: 1.1rem;
-    font-weight: 500;
-  }
-
-  .next-room,
-  .room-action {
-    min-height: 44px;
-    padding: 0.7rem 0.9rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    border: 0;
-    border-radius: 999px;
-    background: #c75d4e;
-    color: white;
-    cursor: pointer;
-    font: inherit;
-    font-size: 0.67rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition:
-      transform 180ms ease,
-      background 180ms ease;
-  }
-
-  .next-room {
-    margin-top: 0;
-  }
-
-  .next-room:hover,
-  .room-action:hover {
-    background: #9e443b;
-    transform: translateY(-2px);
-  }
-
-  .lobby-actions {
-    margin-top: 1.3rem;
-    display: flex;
-    align-items: center;
-    gap: 0.55rem;
-    flex-wrap: wrap;
-  }
-
-  .guestbook-entry {
-    box-shadow: 0 8px 28px rgba(199, 93, 78, 0.3);
-  }
-
-  .quiet-room-link {
-    min-height: 44px;
-    padding: 0.7rem 0.9rem;
-    display: inline-flex;
     align-items: center;
     gap: 0.8rem;
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.06);
-    color: #f7f1e6;
-    cursor: pointer;
-    font: inherit;
-    font-size: 0.64rem;
-    font-weight: 600;
   }
 
-  .portrait-window {
-    position: relative;
-    width: min(220px, 100%);
-    margin: 0 auto;
-    padding: 0.55rem 0.55rem 4.35rem;
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    border-radius: 140px 140px 20px 20px;
-    background: rgba(243, 237, 225, 0.92);
-    color: var(--ink);
-    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
-  }
-
-  .window-glow {
-    position: absolute;
-    inset: -8% -12% 28% 18%;
-    z-index: -1;
-    border-radius: 50%;
-    background: rgba(197, 166, 110, 0.34);
-  }
-
-  .portrait-window img {
-    width: 100%;
-    aspect-ratio: 0.86;
-    display: block;
-    border-radius: 130px 130px 14px 14px;
-    object-fit: cover;
-    object-position: center;
-    filter: saturate(0.76) contrast(0.95);
-  }
-
-  .portrait-window figcaption {
-    position: absolute;
-    right: 0.65rem;
-    bottom: 0.65rem;
-    left: 0.65rem;
-  }
-
-  .portrait-window figcaption span,
-  .portrait-window figcaption strong,
-  .portrait-window figcaption i {
-    display: block;
-  }
-
-  .portrait-window figcaption span {
-    color: var(--coral);
-    font-size: 0.51rem;
-    text-transform: uppercase;
-  }
-
-  .portrait-window figcaption strong {
-    margin-top: 0.15rem;
-    font-family: "Newsreader", Georgia, serif;
-    font-size: 1.25rem;
-    font-weight: 400;
-  }
-
-  .portrait-window figcaption i {
-    margin-top: 0.1rem;
-    color: #77746e;
-    font-size: 0.53rem;
-    font-style: normal;
-  }
-
-  .panel-heading {
-    max-width: 680px;
-    padding-top: clamp(1.5rem, 3.5vh, 2.8rem);
-  }
-
-  .panel-heading > p:last-child {
-    max-width: 600px;
-    margin: 0.9rem 0 0;
-    color: rgba(248, 243, 233, 0.76);
-    font-size: 0.9rem;
-    line-height: 1.65;
-  }
-
-  .system-specimen {
-    margin-top: clamp(1.5rem, 4vh, 3rem);
-    display: grid;
-    grid-template-columns: 1fr auto 1fr auto 1fr;
-    align-items: stretch;
-  }
-
-  .system-node {
-    min-height: 180px;
-    padding: 1.2rem;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid rgba(255, 255, 255, 0.17);
-    border-radius: 18px;
-    background: rgba(12, 20, 16, 0.72);
-    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.22);
-    backdrop-filter: blur(14px);
-  }
-
-  .system-node > span {
-    color: #e4bd78;
-    font-size: 0.54rem;
-  }
-
-  .system-node strong {
-    margin-top: auto;
-    font-family: "Newsreader", Georgia, serif;
-    font-size: clamp(1.25rem, 2vw, 1.75rem);
-    font-weight: 400;
-  }
-
-  .system-node p {
-    margin: 0.45rem 0 0;
-    color: rgba(248, 243, 233, 0.7);
-    font-size: 0.67rem;
-    line-height: 1.5;
-  }
-
-  .system-connector {
-    width: clamp(24px, 3vw, 44px);
-    display: flex;
+  .intro-actions button,
+  .detail-card > button,
+  .detail-card a {
+    min-height: 42px;
+    padding: 0.65rem 0.85rem;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 3px;
-  }
-
-  .system-connector i {
-    width: 4px;
-    height: 4px;
-    display: block;
-    border-radius: 50%;
-    background: var(--brass);
-  }
-
-  .lab-note {
-    margin-top: 1rem;
-    padding: 0.9rem 1rem;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: center;
     gap: 1rem;
-    border-radius: 14px;
-    border: 1px solid rgba(228, 189, 120, 0.42);
-    background: rgba(8, 14, 11, 0.8);
-    backdrop-filter: blur(14px);
-    color: white;
-  }
-
-  .lab-note span {
-    color: #e4bd78;
-    font-size: 0.55rem;
-    text-transform: uppercase;
-  }
-
-  .lab-note p {
-    margin: 0;
-    color: #e3e4df;
-    font-size: 0.75rem;
-    line-height: 1.5;
-  }
-
-  .boardroom-layout {
-    min-height: calc(100% - 130px);
-    display: grid;
-    grid-template-columns: 1fr;
-    align-content: space-between;
-    gap: 1.2rem;
-  }
-
-  .boardroom-panel .panel-heading {
-    max-width: 540px;
-  }
-
-  .decision-table {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.55rem;
     border: 0;
-  }
-
-  .decision-table > div {
-    padding: 1rem;
-    display: block;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    border-radius: 14px;
-    background: rgba(10, 16, 13, 0.7);
-    box-shadow: 0 16px 44px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(14px);
-  }
-
-  .decision-table span {
-    display: block;
-    margin-bottom: 0.45rem;
-    color: #e4bd78;
-    font-size: 0.56rem;
-    text-transform: uppercase;
-  }
-
-  .decision-table strong {
-    font-family: "Newsreader", Georgia, serif;
-    font-size: clamp(1.15rem, 1.8vw, 1.55rem);
-    font-weight: 400;
-    line-height: 1.2;
-  }
-
-  .client-shelf {
-    padding: 0.85rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    border-radius: 14px;
-    background: rgba(10, 16, 13, 0.78);
-    backdrop-filter: blur(14px);
-  }
-
-  .client-shelf p {
-    margin: 0 auto 0 0;
-    color: rgba(248, 243, 233, 0.68);
-    font-size: 0.55rem;
-    text-transform: uppercase;
-  }
-
-  .client-shelf span,
-  .client-shelf a {
-    padding: 0.45rem 0.55rem;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.11);
-    color: #f8f3e9;
-    font-size: 0.54rem;
+    background: var(--porcelain);
+    color: var(--ink);
+    cursor: pointer;
+    font-size: 0.64rem;
+    font-weight: 700;
     text-decoration: none;
   }
 
-  .client-shelf a {
-    background: rgba(199, 93, 78, 0.76);
+  .intro-actions span {
+    color: rgba(247, 243, 235, 0.45);
+    font-size: 0.58rem;
   }
 
-  .library-layout {
-    min-height: calc(100% - 2rem);
-    padding-top: 1.4rem;
-    display: grid;
-    grid-template-columns: minmax(150px, 0.48fr) minmax(0, 1.32fr);
-    align-items: end;
-    gap: clamp(2rem, 5vw, 5rem);
-  }
-
-  .book-object {
+  .discovery {
     position: relative;
-    width: min(220px, 100%);
-    margin: 0 auto;
+    min-height: 420px;
   }
 
-  .book-object > span {
+  .discovery-hint {
     position: absolute;
-    inset: 7% -9% -5% 12%;
-    border-radius: 24px;
-    background: rgba(197, 166, 110, 0.72);
-    transform: rotate(4deg);
+    top: 4%;
+    left: 50%;
+    width: 180px;
+    margin: 0;
+    display: flex;
+    gap: 0.65rem;
+    color: rgba(247, 243, 235, 0.47);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.52rem;
+    line-height: 1.55;
+    transform: translateX(-50%);
   }
 
-  .book-object img {
-    position: relative;
+  .discovery-hint span {
+    color: var(--jade);
+  }
+
+  .scene-fallback {
+    display: none;
+  }
+
+  .no-webgl .scene-fallback {
+    position: absolute;
+    inset: 20%;
+    display: block;
+  }
+
+  .no-webgl .scene-fallback span {
+    position: absolute;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--jade);
+  }
+
+  .detail-deck {
+    align-self: center;
+    min-width: 0;
+  }
+
+  .detail-card {
+    width: min(370px, 100%);
+    min-height: 350px;
+    padding: clamp(1.25rem, 2.4vw, 2rem);
+    border: 1px solid rgba(255, 255, 255, 0.17);
+    border-radius: 28px;
+    background: linear-gradient(155deg, rgba(24, 35, 30, 0.82), rgba(9, 15, 13, 0.72));
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(22px) saturate(1.15);
+  }
+
+  .detail-card.is-active {
+    animation: card-arrival 520ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .card-agent {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--jade);
+    font-size: 0.5rem;
+  }
+
+  .card-agent i {
+    width: 6px;
+    height: 6px;
+    display: block;
+    border-radius: 50%;
+    background: currentColor;
+    box-shadow: 0 0 12px currentColor;
+  }
+
+  .detail-card h2 {
+    margin-top: 1rem;
+    font-size: clamp(2.25rem, 3.5vw, 3.75rem);
+    letter-spacing: -0.05em;
+    line-height: 0.98;
+  }
+
+  .detail-card > p:not(.card-agent),
+  .book-card > div > p:not(.card-agent) {
+    margin: 1rem 0 0;
+    color: rgba(247, 243, 235, 0.66);
+    font-size: 0.78rem;
+    line-height: 1.6;
+  }
+
+  .proof-pills,
+  .skill-cloud,
+  .client-line,
+  .note-trails {
+    margin: 1.2rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .proof-pills span,
+  .skill-cloud span,
+  .client-line span,
+  .note-trails span {
+    padding: 0.48rem 0.62rem;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 999px;
+    color: rgba(247, 243, 235, 0.68);
+    font-size: 0.55rem;
+  }
+
+  .proof-pills strong {
+    margin-right: 0.2rem;
+    color: var(--porcelain);
+    font-family: "Bodoni Moda", Georgia, serif;
+    font-size: 1.25rem;
+  }
+
+  .book-card {
+    display: grid;
+    grid-template-columns: 105px 1fr;
+    align-items: center;
+    gap: 1.1rem;
+  }
+
+  .book-card > img {
     width: 100%;
     height: auto;
     display: block;
-    border-radius: 5px;
-    box-shadow: 0 26px 65px rgba(38, 43, 46, 0.2);
-    transform: rotate(-1.5deg);
-    transition: transform 400ms ease;
+    border-radius: 4px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.34);
+    transform: rotate(-3deg);
   }
 
-  .book-object:hover img {
-    transform: rotate(0) translateY(-5px);
+  .book-card h2 {
+    font-size: clamp(1.9rem, 3vw, 3rem);
   }
 
-  .library-copy > p:not(.room-eyebrow) {
-    max-width: 580px;
-    margin: 1rem 0 0;
-    color: rgba(248, 243, 233, 0.76);
-    font-size: 0.88rem;
-    line-height: 1.65;
+  .book-card a {
+    margin-top: 1rem;
   }
 
-  .library-copy cite {
-    color: #fffaf0;
-    font-family: "Newsreader", Georgia, serif;
-    font-size: 1.12em;
+  .note-trails {
+    flex-direction: column;
   }
 
-  .book-facts {
-    margin: 1.2rem 0;
-    display: flex;
-    gap: 0.45rem;
-    flex-wrap: wrap;
+  .note-trails span {
+    border-radius: 12px;
   }
 
-  .book-facts span {
-    padding: 0.55rem 0.7rem;
-    border: 1px solid rgba(255, 255, 255, 0.17);
-    border-radius: 999px;
-    color: rgba(248, 243, 233, 0.7);
-    font-size: 0.56rem;
-  }
-
-  .book-facts strong {
-    color: #ef8f7f;
-  }
-
-  .balcony-view {
-    min-height: calc(100% - 92px);
-    display: grid;
-    grid-template-columns: 0.9fr 1.1fr;
-    align-items: center;
-    gap: clamp(2rem, 5vw, 5rem);
-  }
-
-  .note-stack {
-    display: grid;
-    gap: 0.6rem;
-  }
-
-  .note-stack article {
-    padding: 0.9rem 1rem;
-    display: grid;
-    grid-template-columns: 54px 1fr;
-    border: 1px solid rgba(255, 255, 255, 0.17);
-    border-radius: 16px;
-    background: rgba(10, 16, 13, 0.7);
-    box-shadow: 0 16px 44px rgba(0, 0, 0, 0.18);
-    backdrop-filter: blur(14px);
-  }
-
-  .note-stack article > span {
-    grid-row: 1 / 3;
-    color: #e4bd78;
-    font-size: 0.55rem;
-    text-transform: uppercase;
-  }
-
-  .note-stack h3 {
-    font-size: clamp(1.2rem, 1.9vw, 1.6rem);
-  }
-
-  .note-stack p {
-    margin: 0.2rem 0 0;
-    color: rgba(248, 243, 233, 0.7);
-    font-size: 0.67rem;
-    line-height: 1.45;
-  }
-
-  .balcony-share {
-    min-height: 42px;
-    padding: 0.65rem 0.8rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 1rem;
-    border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    background: rgba(10, 16, 13, 0.74);
-    backdrop-filter: blur(14px);
-    color: white;
-    font-size: 0.62rem;
-    font-weight: 600;
-    text-decoration: none;
-  }
-
-  .salon-layout {
-    min-height: calc(100% - 2rem);
-    display: grid;
-    grid-template-columns: 1fr 0.82fr;
-    align-items: center;
-    gap: clamp(2rem, 6vw, 6rem);
-  }
-
-  .salon-copy > p:last-child {
-    max-width: 580px;
-    margin: 1rem 0 0;
-    color: rgba(248, 243, 233, 0.76);
-    font-size: 0.9rem;
-    line-height: 1.65;
-  }
-
-  .consulting-menu {
-    padding: clamp(1.3rem, 3vw, 2.2rem);
-    border-radius: 22px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    background: rgba(8, 14, 11, 0.78);
-    backdrop-filter: blur(16px);
-    color: white;
-    box-shadow: 0 24px 65px rgba(34, 40, 45, 0.22);
-  }
-
-  .consulting-menu > span {
-    color: #e4bd78;
-    font-size: 0.56rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .consulting-menu > strong {
-    margin-top: 0.65rem;
+  .talk-card > strong {
+    margin: 1.1rem 0;
     display: block;
-    color: #ef9c8f;
-    font-family: "Newsreader", Georgia, serif;
-    font-size: clamp(2.2rem, 4vw, 3.6rem);
-    font-weight: 400;
-    line-height: 1;
+    color: var(--rose);
+    font-family: "Bodoni Moda", Georgia, serif;
+    font-size: 2.25rem;
+    font-weight: 500;
   }
 
-  .consulting-menu > p {
-    margin: 0.75rem 0 1.2rem;
-    color: #b9bbb7;
-    font-size: 0.64rem;
-    line-height: 1.5;
-  }
-
-  .guestbook {
-    min-height: 0;
-    padding: clamp(1rem, 1.8vw, 1.5rem);
-    overflow: auto;
-    border-radius: 22px;
-    border-color: rgba(225, 194, 136, 0.62);
-    background: linear-gradient(155deg, rgba(248, 241, 226, 0.98), rgba(223, 208, 183, 0.97));
-    backdrop-filter: blur(18px);
-    box-shadow:
-      0 18px 60px rgba(7, 12, 17, 0.28),
-      0 0 0 1px rgba(197, 166, 110, 0.18),
-      0 0 42px rgba(197, 166, 110, 0.12);
-  }
-
-  .start-here {
-    margin: 0 0 1rem auto;
+  .agent-dock {
+    position: fixed;
+    bottom: 1.4rem;
+    left: 50%;
+    z-index: 14;
     width: max-content;
-    padding: 0.36rem 0.55rem;
-    display: block;
-    border-radius: 999px;
-    background: #17231d;
-    color: #f6e8c9;
-    font-size: 0.48rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    animation: guestbook-pulse 2.8s ease-in-out infinite;
+    max-width: calc(100vw - 2rem);
+    padding: 0.42rem;
+    display: flex;
+    gap: 0.25rem;
+    overflow-x: auto;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 24px;
+    background: rgba(8, 14, 12, 0.72);
+    box-shadow: 0 18px 65px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(22px);
+    transform: translateX(-50%);
+    scrollbar-width: none;
   }
 
-  .guestbook-key {
+  .agent-dock::-webkit-scrollbar {
+    display: none;
+  }
+
+  .agent-dock button {
+    min-width: 84px;
+    min-height: 54px;
+    padding: 0.4rem 0.55rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 0;
+    border-radius: 18px;
+    background: transparent;
+    color: rgba(247, 243, 235, 0.58);
+    cursor: pointer;
+    font: inherit;
+    text-align: left;
+    transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+  }
+
+  .agent-dock button:hover {
+    background: rgba(255, 255, 255, 0.07);
+    transform: translateY(-2px);
+  }
+
+  .agent-dock button[aria-selected="true"] {
+    background: var(--porcelain);
+    color: var(--ink);
+  }
+
+  .agent-face,
+  .invitation-orb {
     position: relative;
-    width: 48px;
-    height: 20px;
-    margin: -1.8rem 0 1rem;
-  }
-
-  .guestbook-key span {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
+    flex: 0 0 auto;
     display: block;
-    border: 1px solid var(--brass);
     border-radius: 50%;
+    background: var(--agent-color);
+    box-shadow: inset -4px -6px 10px rgba(30, 37, 34, 0.12), 0 0 18px color-mix(in srgb, var(--agent-color) 40%, transparent);
   }
 
-  .guestbook-key i {
-    position: absolute;
-    top: 9px;
-    left: 19px;
-    width: 28px;
-    height: 1px;
-    background: var(--brass);
-  }
-
-  .guestbook-key i::after {
+  .agent-face::before,
+  .agent-face::after,
+  .invitation-orb::before,
+  .invitation-orb::after {
     content: "";
     position: absolute;
-    right: 2px;
+    top: 12px;
+    width: 3px;
+    height: 4px;
+    border-radius: 50%;
+    background: #18201d;
+  }
+
+  .agent-face::before,
+  .invitation-orb::before {
+    left: 9px;
+  }
+
+  .agent-face::after,
+  .invitation-orb::after {
+    right: 9px;
+  }
+
+  .agent-face i:first-child,
+  .invitation-orb i:first-child {
+    position: absolute;
+    top: -6px;
+    left: 14px;
     width: 1px;
     height: 7px;
-    background: var(--brass);
+    display: block;
+    background: var(--agent-color);
   }
 
-  .guestbook-label {
-    margin: 0;
-    color: #a8473c;
-    font-size: 0.57rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+  .agent-face i:last-child,
+  .invitation-orb i:last-child {
+    position: absolute;
+    top: -8px;
+    left: 12px;
+    width: 5px;
+    height: 5px;
+    display: block;
+    border-radius: 50%;
+    background: var(--agent-color);
   }
 
-  .guestbook h2 {
-    margin-top: 0.35rem;
-    font-size: clamp(2rem, 3vw, 3rem);
+  .agent-name small,
+  .agent-name strong {
+    display: block;
   }
 
-  .guestbook-copy {
-    margin: 0.8rem 0 1rem;
-    color: #5f5c54;
-    font-size: 0.76rem;
+  .agent-name small {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.43rem;
+    font-weight: 500;
+    opacity: 0.62;
+  }
+
+  .agent-name strong {
+    margin-top: 0.05rem;
+    font-size: 0.62rem;
+    font-weight: 700;
+  }
+
+  .invitation {
+    position: fixed;
+    top: 92px;
+    right: 1.5rem;
+    z-index: 30;
+    width: min(410px, calc(100vw - 2rem));
+    padding: 1.35rem;
+    border: 1px solid rgba(24, 32, 28, 0.12);
+    border-radius: 28px;
+    background: rgba(247, 243, 235, 0.98);
+    color: #202622;
+    box-shadow: 0 35px 120px rgba(0, 0, 0, 0.44);
+    transform: translateY(-18px) scale(0.96);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1), opacity 260ms ease;
+  }
+
+  .invitation.is-open {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .invitation-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.35rem 0.5rem;
+    border: 0;
+    background: transparent;
+    color: #70766f;
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.56rem;
+  }
+
+  .invitation-orb {
+    --agent-color: #a9d8cb;
+    width: 38px;
+    height: 38px;
+    margin-bottom: 1.1rem;
+  }
+
+  .invitation-orb::before,
+  .invitation-orb::after {
+    top: 15px;
+  }
+
+  .invitation-orb::before {
+    left: 12px;
+  }
+
+  .invitation-orb::after {
+    right: 12px;
+  }
+
+  .invitation-orb i:first-child {
+    top: -7px;
+    left: 18px;
+  }
+
+  .invitation-orb i:last-child {
+    top: -9px;
+    left: 16px;
+  }
+
+  .invitation-label {
+    color: #96713c;
+  }
+
+  .invitation h2 {
+    max-width: 330px;
+    margin-top: 0.6rem;
+    font-size: clamp(2rem, 3.6vw, 3.05rem);
+    letter-spacing: -0.05em;
+    line-height: 0.98;
+  }
+
+  .invitation > p:not(.invitation-label) {
+    margin: 0.85rem 0 1.1rem;
+    color: #6b706a;
+    font-size: 0.73rem;
     line-height: 1.55;
   }
 
-  .guestbook-footer {
-    margin-top: 0.7rem;
-    padding-top: 0.7rem;
+  .atelier-footer {
+    position: absolute;
+    right: 1.5rem;
+    bottom: 1.4rem;
+    z-index: 8;
     display: flex;
-    justify-content: space-between;
-    gap: 0.6rem;
-    border-top: 1px solid rgba(37, 41, 44, 0.14);
-  }
-
-  .guestbook-footer span,
-  .guestbook-footer i {
-    color: #75716c;
-    font-size: 0.5rem;
-    font-style: normal;
-  }
-
-  .residence-footer {
-    position: relative;
-    z-index: 2;
-    padding-inline: 0.5rem;
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    gap: 1rem;
-    color: #9fabaf;
-    font-size: 0.52rem;
+    gap: 1.2rem;
+    color: rgba(247, 243, 235, 0.36);
+    font-size: 0.5rem;
   }
 
-  .residence-footer p {
-    margin: 0;
-  }
-
-  .residence-footer p:last-child {
-    justify-self: end;
-  }
-
-  .residence-footer nav {
+  .atelier-footer nav {
     display: flex;
-    gap: 1rem;
+    gap: 0.8rem;
   }
 
-  .residence-footer a {
-    color: #d2dadb;
+  .atelier-footer a {
+    color: rgba(247, 243, 235, 0.58);
     text-decoration: none;
   }
 
   :global(a:focus-visible),
   :global(button:focus-visible),
   :global(input:focus-visible) {
-    outline: 2px solid var(--coral);
+    outline: 2px solid var(--brass);
     outline-offset: 3px;
   }
 
-  @keyframes room-arrival {
+  @keyframes breathe {
+    to {
+      transform: scale(1.16) translateY(-2%);
+      opacity: 0.78;
+    }
+  }
+
+  @keyframes card-arrival {
     from {
       opacity: 0;
-      transform: translateY(14px) scale(0.995);
+      transform: translateY(16px) rotateX(-3deg);
     }
     to {
       opacity: 1;
-      transform: translateY(0) scale(1);
+      transform: none;
     }
   }
 
-  @keyframes haze-drift {
-    from {
-      transform: translate3d(-7%, 4%, 0) scale(0.94);
-      opacity: 0.18;
+  @media (max-width: 1020px) {
+    .studio-grid {
+      grid-template-columns: minmax(230px, 0.82fr) minmax(250px, 1.1fr) minmax(270px, 0.9fr);
+      padding-inline: 1.4rem;
+      gap: 1.2rem;
     }
-    to {
-      transform: translate3d(13%, -5%, 0) scale(1.16);
-      opacity: 0.42;
+
+    .detail-card {
+      min-height: 330px;
+    }
+
+    .agent-name small {
+      display: none;
+    }
+
+    .agent-dock button {
+      min-width: 72px;
     }
   }
 
-  @keyframes guestbook-pulse {
-    0%,
-    100% {
-      box-shadow: 0 0 0 0 rgba(199, 93, 78, 0);
-    }
-    50% {
-      box-shadow: 0 0 0 7px rgba(199, 93, 78, 0.1);
-    }
-  }
-
-  @media (max-width: 1120px) {
-    .penthouse-shell {
-      height: auto;
+  @media (max-width: 820px) {
+    .atelier-shell {
       min-height: 100svh;
       overflow: visible;
     }
 
-    .residence {
-      grid-template-columns: minmax(180px, 0.58fr) minmax(0, 1.42fr);
+    .atelier-canvas,
+    .aurora,
+    .grain {
+      position: absolute;
+      top: 74px;
+      height: 520px;
     }
 
-    .room-stage {
-      min-height: 660px;
-    }
-
-    .guestbook {
-      grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: 0.7fr 1.3fr;
-      gap: 1rem 2rem;
-    }
-
-    .start-here {
-      grid-column: 1;
-      margin: 0;
-    }
-
-    .guestbook-key,
-    .guestbook-label,
-    .guestbook h2,
-    .guestbook-copy {
-      grid-column: 1;
-    }
-
-    .guestbook-key {
-      margin: 0 0 0.25rem;
-    }
-
-    .guestbook :global(.newsletter-form) {
-      grid-column: 2;
-      grid-row: 1 / 5;
-      align-self: center;
-    }
-
-    .guestbook-footer {
-      grid-column: 1 / -1;
-    }
-  }
-
-  @media (max-width: 760px) {
-    .penthouse-shell {
-      width: 100%;
-      max-width: 100vw;
-      padding: 0.5rem;
-      grid-template-rows: 58px auto 50px;
-      overflow-x: hidden;
-    }
-
-    .penthouse-header {
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
-      grid-template-columns: minmax(0, 1fr) auto;
-      border-radius: 16px;
-    }
-
-    .wordmark,
-    .header-actions {
-      min-width: 0;
-    }
-
-    .building-title,
-    .header-actions > a:first-child {
-      display: none;
-    }
-
-    .residence {
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
-      grid-template-columns: 1fr;
-    }
-
-    .floor-plan {
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
-      padding: 0.75rem;
-      border-radius: 18px;
-    }
-
-    .floor-plan-heading,
-    .elevator-status,
-    .map-hint {
-      display: none;
-    }
-
-    .room-map {
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
-      display: flex;
-      gap: 4px;
-      overflow-x: auto;
-      border: 0;
-      background: transparent;
-      scrollbar-width: none;
-    }
-
-    .room-map::-webkit-scrollbar {
-      display: none;
-    }
-
-    .room-key {
-      min-width: max-content;
-      min-height: 54px;
-      padding: 0.6rem 0.8rem;
-      justify-content: center;
-      border: 1px solid rgba(197, 166, 110, 0.42);
-      border-radius: 12px;
-    }
-
-    .room-key strong {
-      font-size: 1rem;
-    }
-
-    .guestbook {
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
-      grid-row: 2;
-      grid-column: 1;
-      padding: 1rem;
-      display: block;
-      border-radius: 18px;
-    }
-
-    .start-here {
-      margin: 0 0 0.55rem auto;
-    }
-
-    .guestbook-key {
-      display: none;
-    }
-
-    .guestbook h2 {
-      font-size: 2rem;
-    }
-
-    .guestbook-copy {
-      margin-block: 0.45rem 0.8rem;
-    }
-
-    .guestbook-footer {
-      display: none;
-    }
-
-    .room-stage {
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
-      grid-row: 3;
-      min-height: 720px;
-      border-radius: 20px;
-    }
-
-    .room-panel {
-      min-width: 0;
-      padding: 1rem;
-      overflow-x: hidden;
-    }
-
-    .room-panel::before {
-      background: linear-gradient(
-        180deg,
-        rgba(7, 12, 10, 0.58) 0%,
-        rgba(7, 12, 10, 0.83) 48%,
-        rgba(7, 12, 10, 0.96) 100%
-      );
-    }
-
-    .room-scene {
-      height: 58%;
-    }
-
-    .room-scene img {
-      object-position: 62% center;
-    }
-
-    .panel-kicker i {
-      display: none;
-    }
-
-    .lobby-layout,
-    .boardroom-layout,
-    .library-layout,
-    .balcony-view,
-    .salon-layout {
-      min-width: 0;
-      grid-template-columns: 1fr;
-    }
-
-    h1 {
-      font-size: clamp(2.35rem, 11.5vw, 3.25rem);
-    }
-
-    h2 {
-      font-size: clamp(2.15rem, 10vw, 3rem);
-    }
-
-    .portrait-window {
-      width: min(190px, calc(100% - 1rem));
-    }
-
-    .system-specimen {
-      grid-template-columns: 1fr;
-      gap: 0.55rem;
-    }
-
-    .system-node {
-      min-height: 145px;
-    }
-
-    .system-connector {
-      width: 100%;
-      height: 14px;
-    }
-
-    .lab-note {
-      grid-template-columns: 1fr;
-    }
-
-    .client-shelf {
-      align-items: flex-start;
-      flex-wrap: wrap;
-    }
-
-    .decision-table {
-      grid-template-columns: 1fr;
-    }
-
-    .client-shelf p {
-      width: 100%;
-    }
-
-    .library-layout {
-      padding-bottom: 1rem;
-    }
-
-    .book-object {
-      width: min(250px, calc(100% - 2rem));
-    }
-
-    .note-stack article {
-      grid-template-columns: 46px 1fr;
-    }
-
-    .residence-footer {
+    .atelier-header {
+      position: sticky;
+      top: 0;
       grid-template-columns: 1fr auto;
     }
 
-    .residence-footer p:last-child {
+    .atelier-status {
       display: none;
+    }
+
+    .studio-grid {
+      min-height: auto;
+      padding: 2.4rem 1rem 8rem;
+      display: block;
+    }
+
+    .intro {
+      width: min(72%, 330px);
+      min-height: 490px;
+      padding-top: 1.2rem;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 11.5vw, 3.6rem);
+    }
+
+    .intro-copy {
+      font-size: 0.78rem;
+    }
+
+    .discovery {
+      min-height: 0;
+    }
+
+    .discovery-hint {
+      display: none;
+    }
+
+    .detail-deck {
+      position: relative;
+      z-index: 6;
+      width: 100%;
+      margin-top: 1.2rem;
+    }
+
+    .detail-card {
+      width: 100%;
+      min-height: 0;
+    }
+
+    .agent-dock {
+      right: 0.5rem;
+      bottom: 0.5rem;
+      left: 0.5rem;
+      width: auto;
+      max-width: none;
+      border-radius: 20px;
+      transform: none;
+    }
+
+    .agent-dock button {
+      min-width: 76px;
+    }
+
+    .invitation {
+      top: 84px;
+      right: 0.7rem;
+      left: 0.7rem;
+      width: auto;
+      max-height: calc(100svh - 100px);
+      overflow-y: auto;
+    }
+
+    .atelier-footer {
+      position: relative;
+      right: auto;
+      bottom: auto;
+      padding: 1rem 1rem 6.4rem;
+      justify-content: space-between;
     }
   }
 
-  @media (max-height: 760px) and (min-width: 1121px) {
-    .penthouse-shell {
-      min-height: 620px;
+  @media (max-width: 520px) {
+    .atelier-header {
+      min-height: 66px;
+      padding-inline: 0.8rem;
     }
 
-    .room-panel {
-      padding: 1.2rem;
+    .guestbook-trigger {
+      min-height: 38px;
+      padding-inline: 0.7rem;
+      font-size: 0.58rem;
     }
 
-    .panel-heading {
-      padding-top: 1.2rem;
+    .atelier-canvas,
+    .aurora,
+    .grain {
+      top: 66px;
+      height: 500px;
     }
 
-    .portrait-window {
-      width: min(235px, 100%);
+    .studio-grid {
+      padding-top: 1.4rem;
     }
 
-    .system-node {
-      min-height: 155px;
+    .intro {
+      min-height: 475px;
+    }
+
+    .intro-actions {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .book-card {
+      grid-template-columns: 90px 1fr;
+    }
+
+    .agent-dock {
+      overflow-x: auto;
+    }
+
+    .agent-dock button {
+      min-width: 70px;
+      padding-inline: 0.42rem;
+    }
+
+    .agent-face {
+      width: 26px;
+      height: 26px;
+    }
+
+    .agent-face::before,
+    .agent-face::after {
+      top: 10px;
+    }
+
+    .agent-face::before {
+      left: 8px;
+    }
+
+    .agent-face::after {
+      right: 8px;
+    }
+
+    .agent-face i:first-child {
+      left: 12px;
+    }
+
+    .agent-face i:last-child {
+      left: 10px;
+    }
+
+    .invitation {
+      top: 76px;
+      padding: 1.1rem;
+      border-radius: 22px;
     }
   }
 
@@ -2251,9 +1505,9 @@ const X_SHARE_URL =
     *,
     *::before,
     *::after {
-      transition-duration: 0.01ms !important;
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
     }
   }
 </style>

@@ -1,7 +1,6 @@
 import satori, { type SatoriOptions } from "satori";
 import { Resvg } from "@resvg/resvg-js";
 import { type CollectionEntry } from "astro:content";
-import { readFile } from "node:fs/promises";
 import postOgImage from "./og-templates/post";
 import siteOgImage from "./og-templates/site";
 
@@ -55,8 +54,6 @@ export async function generateOgImageForPost(post: CollectionEntry<"blog">) {
 }
 
 export async function generateOgImageForSite() {
-  const lobbyImage = await readFile("public/assets/rooms/lobby.jpg");
-  const lobbyImageData = `data:image/jpeg;base64,${lobbyImage.toString("base64")}`;
-  const svg = await satori(siteOgImage(lobbyImageData), options);
+  const svg = await satori(siteOgImage(), options);
   return svgBufferToPngBuffer(svg);
 }

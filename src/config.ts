@@ -3,7 +3,7 @@ import type { Site, SocialObjects } from "./types";
 export const SITE: Site = {
   website: "https://leevanielle.github.io/vanielle-/",
   author: "Vanielle Lee",
-  desc: "Step inside Vanielle Lee’s interactive penthouse—a room-by-room tour through agentic AI, engineering leadership, her book, and founder life.",
+  desc: "Meet Vanielle Lee through a playful constellation of AI, engineering leadership, writing, and founder work.",
   title: "Vanielle Lee",
   ogImage: "og.png",
   lightAndDarkMode: true,
