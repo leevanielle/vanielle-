@@ -3,7 +3,6 @@ import tailwind from "@astrojs/tailwind";
 import react from "@astrojs/react";
 import remarkToc from "remark-toc";
 import remarkCollapse from "remark-collapse";
-import vercelStatic from "@astrojs/vercel/static";
 import sitemap from "@astrojs/sitemap";
 import { SITE } from "./src/config";
 
@@ -11,15 +10,6 @@ import { SITE } from "./src/config";
 export default defineConfig({
   site: SITE.website,
   output: "static",
-  adapter: vercelStatic({
-    imageService: true,
-    speedInsights: {
-      enabled: true,
-    },
-    webAnalytics: {
-      enabled: true,
-    },
-  }),
   integrations: [
     tailwind({
       applyBaseStyles: false,
