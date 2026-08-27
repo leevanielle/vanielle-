@@ -1,11 +1,11 @@
 export default () => {
   const agents = [
-    { name: "MEET", color: "#f0c8bc", x: 785, y: 148 },
-    { name: "BUILD", color: "#a9d8cb", x: 953, y: 184 },
-    { name: "LEAD", color: "#e3bd74", x: 1012, y: 330 },
-    { name: "BOOK", color: "#c7bce8", x: 910, y: 455 },
-    { name: "NOTES", color: "#a8c9e8", x: 742, y: 438 },
-    { name: "TALK", color: "#e9a4a0", x: 690, y: 278 },
+    { name: "MEET", color: "#cf2f21", x: 28, y: 88, n: "01" },
+    { name: "BUILD", color: "#d4a33b", x: 170, y: 88, n: "02" },
+    { name: "LEAD", color: "#191915", x: 312, y: 88, n: "03" },
+    { name: "BOOK", color: "#ef746d", x: 312, y: 255, n: "04" },
+    { name: "NOTES", color: "#716c61", x: 170, y: 255, n: "05" },
+    { name: "TALK", color: "#9f2018", x: 28, y: 255, n: "06" },
   ];
 
   return (
@@ -16,55 +16,60 @@ export default () => {
         height: "100%",
         display: "flex",
         overflow: "hidden",
-        background:
-          "radial-gradient(circle at 72% 50%, #254138 0%, #111b18 30%, #0b1110 66%)",
-        color: "#f7f3eb",
+        background: "#f2eee4",
+        color: "#191915",
         fontFamily: "IBM Plex Mono",
       }}
     >
       <div
         style={{
           position: "absolute",
-          top: 28,
-          left: 36,
-          right: 36,
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 72,
+          padding: "0 38px",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
+          borderBottom: "2px solid #191915",
+          background: "#f2eee4",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <span style={{ marginRight: 12, color: "#e3bd74" }}>+</span>
-          <span style={{ fontSize: 18, fontWeight: 600 }}>Vanielle Lee</span>
-        </div>
-        <span
+        <div
           style={{
-            padding: "9px 13px",
-            border: "1px solid rgba(255,255,255,.2)",
-            borderRadius: 999,
-            color: "#a9d8cb",
-            fontSize: 10,
+            display: "flex",
+            alignItems: "center",
+            fontSize: 18,
+            fontWeight: 700,
           }}
         >
-          SIX AGENTS ARE AWAKE
+          <span>VANIELLE</span>
+          <span style={{ margin: "0 10px", color: "#cf2f21" }}>■</span>
+          <span>LEE</span>
+        </div>
+        <span
+          style={{ color: "#716c61", fontSize: 10, letterSpacing: "0.08em" }}
+        >
+          AGENT FIELD SYSTEM / ONLINE
         </span>
       </div>
 
       <div
         style={{
           position: "absolute",
-          top: 135,
+          top: 124,
           left: 42,
-          width: 560,
+          width: 570,
           display: "flex",
           flexDirection: "column",
         }}
       >
         <span
           style={{
-            color: "#e3bd74",
+            color: "#cf2f21",
             fontSize: 12,
-            fontWeight: 600,
+            fontWeight: 700,
             letterSpacing: "0.08em",
           }}
         >
@@ -72,113 +77,178 @@ export default () => {
         </span>
         <span
           style={{
-            marginTop: 22,
-            fontSize: 47,
-            fontWeight: 600,
+            marginTop: 24,
+            fontFamily: "serif",
+            fontSize: 51,
+            fontWeight: 400,
             letterSpacing: "-0.055em",
-            lineHeight: 1.14,
+            lineHeight: 1.08,
           }}
         >
           I make ambitious technology feel possible.
         </span>
         <span
           style={{
-            width: 525,
-            marginTop: 23,
-            color: "rgba(247,243,235,.68)",
+            width: 520,
+            marginTop: 22,
+            color: "#5f5a50",
             fontSize: 15,
             lineHeight: 1.55,
           }}
         >
-          Discover the systems, leadership, book, field notes, and human behind
-          the work.
+          Ten years turning hard technical bets into products, teams, and
+          decisions people can trust.
         </span>
+        <div
+          style={{
+            width: 235,
+            marginTop: 29,
+            padding: "13px 17px",
+            display: "flex",
+            justifyContent: "center",
+            background: "#191915",
+            boxShadow: "6px 6px 0 #cf2f21",
+            color: "#f2eee4",
+            fontSize: 11,
+            fontWeight: 700,
+          }}
+        >
+          ENTER THE FIELD MANUAL →
+        </div>
       </div>
 
       <div
         style={{
           position: "absolute",
-          left: 840,
-          top: 250,
-          width: 130,
-          height: 130,
+          top: 112,
+          right: 40,
+          width: 480,
+          height: 440,
           display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          border: "1px solid rgba(169,216,203,.36)",
-          borderRadius: "50%",
-          background: "radial-gradient(circle at 35% 28%, #fff8e9, #d9e5dc 54%, #8fc5b7)",
-          boxShadow: "0 0 80px rgba(169,216,203,.34)",
-          color: "#18201d",
-          fontSize: 22,
+          border: "2px solid #191915",
+          background: "#fbf8ef",
+          boxShadow: "10px 10px 0 #d4a33b",
         }}
       >
-        +
-      </div>
-
-      {agents.map(agent => (
         <div
           style={{
             position: "absolute",
-            left: agent.x,
-            top: agent.y,
+            top: 0,
+            left: 0,
+            right: 0,
+            height: 45,
+            padding: "0 15px",
             display: "flex",
-            flexDirection: "column",
             alignItems: "center",
+            justifyContent: "space-between",
+            background: "#191915",
+            color: "#f2eee4",
+            fontSize: 10,
           }}
         >
+          <span>FIELD ROUTE / 001</span>
+          <span style={{ color: "#ef746d" }}>SCROLL TO MOVE</span>
+        </div>
+
+        <div
+          style={{
+            position: "absolute",
+            top: 146,
+            left: 65,
+            width: 340,
+            borderTop: "2px dashed #191915",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            top: 313,
+            left: 65,
+            width: 340,
+            borderTop: "2px dashed #191915",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            top: 146,
+            right: 73,
+            height: 169,
+            borderLeft: "2px dashed #191915",
+          }}
+        />
+
+        {agents.map(agent => (
           <div
             style={{
-              position: "relative",
-              width: 54,
-              height: 54,
+              position: "absolute",
+              left: agent.x + 39,
+              top: agent.y,
+              width: 74,
               display: "flex",
+              flexDirection: "column",
               alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "50%",
-              background: agent.color,
-              boxShadow: `0 0 34px ${agent.color}55`,
             }}
           >
+            <div
+              style={{
+                width: 54,
+                height: 54,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                border: "2px solid #191915",
+                borderRadius: "50%",
+                background: agent.color,
+              }}
+            >
+              <span
+                style={{
+                  width: 4,
+                  height: 6,
+                  marginRight: 7,
+                  borderRadius: "50%",
+                  background: "#fbf8ef",
+                }}
+              />
+              <span
+                style={{
+                  width: 4,
+                  height: 6,
+                  borderRadius: "50%",
+                  background: "#fbf8ef",
+                }}
+              />
+            </div>
             <span
               style={{
-                width: 4,
-                height: 6,
-                marginRight: 7,
-                borderRadius: "50%",
-                background: "#17201d",
+                marginTop: 8,
+                color: "#191915",
+                fontSize: 9,
+                fontWeight: 700,
               }}
-            />
-            <span
-              style={{
-                width: 4,
-                height: 6,
-                borderRadius: "50%",
-                background: "#17201d",
-              }}
-            />
+            >
+              {agent.n} · {agent.name}
+            </span>
           </div>
-          <span style={{ marginTop: 7, color: "rgba(247,243,235,.72)", fontSize: 9 }}>
-            {agent.name}
-          </span>
-        </div>
-      ))}
+        ))}
 
-      <div
-        style={{
-          position: "absolute",
-          right: 36,
-          bottom: 30,
-          padding: "11px 15px",
-          display: "flex",
-          borderRadius: 999,
-          background: "#f7f3eb",
-          color: "#17201d",
-          fontSize: 11,
-          fontWeight: 600,
-        }}
-      >
-        COME MEET THE AGENTS →
+        <div
+          style={{
+            position: "absolute",
+            right: 14,
+            bottom: 12,
+            left: 14,
+            display: "flex",
+            justifyContent: "space-between",
+            color: "#716c61",
+            fontSize: 8,
+            letterSpacing: "0.08em",
+          }}
+        >
+          <span>HUMAN IN THE LOOP</span>
+          <span>BUILD · LEAD · WRITE</span>
+        </div>
       </div>
     </div>
   );
