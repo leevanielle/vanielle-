@@ -29,6 +29,18 @@ const basePath = `${import.meta.env.BASE_URL.replace(/\/+$/, "")}/`;
     </button>
   </div>
 
+  <input type="hidden" name="source" value="website" />
+  <div class="honeypot" aria-hidden="true">
+    <label for="newsletter-company">Company website</label>
+    <input
+      id="newsletter-company"
+      name="company_website"
+      type="text"
+      tabindex="-1"
+      autocomplete="off"
+    />
+  </div>
+
   <div class="form-meta">
     <p id="newsletter-help" class="help">
       No spam. Unsubscribe anytime. <a href={`${basePath}privacy`}>Privacy</a>.
@@ -55,11 +67,12 @@ const basePath = `${import.meta.env.BASE_URL.replace(/\/+$/, "")}/`;
     status.textContent = "";
   });
 
-  form?.addEventListener("submit", event => {
+  form?.addEventListener("submit", async event => {
     if (!email || !status) return;
 
+    event.preventDefault();
+
     if (!email.validity.valid) {
-      event.preventDefault();
       status.textContent =
         "Enter a valid email address, such as you@example.com.";
       email.setAttribute("aria-invalid", "true");
@@ -70,7 +83,6 @@ const basePath = `${import.meta.env.BASE_URL.replace(/\/+$/, "")}/`;
     email.removeAttribute("aria-invalid");
 
     if (form.dataset.configured !== "true") {
-      event.preventDefault();
       status.textContent =
         "The signup design is ready; the mailing-list connection is the final step.";
       return;
@@ -82,6 +94,34 @@ const basePath = `${import.meta.env.BASE_URL.replace(/\/+$/, "")}/`;
     if (button) {
       button.disabled = true;
       button.textContent = "Joining…";
+    }
+
+    status.textContent = "Adding you to the field notes…";
+
+    try {
+      const response = await fetch(form.action, {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: new FormData(form),
+      });
+      const payload = await response.json().catch(() => ({}));
+
+      if (!response.ok || payload.ok !== true) {
+        throw new Error(payload.error || "Unable to subscribe right now.");
+      }
+
+      form.reset();
+      status.textContent = "You’re on the list. Watch your inbox for the next note.";
+    } catch (error) {
+      status.textContent =
+        error instanceof Error
+          ? error.message
+          : "Unable to subscribe right now. Please try again.";
+    } finally {
+      if (button) {
+        button.disabled = false;
+        button.innerHTML = 'Send me the next note <span aria-hidden="true">→</span>';
+      }
     }
   });
 </script>
@@ -99,6 +139,14 @@ const basePath = `${import.meta.env.BASE_URL.replace(/\/+$/, "")}/`;
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border: 0;
+  }
+  .honeypot {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
   .field-row {
     display: grid;
