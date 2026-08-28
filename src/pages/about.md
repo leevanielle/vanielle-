@@ -14,4 +14,4 @@ That is the résumé. The better introduction is the work:
 - [Open the field manual](/#work)
 - [Read the book](/#book)
 - [Join the field notes](/#newsletter)
-- [Email me](mailto:vanielletxt@gmail.com)
+- [Find me on Threads](https://www.threads.com/@leevanielle)
