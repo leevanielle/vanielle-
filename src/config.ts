@@ -3,9 +3,9 @@ import type { Site, SocialObjects } from "./types";
 export const SITE: Site = {
   website: "https://vanielle.io/",
   author: "Vanielle Lee",
-  desc: "AI engineer, founder, and OdeCloud CTO with 10+ years building products, platforms, teams, and agentic AI systems.",
+  desc: "Vanielle Lee is an AI engineer, founder, OdeCloud CTO, and author of Emperors, Prophets, and Product Managers.",
   title: "Vanielle Lee",
-  ogImage: "astropaper-og.jpg",
+  ogImage: "og.png",
   lightAndDarkMode: true,
   postPerPage: 3,
 };

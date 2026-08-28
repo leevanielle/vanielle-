@@ -9,10 +9,7 @@ tags:
   - memories
   - personal
   - identity
-description:
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-  incididunt ut labore et dolore magna aliqua. Praeseｓｓnt elementum facilisis leo vel
-  fringilla est
+description: A reflection on my grandfather, memory, language, and the fear of losing part of my Vietnamese identity.
 ---
 
 The dark night cloud scattered across the evening horizon. The main streets were loud and booming with activities, but the side street were surprisingly quiet. Evening vendors woudl set up stand and cook up food. Quality of the food was questionalble, but the food was good at least––it was authentic to the true nature of a Vietnamese experience.
