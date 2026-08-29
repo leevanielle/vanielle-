@@ -41,18 +41,20 @@ const socialLinks = [
       <strong>Vanielle Lee</strong>
     </div>
 
-    <aside
-      class="subscribe-rail"
-      id="newsletter"
-      aria-label="Join the field notes"
-    >
-      <span>Field notes / occasional</span>
-      <strong>One useful note at a time.</strong>
-      <NewsletterSignup />
-    </aside>
-
     <main>
       <section class="home-hero" aria-labelledby="hero-heading">
+        <aside
+          class="hero-newsletter"
+          id="newsletter"
+          aria-label="Join the field notes"
+        >
+          <div class="newsletter-intro">
+            <span>Field notes / occasional</span>
+            <strong>One useful note at a time.</strong>
+          </div>
+          <NewsletterSignup />
+        </aside>
+
         <div class="hero-copy reveal">
           <p class="kicker">Founder · CTO · AI engineer · Author</p>
           <h1 id="hero-heading">
@@ -301,31 +303,44 @@ const socialLinks = [
     font-weight: 500;
     letter-spacing: -0.06em;
   }
-  .subscribe-rail {
+  .hero-newsletter {
+    grid-column: 1 / -1;
     width: 100%;
-    max-width: none;
-    min-height: 94px;
     margin: 0;
-    padding: 1rem max(1rem, calc((100vw - 1240px) / 2));
+    padding: 1.15rem 0;
     display: grid;
-    grid-template-columns: 0.45fr 0.55fr 1fr;
+    grid-template-columns: minmax(240px, 0.7fr) minmax(440px, 1.3fr);
     align-items: center;
-    gap: clamp(1rem, 3vw, 3rem);
-    background: var(--ink);
-    color: var(--paper);
+    gap: clamp(2rem, 5vw, 5rem);
+    border-top: 1px solid rgba(25, 25, 21, 0.48);
+    border-bottom: 1px solid rgba(25, 25, 21, 0.48);
+    color: var(--ink);
   }
-  .subscribe-rail > span {
-    color: var(--salmon);
+  .newsletter-intro {
+    display: grid;
+    gap: 0.35rem;
+  }
+  .newsletter-intro span {
+    color: var(--red);
     font-family: "IBM Plex Mono", monospace;
     font-size: 0.52rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
-  .subscribe-rail > strong {
+  .newsletter-intro strong {
     font-family: "Bodoni Moda", Didot, serif;
-    font-size: clamp(1.3rem, 2vw, 1.85rem);
+    font-size: clamp(1.25rem, 1.8vw, 1.7rem);
     font-weight: 500;
     letter-spacing: -0.035em;
+  }
+  .hero-newsletter :global(.newsletter-form) {
+    color: var(--ink);
+  }
+  .hero-newsletter :global(.newsletter-form .help) {
+    color: #6e675d;
+  }
+  .hero-newsletter :global(.newsletter-form .help a) {
+    color: var(--ink);
   }
   .home-hero {
     position: relative;
@@ -334,7 +349,8 @@ const socialLinks = [
     display: grid;
     grid-template-columns: minmax(0, 1.14fr) minmax(360px, 0.86fr);
     align-items: center;
-    gap: clamp(3rem, 7vw, 7rem);
+    column-gap: clamp(3rem, 7vw, 7rem);
+    row-gap: clamp(2.5rem, 4vw, 4rem);
     overflow: hidden;
   }
   .hero-copy {
@@ -846,10 +862,9 @@ const socialLinks = [
     .home-hero {
       padding-top: 3.5rem;
     }
-    .subscribe-rail {
-      padding-block: 1.25rem;
+    .hero-newsletter {
       grid-template-columns: 1fr;
-      gap: 0.55rem;
+      gap: 1rem;
     }
     h1 {
       font-size: clamp(2.8rem, 13vw, 4rem);
