@@ -101,13 +101,7 @@ const socialLinks = [
         </div>
       </section>
 
-      <section class="work-section" id="work" aria-labelledby="work-heading">
-        <header class="section-heading reveal">
-          <p class="kicker">Selected work</p>
-          <h2 id="work-heading">The work behind the résumé.</h2>
-          <span>Systems and decisions from the codebase and the CTO seat.</span>
-        </header>
-
+      <section class="work-section" id="work" aria-label="Selected work">
         <div class="artifact-list">
           <article class="artifact artifact-agent reveal">
             <div class="artifact-label">
@@ -555,6 +549,7 @@ const socialLinks = [
     padding: clamp(7rem, 12vw, 11rem) max(1rem, calc((100vw - 1160px) / 2));
   }
   .work-section {
+    padding-top: clamp(3rem, 6vw, 5rem);
     border-top: 1px solid rgba(25, 25, 21, 0.52);
   }
   .section-heading {
