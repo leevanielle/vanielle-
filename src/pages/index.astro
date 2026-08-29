@@ -73,7 +73,7 @@ const socialLinks = [
           </p>
 
           <div class="hero-links">
-            <a href="#work">Open the work <span>↓</span></a>
+            <a href="#journal">Read the field notes <span>↓</span></a>
             <a href={FORBES_URL} target="_blank" rel="noopener noreferrer">
               OdeCloud in Forbes <span>↗</span>
             </a>
@@ -98,77 +98,6 @@ const socialLinks = [
 
         <div class="hero-coordinate" aria-hidden="true">
           37.7749° N / 122.4194° W
-        </div>
-      </section>
-
-      <section class="work-section" id="work" aria-label="Selected work">
-        <div class="artifact-list">
-          <article class="artifact artifact-agent reveal">
-            <div class="artifact-label">
-              <span>Agentic systems</span>
-              <small>Boundaries before autonomy</small>
-            </div>
-            <div class="agent-map" aria-label="Agent system flow">
-              <span>Intent</span><i>→</i><span>Agent</span><i>→</i><span
-                >Tools</span
-              ><i>→</i><span>Evidence</span><i>→</i><strong>Judgment</strong>
-            </div>
-            <p>Every action leaves evidence a human can inspect.</p>
-          </article>
-
-          <article class="artifact artifact-stack reveal">
-            <div class="artifact-label">
-              <span>Engineering</span>
-              <small>The seams are the system</small>
-            </div>
-            <ol class="stack-map" aria-label="Vanielle's engineering range">
-              <li>
-                <small>05</small><strong>Agents</strong><span
-                  >reason · act · review</span
-                >
-              </li>
-              <li>
-                <small>04</small><strong>Data</strong><span
-                  >signals · models · context</span
-                >
-              </li>
-              <li>
-                <small>03</small><strong>Infrastructure</strong><span
-                  >cloud · reliability · scale</span
-                >
-              </li>
-              <li>
-                <small>02</small><strong>Backend</strong><span
-                  >services · APIs · workflows</span
-                >
-              </li>
-              <li>
-                <small>01</small><strong>Frontend</strong><span
-                  >interfaces · product · people</span
-                >
-              </li>
-            </ol>
-            <p>
-              Frontend to infrastructure to the agents running underneath it.
-            </p>
-          </article>
-
-          <article class="artifact artifact-leadership reveal">
-            <div class="artifact-label">
-              <span>Leadership</span>
-              <small>Remove the single point of failure</small>
-            </div>
-            <div class="leadership-map" aria-label="Leadership decision model">
-              <div>
-                <span>Before</span><b>Team</b><i>→</i><strong>Hero</strong>
-              </div>
-              <em>context moves outward</em>
-              <div>
-                <span>After</span><b>Context</b><i>→</i><strong>Team</strong>
-              </div>
-            </div>
-            <p>Good context distributes better decisions.</p>
-          </article>
         </div>
       </section>
 
@@ -543,14 +472,9 @@ const socialLinks = [
     font-size: 0.5rem;
     text-transform: uppercase;
   }
-  .work-section,
   .journal-section {
     position: relative;
     padding: clamp(7rem, 12vw, 11rem) max(1rem, calc((100vw - 1160px) / 2));
-  }
-  .work-section {
-    padding-top: clamp(3rem, 6vw, 5rem);
-    border-top: 1px solid rgba(25, 25, 21, 0.52);
   }
   .section-heading {
     margin-bottom: clamp(4rem, 8vw, 7rem);
@@ -571,161 +495,6 @@ const socialLinks = [
   .section-heading > span {
     color: #635d53;
     line-height: 1.65;
-  }
-  .artifact-list {
-    border-top: 1px solid var(--ink);
-  }
-  .artifact {
-    min-height: 330px;
-    padding: clamp(1.5rem, 3.5vw, 3.1rem) 0;
-    display: grid;
-    grid-template-columns: 0.5fr 1.5fr;
-    align-items: center;
-    gap: clamp(2rem, 6vw, 6rem);
-    border-bottom: 1px solid var(--ink);
-  }
-  .artifact-label {
-    align-self: start;
-    display: grid;
-    gap: 0.45rem;
-    font-family: "IBM Plex Mono", monospace;
-    text-transform: uppercase;
-  }
-  .artifact-label span {
-    color: var(--red);
-    font-size: 0.58rem;
-    font-weight: 600;
-  }
-  .artifact-label small {
-    max-width: 180px;
-    font-size: 0.62rem;
-    line-height: 1.45;
-  }
-  .artifact > p {
-    grid-column: 2;
-    margin: -3.5rem 0 0;
-    color: #696359;
-    font-size: 0.88rem;
-  }
-  .agent-map {
-    min-height: 180px;
-    padding: clamp(1.2rem, 3vw, 2.4rem);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.7rem;
-    border: 1px solid var(--ink);
-    background: var(--ink);
-    color: var(--paper);
-    box-shadow: 8px 8px 0 var(--red);
-    font-family: "IBM Plex Mono", monospace;
-  }
-  .agent-map span,
-  .agent-map strong {
-    min-width: 76px;
-    aspect-ratio: 1;
-    display: grid;
-    place-items: center;
-    border: 1px solid #777268;
-    border-radius: 50%;
-    font-size: 0.56rem;
-    font-weight: 500;
-    text-transform: uppercase;
-  }
-  .agent-map strong {
-    border-color: var(--salmon);
-    background: var(--red);
-  }
-  .agent-map i {
-    color: var(--amber);
-    font-style: normal;
-  }
-  .stack-map {
-    margin: 0;
-    padding: 0;
-    border: 1px solid var(--ink);
-    background: var(--sage);
-    list-style: none;
-    box-shadow: 8px 8px 0 var(--amber);
-  }
-  .stack-map li {
-    min-height: 52px;
-    padding: 0.75rem 1rem;
-    display: grid;
-    grid-template-columns: 40px 0.7fr 1.3fr;
-    align-items: center;
-    gap: 1rem;
-    border-bottom: 1px solid rgba(25, 25, 21, 0.42);
-  }
-  .stack-map li:last-child {
-    border-bottom: 0;
-  }
-  .stack-map small,
-  .stack-map span {
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 0.54rem;
-    text-transform: uppercase;
-  }
-  .stack-map small {
-    color: var(--red);
-  }
-  .stack-map strong {
-    font-size: 0.92rem;
-  }
-  .stack-map span {
-    color: #625e55;
-  }
-  .leadership-map {
-    min-height: 200px;
-    padding: clamp(1.2rem, 3vw, 2.4rem);
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    gap: 1.2rem;
-    border: 1px solid var(--ink);
-    background: var(--rose);
-    box-shadow: 8px 8px 0 var(--red);
-  }
-  .leadership-map > div {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    align-items: center;
-    gap: 0.65rem;
-    font-family: "IBM Plex Mono", monospace;
-  }
-  .leadership-map div span {
-    grid-column: 1 / -1;
-    color: var(--red);
-    font-size: 0.52rem;
-    text-transform: uppercase;
-  }
-  .leadership-map div b,
-  .leadership-map div strong {
-    min-height: 64px;
-    padding: 0.7rem;
-    display: grid;
-    place-items: center;
-    border: 1px solid var(--ink);
-    font-size: 0.57rem;
-    font-weight: 500;
-    text-transform: uppercase;
-  }
-  .leadership-map div strong {
-    background: var(--ink);
-    color: var(--paper);
-  }
-  .leadership-map div i {
-    color: var(--red);
-    font-style: normal;
-  }
-  .leadership-map > em {
-    max-width: 80px;
-    color: #6a645b;
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 0.48rem;
-    line-height: 1.45;
-    text-align: center;
-    text-transform: uppercase;
   }
   .book-section {
     position: relative;
@@ -1083,16 +852,6 @@ const socialLinks = [
     .section-heading {
       gap: 0.8rem;
     }
-    .artifact {
-      grid-template-columns: 1fr;
-    }
-    .artifact > p {
-      grid-column: 1;
-      margin: 0;
-    }
-    .artifact-label {
-      align-self: auto;
-    }
     .home-posts {
       grid-template-columns: 1fr 1fr;
     }
@@ -1117,20 +876,6 @@ const socialLinks = [
     .connect-copy h2 {
       font-size: clamp(3.5rem, 16vw, 5.2rem);
     }
-    .agent-map {
-      overflow-x: auto;
-      justify-content: flex-start;
-    }
-    .agent-map span,
-    .agent-map strong {
-      min-width: 64px;
-    }
-    .leadership-map {
-      grid-template-columns: 1fr;
-    }
-    .leadership-map > em {
-      max-width: none;
-    }
     .book-details,
     .home-posts {
       grid-template-columns: 1fr;
@@ -1150,11 +895,6 @@ const socialLinks = [
     .portrait-system figcaption {
       align-items: flex-start;
       flex-direction: column;
-    }
-    .stack-map li {
-      grid-template-columns: 28px 0.8fr 1.2fr;
-      gap: 0.5rem;
-      padding-inline: 0.65rem;
     }
     .book-atmosphere strong {
       display: none;
