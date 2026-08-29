@@ -65,9 +65,11 @@ const socialLinks = [
             >
           </h1>
           <p class="hero-intro">
-            I’m a founder, CTO, AI engineer, and author. This is my corner of
-            the internet for field notes on technology, leadership, careers, and
-            building across cultures. Welcome.
+            I’m a founder, CTO, AI engineer, and author. Over the past decade,
+            I’ve worked across the engineering stack and spent eight years in
+            the CTO seat. This is my corner of the internet for field notes on
+            technology, leadership, careers, and building across cultures.
+            Welcome.
           </p>
 
           <div class="hero-links">
@@ -99,20 +101,11 @@ const socialLinks = [
         </div>
       </section>
 
-      <section class="proof-line" aria-label="Career proof points">
-        <div><strong>10+</strong><span>years engineering</span></div>
-        <div><strong>8</strong><span>years as CTO</span></div>
-        <div><strong>Full stack</strong><span>interface → agents</span></div>
-        <a href={FORBES_URL} target="_blank" rel="noopener noreferrer">
-          <strong>Forbes</strong><span>OdeCloud profile ↗</span>
-        </a>
-      </section>
-
       <section class="work-section" id="work" aria-labelledby="work-heading">
         <header class="section-heading reveal">
-          <p class="kicker">Selected operating models</p>
-          <h2 id="work-heading">The work, without the résumé.</h2>
-          <span>Three artifacts from the codebase and the CTO seat.</span>
+          <p class="kicker">Selected work</p>
+          <h2 id="work-heading">The work behind the résumé.</h2>
+          <span>Systems and decisions from the codebase and the CTO seat.</span>
         </header>
 
         <div class="artifact-list">
@@ -556,43 +549,13 @@ const socialLinks = [
     font-size: 0.5rem;
     text-transform: uppercase;
   }
-  .proof-line {
-    padding-inline: max(1rem, calc((100vw - 1240px) / 2));
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    border-top: 1px solid var(--ink);
-    border-bottom: 1px solid var(--ink);
-    background: var(--paper-deep);
-  }
-  .proof-line > * {
-    min-height: 118px;
-    padding: 1.1rem;
-    display: grid;
-    align-content: center;
-    gap: 0.2rem;
-    border-right: 1px solid rgba(25, 25, 21, 0.42);
-    color: var(--ink);
-    text-decoration: none;
-  }
-  .proof-line > *:first-child {
-    border-left: 1px solid rgba(25, 25, 21, 0.42);
-  }
-  .proof-line strong {
-    font-family: "Bodoni Moda", Didot, serif;
-    font-size: 2rem;
-    font-weight: 500;
-    line-height: 1;
-  }
-  .proof-line span {
-    color: #696359;
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 0.53rem;
-    text-transform: uppercase;
-  }
   .work-section,
   .journal-section {
     position: relative;
     padding: clamp(7rem, 12vw, 11rem) max(1rem, calc((100vw - 1160px) / 2));
+  }
+  .work-section {
+    border-top: 1px solid rgba(25, 25, 21, 0.52);
   }
   .section-heading {
     margin-bottom: clamp(4rem, 8vw, 7rem);
@@ -1154,12 +1117,6 @@ const socialLinks = [
     h1 {
       font-size: clamp(4rem, 19vw, 6rem);
     }
-    .proof-line {
-      grid-template-columns: 1fr 1fr;
-    }
-    .proof-line > *:nth-child(3) {
-      border-left: 1px solid rgba(25, 25, 21, 0.42);
-    }
     .section-heading h2,
     .book-copy h2,
     .connect-copy h2 {
@@ -1198,13 +1155,6 @@ const socialLinks = [
     .portrait-system figcaption {
       align-items: flex-start;
       flex-direction: column;
-    }
-    .proof-line {
-      grid-template-columns: 1fr;
-    }
-    .proof-line > *,
-    .proof-line > *:nth-child(3) {
-      border-left: 1px solid rgba(25, 25, 21, 0.42);
     }
     .stack-map li {
       grid-template-columns: 28px 0.8fr 1.2fr;
