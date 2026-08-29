@@ -43,18 +43,6 @@ const socialLinks = [
 
     <main>
       <section class="home-hero" aria-labelledby="hero-heading">
-        <aside
-          class="hero-newsletter"
-          id="newsletter"
-          aria-label="Join the field notes"
-        >
-          <div class="newsletter-intro">
-            <span>Field notes / occasional</span>
-            <strong>One useful note at a time.</strong>
-          </div>
-          <NewsletterSignup />
-        </aside>
-
         <div class="hero-copy reveal">
           <p class="kicker">Founder · CTO · AI engineer · Author</p>
           <h1 id="hero-heading">
@@ -68,6 +56,22 @@ const socialLinks = [
             the CTO seat. This is my corner of the internet for field notes on
             technology, leadership, careers, and building across cultures.
           </p>
+
+          <aside
+            class="hero-newsletter"
+            id="newsletter"
+            aria-labelledby="newsletter-heading"
+          >
+            <div class="newsletter-intro">
+              <span>Field notes</span>
+              <h2 id="newsletter-heading">A useful note, when I have one.</h2>
+              <p>
+                AI, engineering leadership, careers, and building across
+                cultures.
+              </p>
+            </div>
+            <NewsletterSignup variant="editorial" idPrefix="home-newsletter" />
+          </aside>
 
           <div class="hero-links">
             <a href="#journal">Read the field notes <span>↓</span></a>
@@ -291,21 +295,15 @@ const socialLinks = [
     letter-spacing: -0.06em;
   }
   .hero-newsletter {
-    grid-column: 1 / -1;
-    width: 100%;
-    margin: 0;
-    padding: 1.15rem 0;
-    display: grid;
-    grid-template-columns: minmax(240px, 0.7fr) minmax(440px, 1.3fr);
-    align-items: center;
-    gap: clamp(2rem, 5vw, 5rem);
-    border-top: 1px solid rgba(25, 25, 21, 0.48);
-    border-bottom: 1px solid rgba(25, 25, 21, 0.48);
+    width: min(100%, 600px);
+    margin: 2rem 0 0;
+    padding: 1.65rem 0 0;
+    border-top: 1px solid rgba(25, 25, 21, 0.38);
     color: var(--ink);
   }
   .newsletter-intro {
     display: grid;
-    gap: 0.35rem;
+    gap: 0.45rem;
   }
   .newsletter-intro span {
     color: var(--red);
@@ -314,20 +312,21 @@ const socialLinks = [
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
-  .newsletter-intro strong {
+  .newsletter-intro h2 {
+    max-width: 520px;
+    margin: 0;
     font-family: "Bodoni Moda", Didot, serif;
-    font-size: clamp(1.25rem, 1.8vw, 1.7rem);
+    font-size: clamp(2.2rem, 3.2vw, 3.1rem);
     font-weight: 500;
-    letter-spacing: -0.035em;
+    letter-spacing: -0.055em;
+    line-height: 0.96;
   }
-  .hero-newsletter :global(.newsletter-form) {
-    color: var(--ink);
-  }
-  .hero-newsletter :global(.newsletter-form .help) {
+  .newsletter-intro p {
+    max-width: 520px;
+    margin: 0.15rem 0 1.15rem;
     color: #6e675d;
-  }
-  .hero-newsletter :global(.newsletter-form .help a) {
-    color: var(--ink);
+    font-size: 0.84rem;
+    line-height: 1.55;
   }
   .home-hero {
     position: relative;
@@ -804,10 +803,6 @@ const socialLinks = [
     }
     .home-hero {
       padding-top: 3.5rem;
-    }
-    .hero-newsletter {
-      grid-template-columns: 1fr;
-      gap: 1rem;
     }
     h1 {
       font-size: clamp(2.8rem, 13vw, 4rem);

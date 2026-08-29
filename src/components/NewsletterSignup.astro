@@ -1,39 +1,59 @@
 ---
+interface Props {
+  variant?: "default" | "editorial";
+  idPrefix?: string;
+}
+
+const { variant = "default", idPrefix = "newsletter" } = Astro.props;
 const newsletterAction = import.meta.env.PUBLIC_NEWSLETTER_ACTION?.trim();
 const isConfigured = Boolean(newsletterAction);
 const basePath = `${import.meta.env.BASE_URL.replace(/\/+$/, "")}/`;
+const emailId = `${idPrefix}-email`;
+const helpId = `${idPrefix}-help`;
+const statusId = `${idPrefix}-status`;
+const companyId = `${idPrefix}-company`;
 ---
 
 <form
-  id="newsletter-form"
-  class="newsletter-form"
+  class:list={[
+    "newsletter-form",
+    variant === "editorial" && "newsletter-form--editorial",
+  ]}
   action={isConfigured ? newsletterAction : undefined}
   method="post"
   data-configured={String(isConfigured)}
   novalidate
 >
-  <label for="newsletter-email">Email address</label>
+  <label class="email-label" for={emailId}>Email address</label>
   <div class="field-row">
     <input
-      id="newsletter-email"
+      id={emailId}
       name="email"
       type="email"
       inputmode="email"
       autocomplete="email"
       placeholder="you@example.com"
-      aria-describedby="newsletter-help newsletter-status"
+      aria-describedby={`${helpId} ${statusId}`}
       required
     />
-    <button type="submit">
-      Send me the next note <span aria-hidden="true">→</span>
+    <button type="submit" aria-label="Join the field notes">
+      {
+        variant === "editorial" ? (
+          <span aria-hidden="true">→</span>
+        ) : (
+          <>
+            Send me the next note <span aria-hidden="true">→</span>
+          </>
+        )
+      }
     </button>
   </div>
 
-  <input type="hidden" name="source" value="website" />
+  <input type="hidden" name="source" value={`website-${variant}`} />
   <div class="honeypot" aria-hidden="true">
-    <label for="newsletter-company">Company website</label>
+    <label for={companyId}>Company website</label>
     <input
-      id="newsletter-company"
+      id={companyId}
       name="company_website"
       type="text"
       tabindex="-1"
@@ -42,8 +62,13 @@ const basePath = `${import.meta.env.BASE_URL.replace(/\/+$/, "")}/`;
   </div>
 
   <div class="form-meta">
-    <p id="newsletter-help" class="help">
-      No spam. Unsubscribe anytime. <a href={`${basePath}privacy`}>Privacy</a>.
+    <p id={helpId} class="help">
+      {
+        variant === "editorial"
+          ? "Occasional. No spam. "
+          : "No spam. Unsubscribe anytime. "
+      }
+      <a href={`${basePath}privacy`}>Privacy</a>.
     </p>
     {
       !isConfigured && (
@@ -52,77 +77,82 @@ const basePath = `${import.meta.env.BASE_URL.replace(/\/+$/, "")}/`;
     }
   </div>
 
-  <p id="newsletter-status" class="status" role="status" aria-live="polite"></p>
+  <p id={statusId} class="status" role="status" aria-live="polite"></p>
 </form>
 
 <script>
-  const form = document.querySelector<HTMLFormElement>("#newsletter-form");
-  const email = document.querySelector<HTMLInputElement>("#newsletter-email");
-  const status =
-    document.querySelector<HTMLParagraphElement>("#newsletter-status");
+  const forms = document.querySelectorAll<HTMLFormElement>(
+    ".newsletter-form:not([data-bound])"
+  );
 
-  email?.addEventListener("input", () => {
-    if (!status) return;
-    email.removeAttribute("aria-invalid");
-    status.textContent = "";
-  });
-
-  form?.addEventListener("submit", async event => {
-    if (!email || !status) return;
-
-    event.preventDefault();
-
-    if (!email.validity.valid) {
-      status.textContent =
-        "Enter a valid email address, such as you@example.com.";
-      email.setAttribute("aria-invalid", "true");
-      email.focus();
-      return;
-    }
-
-    email.removeAttribute("aria-invalid");
-
-    if (form.dataset.configured !== "true") {
-      status.textContent =
-        "The signup design is ready; the mailing-list connection is the final step.";
-      return;
-    }
-
+  forms.forEach(form => {
+    form.dataset.bound = "true";
+    const email = form.querySelector<HTMLInputElement>("input[type='email']");
+    const status = form.querySelector<HTMLParagraphElement>(".status");
     const button = form.querySelector<HTMLButtonElement>(
       "button[type='submit']"
     );
-    if (button) {
-      button.disabled = true;
-      button.textContent = "Joining…";
-    }
+    const originalButton = button?.innerHTML ?? "";
 
-    status.textContent = "Adding you to the field notes…";
+    email?.addEventListener("input", () => {
+      if (!status) return;
+      email.removeAttribute("aria-invalid");
+      status.textContent = "";
+    });
 
-    try {
-      const response = await fetch(form.action, {
-        method: "POST",
-        headers: { Accept: "application/json" },
-        body: new FormData(form),
-      });
-      const payload = await response.json().catch(() => ({}));
+    form.addEventListener("submit", async event => {
+      event.preventDefault();
+      if (!email || !status) return;
 
-      if (!response.ok || payload.ok !== true) {
-        throw new Error(payload.error || "Unable to subscribe right now.");
+      if (!email.validity.valid) {
+        status.textContent =
+          "Enter a valid email address, such as you@example.com.";
+        email.setAttribute("aria-invalid", "true");
+        email.focus();
+        return;
       }
 
-      form.reset();
-      status.textContent = "You’re on the list. Watch your inbox for the next note.";
-    } catch (error) {
-      status.textContent =
-        error instanceof Error
-          ? error.message
-          : "Unable to subscribe right now. Please try again.";
-    } finally {
+      email.removeAttribute("aria-invalid");
+
+      if (form.dataset.configured !== "true") {
+        status.textContent =
+          "The signup design is ready; the mailing-list connection is the final step.";
+        return;
+      }
+
       if (button) {
-        button.disabled = false;
-        button.innerHTML = 'Send me the next note <span aria-hidden="true">→</span>';
+        button.disabled = true;
+        button.textContent = "Joining…";
       }
-    }
+      status.textContent = "Adding you to the field notes…";
+
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          headers: { Accept: "application/json" },
+          body: new FormData(form),
+        });
+        const payload = await response.json().catch(() => ({}));
+
+        if (!response.ok || payload.ok !== true) {
+          throw new Error(payload.error || "Unable to subscribe right now.");
+        }
+
+        form.reset();
+        status.textContent =
+          "You’re on the list. Watch your inbox for the next note.";
+      } catch (error) {
+        status.textContent =
+          error instanceof Error
+            ? error.message
+            : "Unable to subscribe right now. Please try again.";
+      } finally {
+        if (button) {
+          button.disabled = false;
+          button.innerHTML = originalButton;
+        }
+      }
+    });
   });
 </script>
 
@@ -130,7 +160,7 @@ const basePath = `${import.meta.env.BASE_URL.replace(/\/+$/, "")}/`;
   .newsletter-form {
     color: #fbf8ef;
   }
-  label {
+  .newsletter-form:not(.newsletter-form--editorial) .email-label {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -237,12 +267,77 @@ const basePath = `${import.meta.env.BASE_URL.replace(/\/+$/, "")}/`;
     font-weight: 650;
   }
 
+  .newsletter-form--editorial {
+    width: 100%;
+    max-width: 560px;
+    color: #191915;
+    font-family: "Instrument Sans", sans-serif;
+  }
+  .newsletter-form--editorial .email-label {
+    margin-bottom: 0.5rem;
+    display: block;
+    color: #716a60;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.54rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .newsletter-form--editorial .field-row {
+    grid-template-columns: minmax(0, 1fr) 62px;
+    gap: 0;
+    padding: 5px;
+    border: 1px solid rgba(25, 25, 21, 0.62);
+    background: #fffdf8;
+    box-shadow: 0 16px 40px rgba(52, 43, 31, 0.08);
+  }
+  .newsletter-form--editorial input {
+    min-width: 0;
+    min-height: 56px;
+    border: 0;
+    padding: 0 1rem;
+    background: transparent;
+    font-size: 0.95rem;
+  }
+  .newsletter-form--editorial input:focus {
+    outline: 2px solid #ef746d;
+    outline-offset: -2px;
+  }
+  .newsletter-form--editorial .field-row button {
+    width: 62px;
+    min-height: 56px;
+    border: 0;
+    padding: 0;
+    font-family: "Instrument Sans", sans-serif;
+    font-size: 1.35rem;
+  }
+  .newsletter-form--editorial .field-row button:hover {
+    border-color: #191915;
+    background: #191915;
+    transform: translateX(2px);
+  }
+  .newsletter-form--editorial .help {
+    color: #6f685e;
+  }
+  .newsletter-form--editorial .help a {
+    color: #191915;
+  }
+  .newsletter-form--editorial .status {
+    color: #cf2f21;
+  }
+
   @media (max-width: 560px) {
     .field-row {
       grid-template-columns: 1fr;
     }
     .newsletter-form .field-row button {
       width: 100%;
+    }
+    .newsletter-form--editorial .field-row {
+      grid-template-columns: minmax(0, 1fr) 56px;
+    }
+    .newsletter-form--editorial .field-row button {
+      width: 56px;
     }
     .form-meta {
       align-items: flex-start;
