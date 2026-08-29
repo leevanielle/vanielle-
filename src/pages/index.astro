@@ -87,10 +87,6 @@ const socialLinks = [
             loading="eager"
             fetchpriority="high"
           />
-          <figcaption>
-            <span>Human in the loop</span>
-            <strong>Build · scale · lead</strong>
-          </figcaption>
         </figure>
 
         <div class="hero-coordinate" aria-hidden="true">
@@ -416,24 +412,6 @@ const socialLinks = [
     object-fit: cover;
     object-position: 53% center;
     filter: grayscale(1) contrast(1.08);
-  }
-  .portrait-system figcaption {
-    position: relative;
-    z-index: 3;
-    width: 82%;
-    margin: -1.35rem auto 0;
-    padding: 0.75rem 0.9rem;
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    border: 1px solid var(--ink);
-    background: var(--paper);
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 0.53rem;
-    text-transform: uppercase;
-  }
-  .portrait-system figcaption span {
-    color: var(--red);
   }
   .portrait-rings {
     position: absolute;
@@ -890,10 +868,6 @@ const socialLinks = [
     }
   }
   @media (max-width: 480px) {
-    .portrait-system figcaption {
-      align-items: flex-start;
-      flex-direction: column;
-    }
     .book-atmosphere strong {
       display: none;
     }
