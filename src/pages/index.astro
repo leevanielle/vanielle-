@@ -2,7 +2,6 @@
 import { getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 import NewsletterSignup from "@components/NewsletterSignup.astro";
-import HomeHeader from "@components/HomeHeader.astro";
 import JournalFooter from "@components/JournalFooter.astro";
 import getSortedPosts from "@utils/getSortedPosts";
 
@@ -42,8 +41,6 @@ const socialLinks = [
       <strong>Vanielle Lee</strong>
     </div>
 
-    <HomeHeader />
-
     <aside
       class="subscribe-rail"
       id="newsletter"
@@ -57,6 +54,10 @@ const socialLinks = [
     <main>
       <section class="home-hero" aria-labelledby="hero-heading">
         <div class="hero-copy reveal">
+          <div class="hero-identity">
+            <strong>Vanielle Lee</strong>
+            <span>Field system / online</span>
+          </div>
           <p class="kicker">AI engineer · Founder · CTO · Author</p>
           <h1 id="hero-heading">
             I build AI systems—<em>and the companies around them.</em>
@@ -317,7 +318,7 @@ const socialLinks = [
 <style>
   :global(html) {
     scroll-behavior: smooth;
-    scroll-padding-top: 78px;
+    scroll-padding-top: 0;
   }
   :global(body) {
     margin: 0;
@@ -416,7 +417,7 @@ const socialLinks = [
   }
   .home-hero {
     position: relative;
-    min-height: calc(100svh - 172px);
+    min-height: calc(100svh - 94px);
     padding: clamp(5rem, 9vw, 8.5rem) max(1rem, calc((100vw - 1240px) / 2));
     display: grid;
     grid-template-columns: minmax(0, 1.14fr) minmax(360px, 0.86fr);
@@ -427,6 +428,23 @@ const socialLinks = [
   .hero-copy {
     position: relative;
     z-index: 3;
+  }
+  .hero-identity {
+    margin-bottom: clamp(3rem, 6vw, 5.5rem);
+    display: flex;
+    align-items: baseline;
+    gap: 0.85rem;
+  }
+  .hero-identity strong {
+    font-size: 0.92rem;
+    letter-spacing: -0.025em;
+  }
+  .hero-identity span {
+    color: var(--red);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.52rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
   h1 {
     max-width: 800px;
@@ -1126,7 +1144,7 @@ const socialLinks = [
   }
   @media (max-width: 700px) {
     :global(html) {
-      scroll-padding-top: 66px;
+      scroll-padding-top: 0;
     }
     .home-hero {
       padding-top: 5.5rem;
