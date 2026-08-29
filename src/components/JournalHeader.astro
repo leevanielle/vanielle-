@@ -1,0 +1,91 @@
+---
+const { section = "Journal" } = Astro.props;
+---
+
+<header class="journal-header">
+  <a class="journal-wordmark" href="/" aria-label="Vanielle Lee, home">
+    <strong>Vanielle Lee</strong>
+    <span>{section}</span>
+  </a>
+
+  <nav aria-label="Journal navigation">
+    <a href="/blog/">Index</a>
+    <a href="/#book">Book</a>
+    <a class="join-link" href="/#newsletter">Join the field notes <i>↘</i></a>
+  </nav>
+</header>
+
+<style>
+  .journal-header {
+    position: relative;
+    z-index: 20;
+    width: min(100% - 2rem, 1240px);
+    min-height: 86px;
+    margin-inline: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    border-bottom: 1px solid rgba(25, 25, 21, 0.46);
+    font-family: "Instrument Sans", sans-serif;
+  }
+  .journal-wordmark {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    color: #191915;
+    text-decoration: none;
+  }
+  .journal-wordmark strong {
+    font-size: 0.9rem;
+    letter-spacing: -0.02em;
+  }
+  .journal-wordmark span {
+    color: #cf2f21;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.56rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 2.5vw, 2.2rem);
+  }
+  nav a {
+    color: #191915;
+    font-size: 0.78rem;
+    text-decoration: none;
+  }
+  nav a:not(.join-link):hover {
+    color: #cf2f21;
+  }
+  .join-link {
+    min-height: 42px;
+    padding: 0.65rem 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: #191915;
+    color: #fbf8ef;
+  }
+  .join-link i {
+    color: #ef746d;
+    font-style: normal;
+  }
+
+  @media (max-width: 620px) {
+    .journal-header {
+      min-height: 68px;
+    }
+    .journal-wordmark span,
+    nav > a:not(.join-link) {
+      display: none;
+    }
+    .join-link {
+      min-height: 38px;
+      padding-inline: 0.7rem;
+      font-size: 0.66rem;
+    }
+  }
+</style>

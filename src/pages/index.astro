@@ -1,10 +1,20 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import NewsletterSignup from "@components/NewsletterSignup.astro";
+import { getCollection } from "astro:content";
+import getSortedPosts from "@utils/getSortedPosts";
 
 const AMAZON_URL = "https://www.amazon.com/dp/B0HF6JW33T";
 const FORBES_URL =
   "https://www.forbes.com/sites/jonyounger/2020/11/23/meet-another-freelance-innovator-odecloud-a-netsuite-expert-community/";
+
+const latestPosts = getSortedPosts(await getCollection("blog")).slice(0, 3);
+const formatPostDate = (date: Date) =>
+  new Intl.DateTimeFormat("en", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).format(date);
 
 const stackLayers = [
   { index: "05", label: "Agents", detail: "Reason · act · review" },
@@ -68,8 +78,8 @@ const links = [
         <a href="#book" data-chapter-link="book">
           <small>02</small><span>Book</span>
         </a>
-        <a href="#notes" data-chapter-link="notes">
-          <small>03</small><span>Field notes</span>
+        <a href="/blog/">
+          <small>03</small><span>Journal</span>
         </a>
       </nav>
 
@@ -319,39 +329,49 @@ const links = [
         data-chapter="notes"
         aria-labelledby="notes-heading"
       >
+        <div class="journal-atmosphere" aria-hidden="true">
+          <span class="journal-orbit"></span>
+          <span class="journal-cross"></span>
+        </div>
+
         <div class="notes-heading" data-reveal="up">
-          <p class="eyebrow eyebrow-light">Act 03 / Field notes</p>
-          <h2 id="notes-heading">From the notebook.</h2>
-          <p>Working notes, written for humans—not just engineers.</p>
+          <p class="eyebrow">Act 03 / The journal</p>
+          <h2 id="notes-heading">Notes from inside the system.</h2>
+          <p>AI, engineering, ambition, and a life built across cultures.</p>
         </div>
 
         <div class="dispatch-list">
-          <article data-reveal="left">
-            <span>01</span>
-            <div>
-              <h3>Practical AI, without the theater</h3>
-              <p>Where agentic systems actually break.</p>
-            </div>
-          </article>
-          <article data-reveal="right">
-            <span>02</span>
-            <div>
-              <h3>The interview after the interview</h3>
-              <p>The signals nobody puts in the job description.</p>
-            </div>
-          </article>
-          <article data-reveal="left">
-            <span>03</span>
-            <div>
-              <h3>What “direct” means in another culture</h3>
-              <p>A field note on context, trust, and working styles.</p>
-            </div>
-          </article>
+          {
+            latestPosts.map((post, index) => (
+              <a
+                class={`dispatch dispatch-${(index % 3) + 1}`}
+                href={`/blog/${post.slug}/`}
+                data-reveal={index % 2 ? "right" : "left"}
+              >
+                <div class="dispatch-visual" aria-hidden="true">
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <i />
+                  <b>{post.data.tags[0] ?? "field note"}</b>
+                </div>
+                <div class="dispatch-copy">
+                  <p>
+                    {formatPostDate(post.data.pubDatetime)} ·{" "}
+                    {post.data.tags[0]}
+                  </p>
+                  <h3>{post.data.title}</h3>
+                  <span>{post.data.description}</span>
+                  <strong>
+                    Read the note <i aria-hidden="true">↗</i>
+                  </strong>
+                </div>
+              </a>
+            ))
+          }
         </div>
 
-        <a class="notes-cta" href="#newsletter" data-focus-newsletter>
-          <span>Next dispatch</span>
-          <strong>Get the next one</strong>
+        <a class="notes-cta" href="/blog/">
+          <span>All transmissions</span>
+          <strong>Enter the journal</strong>
           <i aria-hidden="true">↗</i>
         </a>
       </section>
@@ -1078,18 +1098,16 @@ const links = [
   .evidence-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    border-top: 1px solid var(--ink);
-    border-left: 1px solid var(--ink);
-    box-shadow: 12px 12px 0 var(--amber);
+    gap: clamp(1rem, 2vw, 1.75rem);
   }
   .evidence-card {
     min-width: 0;
-    min-height: 520px;
+    min-height: 490px;
     padding: clamp(1.25rem, 2.25vw, 1.8rem);
     display: flex;
     flex-direction: column;
-    border-right: 1px solid var(--ink);
-    border-bottom: 1px solid var(--ink);
+    border: 1px solid var(--ink);
+    box-shadow: 7px 7px 0 rgba(217, 167, 56, 0.7);
   }
   .evidence-card > header {
     display: flex;
@@ -1421,16 +1439,68 @@ const links = [
 
   .notes-chapter {
     position: relative;
-    min-height: 100svh;
+    min-height: 92svh;
     padding: clamp(7rem, 12vw, 10rem) max(1rem, calc((100vw - 1160px) / 2));
     display: grid;
-    grid-template-columns: 0.8fr 1.2fr;
-    align-content: center;
-    gap: clamp(3rem, 8vw, 7rem);
-    background: linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
-      var(--red);
-    background-size: 100% 29px;
-    color: var(--paper-bright);
+    grid-template-columns: 0.72fr 1.28fr;
+    align-content: start;
+    gap: clamp(3rem, 7vw, 6rem);
+    overflow: hidden;
+    background: var(--paper-bright);
+    color: var(--ink);
+  }
+  .journal-atmosphere {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .journal-orbit {
+    position: absolute;
+    width: min(58vw, 760px);
+    aspect-ratio: 1;
+    top: -29vw;
+    right: -11vw;
+    border: 1px solid rgba(207, 47, 33, 0.13);
+    border-radius: 50%;
+  }
+  .journal-orbit::before,
+  .journal-orbit::after {
+    content: "";
+    position: absolute;
+    border: 1px solid rgba(217, 167, 56, 0.18);
+    border-radius: 50%;
+  }
+  .journal-orbit::before {
+    inset: 13%;
+  }
+  .journal-orbit::after {
+    inset: 31%;
+    background: rgba(239, 116, 109, 0.07);
+  }
+  .journal-cross {
+    position: absolute;
+    width: 210px;
+    height: 210px;
+    bottom: 8%;
+    left: -82px;
+    opacity: 0.08;
+  }
+  .journal-cross::before,
+  .journal-cross::after {
+    content: "";
+    position: absolute;
+    background: var(--red);
+  }
+  .journal-cross::before {
+    width: 100%;
+    height: 1px;
+    top: 50%;
+  }
+  .journal-cross::after {
+    width: 1px;
+    height: 100%;
+    left: 50%;
   }
   .notes-heading h2 {
     max-width: 540px;
@@ -1440,57 +1510,147 @@ const links = [
   }
   .notes-heading > p:last-child {
     max-width: 520px;
-    color: #f7d9d3;
+    color: #655f55;
     font-size: 1.05rem;
     line-height: 1.65;
   }
   .dispatch-list {
-    border-top: 1px solid rgba(255, 255, 255, 0.65);
-  }
-  .dispatch-list article {
-    padding: 1.45rem 0;
+    position: relative;
     display: grid;
-    grid-template-columns: 55px 1fr;
     gap: 1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.65);
   }
-  .dispatch-list article > span {
-    color: var(--amber);
+  .dispatch {
+    min-height: 186px;
+    padding: 0.75rem 0;
+    display: grid;
+    grid-template-columns: 156px 1fr;
+    gap: clamp(1.2rem, 3vw, 2.2rem);
+    border-top: 1px solid rgba(25, 25, 21, 0.52);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .dispatch:last-child {
+    border-bottom: 1px solid rgba(25, 25, 21, 0.52);
+  }
+  .dispatch-visual {
+    position: relative;
+    min-height: 154px;
+    padding: 0.85rem;
+    overflow: hidden;
+    border: 1px solid rgba(25, 25, 21, 0.22);
     font-family: "IBM Plex Mono", monospace;
+    transition: transform 260ms ease;
+  }
+  .dispatch-1 .dispatch-visual {
+    background: #eee4d2;
+  }
+  .dispatch-2 .dispatch-visual {
+    background: #e5ebdf;
+  }
+  .dispatch-3 .dispatch-visual {
+    background: #f1d7d0;
+  }
+  .dispatch-visual > span {
+    position: relative;
+    z-index: 2;
+    color: var(--red);
     font-size: 0.65rem;
   }
-  .dispatch-list h3 {
+  .dispatch-visual i {
+    position: absolute;
+    width: 94px;
+    aspect-ratio: 1;
+    right: -18px;
+    bottom: -17px;
+    border: 1px solid rgba(25, 25, 21, 0.32);
+    border-radius: 50%;
+  }
+  .dispatch-visual i::before,
+  .dispatch-visual i::after {
+    content: "";
+    position: absolute;
+    inset: 19%;
+    border: 1px solid rgba(207, 47, 33, 0.34);
+    border-radius: 50%;
+  }
+  .dispatch-visual i::after {
+    inset: 42%;
+    background: var(--red);
+  }
+  .dispatch-visual b {
+    position: absolute;
+    left: 0.85rem;
+    bottom: 0.85rem;
+    max-width: 95px;
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .dispatch-copy {
+    align-self: center;
+  }
+  .dispatch-copy > p {
+    margin: 0 0 0.65rem;
+    color: var(--red);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .dispatch-copy h3 {
     margin: 0;
     font-family: "Bodoni Moda", Didot, serif;
-    font-size: clamp(1.65rem, 2.7vw, 2.4rem);
+    font-size: clamp(1.65rem, 2.5vw, 2.35rem);
     font-weight: 500;
     line-height: 1.1;
   }
-  .dispatch-list p {
-    margin: 0.45rem 0 0;
-    color: #f7d9d3;
+  .dispatch-copy > span {
+    margin: 0.55rem 0 0.9rem;
+    display: -webkit-box;
+    overflow: hidden;
+    color: #655f55;
+    font-size: 0.88rem;
     line-height: 1.55;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  .dispatch-copy > strong {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.61rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+  .dispatch-copy > strong i {
+    color: var(--red);
+    font-style: normal;
+  }
+  .dispatch:hover .dispatch-visual {
+    transform: rotate(-2deg) translateY(-3px);
+  }
+  .dispatch:hover h3 {
+    color: var(--red);
   }
   .notes-cta {
     grid-column: 1 / -1;
     min-height: 118px;
-    margin-top: 1rem;
+    margin-top: clamp(2rem, 5vw, 4rem);
     padding: 1.25rem 1.5rem;
     display: grid;
     grid-template-columns: 0.55fr 1.45fr auto;
     align-items: center;
     gap: 1.5rem;
     border: 1px solid var(--ink);
-    background: var(--paper-bright);
-    color: var(--ink);
-    box-shadow: 10px 10px 0 var(--amber);
+    background: var(--ink);
+    color: var(--paper-bright);
+    box-shadow: 10px 10px 0 var(--red);
     text-decoration: none;
     transition:
       transform 200ms ease,
       box-shadow 200ms ease;
   }
   .notes-cta:hover {
-    box-shadow: 14px 14px 0 var(--amber);
+    box-shadow: 14px 14px 0 var(--red);
     transform: translate(-3px, -3px);
   }
   .notes-cta span {
@@ -1505,7 +1665,7 @@ const links = [
     letter-spacing: -0.045em;
   }
   .notes-cta i {
-    color: var(--red);
+    color: var(--salmon);
     font-size: 2rem;
     font-style: normal;
   }
@@ -1743,6 +1903,9 @@ const links = [
     .notes-chapter {
       min-height: auto;
     }
+    .dispatch {
+      grid-template-columns: 132px 1fr;
+    }
   }
 
   @media (max-width: 680px) {
@@ -1838,11 +2001,19 @@ const links = [
     .notes-cta span {
       grid-column: 1 / -1;
     }
-    .evidence-grid {
-      box-shadow: 7px 7px 0 var(--amber);
-    }
     .evidence-card {
       min-height: 390px;
+    }
+    .dispatch {
+      padding-block: 1rem;
+      grid-template-columns: 1fr;
+    }
+    .dispatch-visual {
+      width: min(58vw, 220px);
+      min-height: 150px;
+    }
+    .dispatch-copy > span {
+      -webkit-line-clamp: 3;
     }
     .agent-flow span {
       min-width: 46px;

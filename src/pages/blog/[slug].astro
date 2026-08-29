@@ -1,0 +1,385 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import NewsletterSignup from "@components/NewsletterSignup.astro";
+import JournalHeader from "@components/JournalHeader.astro";
+import JournalFooter from "@components/JournalFooter.astro";
+import getSortedPosts from "@utils/getSortedPosts";
+import { slugifyStr } from "@utils/slugify";
+
+export interface Props {
+  post: CollectionEntry<"blog">;
+}
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+const allPosts = getSortedPosts(await getCollection("blog"));
+const currentIndex = allPosts.findIndex(item => item.slug === post.slug);
+const nextPost = allPosts[(currentIndex + 1) % allPosts.length];
+
+const {
+  title,
+  author,
+  description,
+  ogImage,
+  canonicalURL,
+  pubDatetime,
+  modDatetime,
+  tags,
+} = post.data;
+const ogImageUrl = typeof ogImage === "string" ? ogImage : ogImage?.src;
+const ogUrl = new URL(
+  ogImageUrl ?? `/posts/${slugifyStr(title)}.png`,
+  Astro.url.origin
+).href;
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat("en", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  }).format(date);
+---
+
+<Layout
+  title={`${title} — Vanielle Lee`}
+  {author}
+  {description}
+  {pubDatetime}
+  {modDatetime}
+  {canonicalURL}
+  ogImage={ogUrl}
+>
+  <div class="article-page">
+    <div class="cinema-entry" aria-hidden="true">
+      <span>Field note / {tags[0] ?? "journal"}</span>
+    </div>
+
+    <JournalHeader section="Field note" />
+
+    <main>
+      <header class="article-heading">
+        <a href="/blog/">← Journal index</a>
+        <p>{tags.join(" / ")}</p>
+        <h1>{title}</h1>
+        <div class="article-meta">
+          <time datetime={pubDatetime.toISOString()}
+            >{formatDate(pubDatetime)}</time
+          >
+          <span>Written by {author}</span>
+        </div>
+        <p class="article-description">{description}</p>
+      </header>
+
+      <div class="article-rule" aria-hidden="true">
+        <span></span><i></i><b></b>
+      </div>
+
+      <article class="article-body" role="article">
+        <Content />
+      </article>
+
+      <section class="after-note" aria-label="Continue reading">
+        <div class="join-note">
+          <p>Next transmission</p>
+          <h2>Get the next note.</h2>
+          <NewsletterSignup />
+        </div>
+        {
+          nextPost && nextPost.slug !== post.slug && (
+            <a class="next-note" href={`/blog/${nextPost.slug}/`}>
+              <span>Continue reading</span>
+              <strong>{nextPost.data.title}</strong>
+              <i>↗</i>
+            </a>
+          )
+        }
+      </section>
+    </main>
+
+    <JournalFooter />
+  </div>
+</Layout>
+
+<style>
+  :global(body) {
+    background: #f4edcf;
+  }
+  .article-page {
+    --ink: #191915;
+    --paper: #fbf8ef;
+    --red: #cf2f21;
+    --amber: #d9a738;
+    min-height: 100svh;
+    overflow: hidden;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Instrument Sans", sans-serif;
+  }
+  .cinema-entry {
+    position: fixed;
+    z-index: 100;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    pointer-events: none;
+    animation: clear-frame 0.95s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+  }
+  main,
+  .after-note {
+    max-width: none;
+  }
+  main {
+    width: min(100% - 2rem, 1120px);
+    margin-inline: auto;
+  }
+  .article-heading {
+    max-width: 920px;
+    margin-inline: auto;
+    padding: clamp(5rem, 11vw, 9rem) 0 clamp(3rem, 7vw, 5rem);
+    text-align: center;
+  }
+  .article-heading > a,
+  .article-heading > p:first-of-type {
+    color: var(--red);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  .article-heading > p:first-of-type {
+    margin: 3rem 0 1rem;
+  }
+  h1,
+  h2,
+  :global(.article-body h2),
+  :global(.article-body h3) {
+    font-family: "Bodoni Moda", Didot, serif;
+    font-weight: 500;
+  }
+  h1 {
+    margin: 0;
+    font-size: clamp(4rem, 9vw, 8rem);
+    letter-spacing: -0.075em;
+    line-height: 0.87;
+  }
+  .article-meta {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.7rem 1.4rem;
+    color: #716b61;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.58rem;
+    text-transform: uppercase;
+  }
+  .article-description {
+    max-width: 650px;
+    margin: 1.5rem auto 0;
+    color: #5f594f;
+    font-size: clamp(1rem, 1.5vw, 1.18rem);
+    line-height: 1.7;
+  }
+  .article-rule {
+    position: relative;
+    height: 150px;
+    display: grid;
+    place-items: center;
+    border-top: 1px solid rgba(25, 25, 21, 0.4);
+    border-bottom: 1px solid rgba(25, 25, 21, 0.4);
+  }
+  .article-rule > span {
+    width: 86px;
+    aspect-ratio: 1;
+    border: 1px solid var(--red);
+    border-radius: 50%;
+  }
+  .article-rule > i,
+  .article-rule > b {
+    position: absolute;
+    width: 1px;
+    height: 42px;
+    background: var(--ink);
+  }
+  .article-rule > i {
+    transform: rotate(45deg);
+  }
+  .article-rule > b {
+    transform: rotate(-45deg);
+  }
+  :global(.article-body) {
+    max-width: 740px;
+    margin: clamp(4.5rem, 9vw, 8rem) auto;
+    color: #282721;
+    font-family: "Instrument Sans", sans-serif;
+    font-size: clamp(1.05rem, 1.45vw, 1.18rem);
+    line-height: 1.82;
+  }
+  :global(.article-body p) {
+    margin: 0 0 1.55em;
+  }
+  :global(.article-body > p:first-child::first-letter) {
+    margin: 0.06em 0.1em 0 0;
+    float: left;
+    color: var(--red);
+    font-family: "Bodoni Moda", Didot, serif;
+    font-size: 4.6em;
+    line-height: 0.72;
+  }
+  :global(.article-body h2) {
+    margin: 2.2em 0 0.55em;
+    font-size: clamp(2.3rem, 4.5vw, 4rem);
+    letter-spacing: -0.05em;
+    line-height: 1;
+  }
+  :global(.article-body h3) {
+    margin: 2em 0 0.55em;
+    font-size: clamp(1.8rem, 3.5vw, 2.7rem);
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+  }
+  :global(.article-body a) {
+    color: var(--red);
+    text-underline-offset: 4px;
+  }
+  :global(.article-body blockquote) {
+    margin: 2.5rem 0;
+    padding: 1.2rem 0 1.2rem 1.6rem;
+    border-left: 3px solid var(--red);
+    color: #504b42;
+    font-family: "Bodoni Moda", Didot, serif;
+    font-size: 1.35em;
+    line-height: 1.45;
+  }
+  :global(.article-body hr) {
+    width: 90px;
+    margin: 4rem auto;
+    border: 0;
+    border-top: 1px solid var(--red);
+  }
+  :global(.article-body img) {
+    width: min(100%, 980px);
+    max-width: none;
+    height: auto;
+    margin: 3rem 50%;
+    display: block;
+    transform: translateX(-50%);
+    border: 1px solid var(--ink);
+  }
+  :global(.article-body li) {
+    margin-bottom: 0.45em;
+  }
+  .after-note {
+    margin: 0 0 clamp(6rem, 10vw, 9rem);
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    border: 1px solid var(--ink);
+    box-shadow: 10px 10px 0 var(--red);
+  }
+  .join-note,
+  .next-note {
+    min-height: 330px;
+    padding: clamp(1.5rem, 4vw, 3rem);
+  }
+  .join-note {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .join-note > p,
+  .next-note > span {
+    margin: 0 0 1rem;
+    display: block;
+    color: #ef746d;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .join-note h2 {
+    margin: 0 0 2rem;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    letter-spacing: -0.06em;
+    line-height: 0.92;
+  }
+  .next-note {
+    display: flex;
+    flex-direction: column;
+    background: #eee4d2;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .next-note > span {
+    color: var(--red);
+  }
+  .next-note > strong {
+    max-width: 380px;
+    font-family: "Bodoni Moda", Didot, serif;
+    font-size: clamp(2rem, 3.5vw, 3.5rem);
+    font-weight: 500;
+    letter-spacing: -0.055em;
+    line-height: 1;
+  }
+  .next-note > i {
+    margin-top: auto;
+    align-self: flex-end;
+    color: var(--red);
+    font-size: 2rem;
+    font-style: normal;
+  }
+  @keyframes clear-frame {
+    0%,
+    35% {
+      clip-path: inset(0);
+    }
+    100% {
+      clip-path: inset(0 0 100% 0);
+    }
+  }
+  @media (max-width: 760px) {
+    .article-heading {
+      text-align: left;
+    }
+    .article-meta {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+    .article-description {
+      margin-left: 0;
+    }
+    .after-note {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 560px) {
+    h1 {
+      font-size: clamp(3.8rem, 18vw, 5.5rem);
+    }
+    .article-rule {
+      height: 110px;
+    }
+    .join-note,
+    .next-note {
+      min-height: 300px;
+      padding: 1.4rem;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cinema-entry {
+      display: none;
+    }
+  }
+</style>
