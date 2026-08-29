@@ -1,0 +1,352 @@
+---
+interface Props {
+  idPrefix: string;
+  variant: "editorial" | "cinematic";
+}
+
+const { idPrefix, variant } = Astro.props;
+const newsletterAction = import.meta.env.PUBLIC_NEWSLETTER_ACTION?.trim();
+const isConfigured = Boolean(newsletterAction);
+const basePath = `${import.meta.env.BASE_URL.replace(/\/+$/, "")}/`;
+const emailId = `${idPrefix}-email`;
+const helpId = `${idPrefix}-help`;
+const statusId = `${idPrefix}-status`;
+const companyId = `${idPrefix}-company`;
+---
+
+<form
+  class:list={["concept-form", `concept-form--${variant}`]}
+  action={isConfigured ? newsletterAction : undefined}
+  method="post"
+  data-configured={String(isConfigured)}
+  novalidate
+>
+  <label class="email-label" for={emailId}>Email address</label>
+  <div class="field-shell">
+    <input
+      id={emailId}
+      name="email"
+      type="email"
+      inputmode="email"
+      autocomplete="email"
+      placeholder="you@example.com"
+      aria-describedby={`${helpId} ${statusId}`}
+      required
+    />
+    <button type="submit" aria-label="Join the field notes">
+      {
+        variant === "editorial" ? (
+          <span aria-hidden="true">→</span>
+        ) : (
+          <>
+            Join the field notes <span aria-hidden="true">→</span>
+          </>
+        )
+      }
+    </button>
+  </div>
+
+  <input type="hidden" name="source" value={`newsletter-review-${variant}`} />
+  <div class="honeypot" aria-hidden="true">
+    <label for={companyId}>Company website</label>
+    <input
+      id={companyId}
+      name="company_website"
+      type="text"
+      tabindex="-1"
+      autocomplete="off"
+    />
+  </div>
+
+  <div class="form-meta">
+    <p id={helpId} class="help">
+      Occasional. No spam. <a href={`${basePath}privacy`}>Privacy</a>.
+    </p>
+    {
+      !isConfigured && (
+        <p class="preview-note">Preview build · Connection pending</p>
+      )
+    }
+  </div>
+  <p id={statusId} class="status" role="status" aria-live="polite"></p>
+</form>
+
+<script>
+  const forms = document.querySelectorAll<HTMLFormElement>(
+    ".concept-form:not([data-bound])"
+  );
+
+  forms.forEach(form => {
+    form.dataset.bound = "true";
+    const email = form.querySelector<HTMLInputElement>("input[type='email']");
+    const status = form.querySelector<HTMLParagraphElement>(".status");
+    const button = form.querySelector<HTMLButtonElement>(
+      "button[type='submit']"
+    );
+    const originalButton = button?.innerHTML ?? "";
+
+    email?.addEventListener("input", () => {
+      if (!status) return;
+      email.removeAttribute("aria-invalid");
+      status.textContent = "";
+    });
+
+    form.addEventListener("submit", async event => {
+      event.preventDefault();
+      if (!email || !status) return;
+
+      if (!email.validity.valid) {
+        status.textContent = "Enter a valid email address.";
+        email.setAttribute("aria-invalid", "true");
+        email.focus();
+        return;
+      }
+
+      email.removeAttribute("aria-invalid");
+
+      if (form.dataset.configured !== "true") {
+        status.textContent =
+          "This preview is ready for the existing mailing list.";
+        return;
+      }
+
+      if (button) {
+        button.disabled = true;
+        button.textContent = "Joining…";
+      }
+      status.textContent = "Adding you to the field notes…";
+
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          headers: { Accept: "application/json" },
+          body: new FormData(form),
+        });
+        const payload = await response.json().catch(() => ({}));
+
+        if (!response.ok || payload.ok !== true) {
+          throw new Error(payload.error || "Unable to subscribe right now.");
+        }
+
+        form.reset();
+        status.textContent = "You’re on the list. Watch for the next note.";
+      } catch (error) {
+        status.textContent =
+          error instanceof Error
+            ? error.message
+            : "Unable to subscribe right now. Please try again.";
+      } finally {
+        if (button) {
+          button.disabled = false;
+          button.innerHTML = originalButton;
+        }
+      }
+    });
+  });
+</script>
+
+<style>
+  .concept-form {
+    width: 100%;
+    font-family: "Instrument Sans", sans-serif;
+  }
+  .email-label {
+    margin-bottom: 0.55rem;
+    display: block;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .field-shell {
+    display: grid;
+  }
+  input,
+  button {
+    min-height: 58px;
+    border-radius: 0;
+    font: inherit;
+  }
+  input {
+    width: 100%;
+    min-width: 0;
+  }
+  input:focus,
+  button:focus-visible {
+    outline: 2px solid #ef746d;
+    outline-offset: 3px;
+  }
+  input[aria-invalid="true"] {
+    outline: 2px solid #ef746d;
+    outline-offset: 2px;
+  }
+  button {
+    cursor: pointer;
+    transition:
+      background 180ms ease,
+      color 180ms ease,
+      transform 180ms ease;
+  }
+  button:disabled {
+    cursor: wait;
+    opacity: 0.68;
+    transform: none;
+  }
+  .honeypot {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .form-meta {
+    margin-top: 0.65rem;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .help,
+  .preview-note,
+  .status {
+    margin: 0;
+    font-size: 0.68rem;
+    line-height: 1.45;
+  }
+  .help a {
+    color: inherit;
+    text-underline-offset: 3px;
+  }
+  .preview-note {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .status {
+    min-height: 1.1rem;
+    margin-top: 0.45rem;
+    color: #cf2f21;
+    font-weight: 650;
+  }
+
+  .concept-form--editorial {
+    max-width: 560px;
+    color: #191915;
+  }
+  .concept-form--editorial .email-label {
+    color: #716a60;
+  }
+  .concept-form--editorial .field-shell {
+    grid-template-columns: minmax(0, 1fr) 62px;
+    padding: 5px;
+    border: 1px solid rgba(25, 25, 21, 0.62);
+    background: #fffdf8;
+    box-shadow: 0 16px 40px rgba(52, 43, 31, 0.08);
+  }
+  .concept-form--editorial input {
+    border: 0;
+    padding: 0 1rem;
+    background: transparent;
+    color: #191915;
+    font-size: 1rem;
+  }
+  .concept-form--editorial input::placeholder {
+    color: #8a8378;
+  }
+  .concept-form--editorial button {
+    width: 62px;
+    border: 0;
+    background: #cf2f21;
+    color: #fffdf8;
+    font-size: 1.45rem;
+  }
+  .concept-form--editorial button:hover {
+    background: #191915;
+    transform: translateX(2px);
+  }
+  .concept-form--editorial .help {
+    color: #6f685e;
+  }
+  .concept-form--editorial .preview-note {
+    color: #9a6a13;
+  }
+
+  .concept-form--cinematic {
+    max-width: 600px;
+    color: #fbf8ef;
+  }
+  .concept-form--cinematic .email-label {
+    color: #bbb4aa;
+  }
+  .concept-form--cinematic .field-shell {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+  }
+  .concept-form--cinematic input {
+    border: 1px solid rgba(251, 248, 239, 0.44);
+    padding: 0 1rem;
+    background: rgba(251, 248, 239, 0.075);
+    color: #fbf8ef;
+    backdrop-filter: blur(12px);
+  }
+  .concept-form--cinematic input::placeholder {
+    color: #bcb6ab;
+  }
+  .concept-form--cinematic button {
+    border: 1px solid #fbf8ef;
+    padding: 0 1.1rem;
+    background: #fbf8ef;
+    color: #191915;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.63rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .concept-form--cinematic button span {
+    margin-left: 0.35rem;
+    color: #cf2f21;
+  }
+  .concept-form--cinematic button:hover {
+    border-color: #ef746d;
+    background: #ef746d;
+    color: #191915;
+    transform: translateY(-2px);
+  }
+  .concept-form--cinematic .help {
+    color: #a9a39a;
+  }
+  .concept-form--cinematic .preview-note {
+    color: #d9a738;
+  }
+  .concept-form--cinematic .status {
+    color: #efaaa5;
+  }
+
+  @media (max-width: 560px) {
+    input,
+    button {
+      min-height: 54px;
+    }
+    .concept-form--editorial .field-shell {
+      grid-template-columns: minmax(0, 1fr) 56px;
+    }
+    .concept-form--editorial button {
+      width: 56px;
+    }
+    .form-meta {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    button {
+      transition: none;
+    }
+  }
+</style>

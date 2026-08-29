@@ -1,0 +1,480 @@
+---
+import Layout from "@layouts/Layout.astro";
+import NewsletterConceptForm from "@components/NewsletterConceptForm.astro";
+---
+
+<Layout
+  title="Newsletter directions — Vanielle Lee"
+  description="Two proposed directions for the Vanielle Lee field-notes signup."
+>
+  <main class="review-page">
+    <header class="review-header">
+      <a href="/">Vanielle Lee</a>
+      <div>
+        <span>Design review</span>
+        <strong>Newsletter / two directions</strong>
+      </div>
+    </header>
+
+    <section class="review-intro" aria-labelledby="review-heading">
+      <p>Same invitation. Different temperature.</p>
+      <h1 id="review-heading">Which one feels more like you?</h1>
+      <a href="#direction-a">See both <span>↓</span></a>
+    </section>
+
+    <section class="concept-section" id="direction-a">
+      <header class="concept-label">
+        <span>A</span>
+        <div>
+          <strong>Editorial signal</strong>
+          <small>Airy · intimate · part of the introduction</small>
+        </div>
+      </header>
+
+      <article class="editorial-canvas" aria-labelledby="editorial-heading">
+        <div class="editorial-orbit" aria-hidden="true"><i></i><b></b></div>
+        <div class="editorial-content">
+          <p class="eyebrow">Field notes</p>
+          <h2 id="editorial-heading">A useful note,<br />when I have one.</h2>
+          <p class="concept-copy">
+            AI, engineering leadership, careers, and building across cultures.
+          </p>
+          <NewsletterConceptForm
+            idPrefix="editorial-newsletter"
+            variant="editorial"
+          />
+        </div>
+      </article>
+
+      <div class="concept-notes">
+        <p>
+          <strong>Feels like</strong> A personal invitation inside your résumé.
+        </p>
+        <p><strong>Best quality</strong> Quiet enough to let your work lead.</p>
+      </div>
+    </section>
+
+    <section class="concept-section" id="direction-b">
+      <header class="concept-label">
+        <span>B</span>
+        <div>
+          <strong>Cinematic letter</strong>
+          <small>Immersive · personal · a destination of its own</small>
+        </div>
+      </header>
+
+      <article class="cinematic-canvas" aria-labelledby="cinematic-heading">
+        <div class="cinematic-copy">
+          <p class="eyebrow">Occasional field notes</p>
+          <h2 id="cinematic-heading">Notes from inside the system.</h2>
+          <p class="concept-copy">
+            What I’m learning about AI, technical leadership, careers, and
+            building across cultures—sent when there is something worth saying.
+          </p>
+          <NewsletterConceptForm
+            idPrefix="cinematic-newsletter"
+            variant="cinematic"
+          />
+        </div>
+
+        <figure class="cinematic-portrait" aria-hidden="true">
+          <div class="portrait-orbit"><i></i><b></b></div>
+          <img src="/assets/vanielle-profile.jpg" alt="" />
+        </figure>
+      </article>
+
+      <div class="concept-notes">
+        <p><strong>Feels like</strong> Opening a private dispatch from you.</p>
+        <p>
+          <strong>Best quality</strong> A memorable closing scene for the page.
+        </p>
+      </div>
+    </section>
+
+    <footer class="review-footer">
+      <strong>A or B?</strong>
+      <a href="#direction-a">Compare again <span>↑</span></a>
+    </footer>
+  </main>
+</Layout>
+
+<style>
+  :global(*) {
+    box-sizing: border-box;
+  }
+  :global(html) {
+    scroll-behavior: smooth;
+  }
+  :global(body) {
+    margin: 0;
+    background: #e9e0d0;
+  }
+  .review-page {
+    --ink: #191915;
+    --paper: #fbf8ef;
+    --paper-deep: #eee4d2;
+    --red: #cf2f21;
+    --amber: #d9a738;
+    --salmon: #ef746d;
+    min-height: 100svh;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Instrument Sans", sans-serif;
+  }
+  .review-page :is(section, footer) {
+    max-width: none;
+    padding-inline: max(1rem, calc((100vw - 1240px) / 2));
+  }
+  .review-header {
+    min-height: 78px;
+    padding-inline: max(1rem, calc((100vw - 1240px) / 2));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    border-bottom: 1px solid rgba(25, 25, 21, 0.32);
+  }
+  .review-header > a {
+    color: var(--ink);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    text-decoration: none;
+  }
+  .review-header div {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.52rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .review-header span {
+    color: var(--red);
+  }
+  .review-intro {
+    min-height: 62svh;
+    padding-block: clamp(5rem, 11vw, 9rem);
+    display: grid;
+    align-content: center;
+  }
+  .review-intro > p {
+    margin: 0 0 1.2rem;
+    color: var(--red);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.61rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .review-intro h1 {
+    max-width: 950px;
+    margin: 0;
+    font-family: "Bodoni Moda", Didot, serif;
+    font-size: clamp(4.25rem, 9vw, 8.8rem);
+    font-weight: 500;
+    letter-spacing: -0.075em;
+    line-height: 0.88;
+  }
+  .review-intro > a {
+    margin-top: 2rem;
+    color: var(--ink);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.58rem;
+    font-weight: 600;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  .review-intro > a span,
+  .review-footer a span {
+    color: var(--red);
+  }
+  .concept-section {
+    padding-block: clamp(4.5rem, 9vw, 8rem);
+    border-top: 1px solid rgba(25, 25, 21, 0.32);
+  }
+  .concept-label {
+    margin-bottom: 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+  .concept-label > span {
+    width: 42px;
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(25, 25, 21, 0.5);
+    border-radius: 50%;
+    color: var(--red);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+  }
+  .concept-label div {
+    display: grid;
+    gap: 0.2rem;
+  }
+  .concept-label strong {
+    font-size: 0.92rem;
+  }
+  .concept-label small {
+    color: #6c655a;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.5rem;
+    text-transform: uppercase;
+  }
+  .editorial-canvas,
+  .cinematic-canvas {
+    position: relative;
+    min-height: 660px;
+    overflow: hidden;
+  }
+  .editorial-canvas {
+    padding: clamp(3rem, 9vw, 8rem);
+    display: grid;
+    align-items: center;
+    border: 1px solid rgba(25, 25, 21, 0.42);
+    background: #f8f5ec;
+  }
+  .editorial-content {
+    position: relative;
+    z-index: 2;
+    width: min(100%, 650px);
+  }
+  .eyebrow {
+    margin: 0 0 1.15rem;
+    color: var(--red);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.61rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .editorial-canvas h2,
+  .cinematic-canvas h2 {
+    margin: 0;
+    font-family: "Bodoni Moda", Didot, serif;
+    font-weight: 500;
+    letter-spacing: -0.065em;
+  }
+  .editorial-canvas h2 {
+    font-size: clamp(4rem, 7vw, 7rem);
+    line-height: 0.89;
+  }
+  .concept-copy {
+    max-width: 590px;
+    margin: 1.45rem 0 2.1rem;
+    line-height: 1.65;
+  }
+  .editorial-canvas .concept-copy {
+    color: #5f594f;
+    font-size: clamp(1rem, 1.4vw, 1.15rem);
+  }
+  .editorial-orbit {
+    position: absolute;
+    width: min(50vw, 620px);
+    aspect-ratio: 1;
+    right: -9%;
+    top: -22%;
+    border: 1px solid rgba(207, 47, 33, 0.24);
+    border-radius: 50%;
+    animation: orbit 14s ease-in-out infinite;
+  }
+  .editorial-orbit i {
+    position: absolute;
+    inset: 23%;
+    border: 1px solid rgba(217, 167, 56, 0.35);
+    border-radius: 50%;
+  }
+  .editorial-orbit b {
+    position: absolute;
+    width: 14px;
+    aspect-ratio: 1;
+    right: 14%;
+    bottom: 16%;
+    border-radius: 50%;
+    background: var(--red);
+  }
+  .cinematic-canvas {
+    padding: clamp(3rem, 7vw, 6rem);
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(290px, 0.85fr);
+    align-items: center;
+    gap: clamp(3rem, 8vw, 8rem);
+    background: radial-gradient(
+        circle at 86% 20%,
+        rgba(207, 47, 33, 0.26),
+        transparent 28%
+      ),
+      #191915;
+    color: #fbf8ef;
+  }
+  .cinematic-copy {
+    position: relative;
+    z-index: 3;
+  }
+  .cinematic-canvas .eyebrow {
+    color: var(--salmon);
+  }
+  .cinematic-canvas h2 {
+    max-width: 680px;
+    font-size: clamp(4rem, 6.7vw, 6.8rem);
+    line-height: 0.9;
+  }
+  .cinematic-canvas .concept-copy {
+    color: #bcb6ab;
+    font-size: clamp(1rem, 1.35vw, 1.12rem);
+  }
+  .cinematic-portrait {
+    position: relative;
+    z-index: 2;
+    width: min(100%, 410px);
+    margin: 0;
+    justify-self: center;
+  }
+  .cinematic-portrait img {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    aspect-ratio: 1;
+    display: block;
+    border: 1px solid rgba(251, 248, 239, 0.72);
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: 53% center;
+    filter: grayscale(1) contrast(1.12);
+  }
+  .portrait-orbit {
+    position: absolute;
+    z-index: 1;
+    inset: -9%;
+    border: 1px solid rgba(239, 116, 109, 0.7);
+    border-radius: 50%;
+    animation: orbit 11s ease-in-out infinite reverse;
+  }
+  .portrait-orbit i {
+    position: absolute;
+    inset: 14%;
+    border: 1px solid rgba(217, 167, 56, 0.42);
+    border-radius: 50%;
+  }
+  .portrait-orbit b {
+    position: absolute;
+    width: 14px;
+    aspect-ratio: 1;
+    top: 8%;
+    left: 23%;
+    border-radius: 50%;
+    background: var(--amber);
+  }
+  .concept-notes {
+    padding: 1.1rem 0 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .concept-notes p {
+    margin: 0;
+    color: #675f55;
+    font-size: 0.78rem;
+  }
+  .concept-notes strong {
+    margin-right: 0.45rem;
+    color: var(--ink);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.52rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .review-footer {
+    min-height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    border-top: 1px solid rgba(25, 25, 21, 0.32);
+  }
+  .review-footer strong {
+    font-family: "Bodoni Moda", Didot, serif;
+    font-size: clamp(4rem, 8vw, 8rem);
+    font-weight: 500;
+    letter-spacing: -0.07em;
+  }
+  .review-footer a {
+    color: var(--ink);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.58rem;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  @keyframes orbit {
+    0%,
+    100% {
+      transform: rotate(-3deg) scale(1);
+    }
+    50% {
+      transform: rotate(4deg) scale(1.03);
+    }
+  }
+  @media (max-width: 820px) {
+    .cinematic-canvas {
+      grid-template-columns: 1fr;
+    }
+    .cinematic-portrait {
+      width: min(72vw, 380px);
+      justify-self: start;
+      order: -1;
+    }
+  }
+  @media (max-width: 620px) {
+    .review-header {
+      min-height: 66px;
+    }
+    .review-header div {
+      display: grid;
+      justify-items: end;
+      gap: 0.18rem;
+    }
+    .review-intro {
+      min-height: 54svh;
+    }
+    .review-intro h1 {
+      font-size: clamp(3.6rem, 19vw, 5.5rem);
+    }
+    .concept-section {
+      padding-block: 4rem;
+    }
+    .editorial-canvas,
+    .cinematic-canvas {
+      min-height: 0;
+      padding: 3rem 1.25rem;
+    }
+    .editorial-canvas h2,
+    .cinematic-canvas h2 {
+      font-size: clamp(3.3rem, 16vw, 5rem);
+    }
+    .editorial-orbit {
+      width: 92vw;
+      right: -49%;
+      top: -18%;
+    }
+    .concept-notes {
+      grid-template-columns: 1fr;
+      gap: 0.4rem;
+    }
+    .review-footer {
+      min-height: 190px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(html) {
+      scroll-behavior: auto;
+    }
+    .editorial-orbit,
+    .portrait-orbit {
+      animation: none;
+    }
+  }
+</style>
