@@ -68,7 +68,6 @@ const formatDate = (date: Date) =>
             <strong>Journal index</strong>
             <small>All field notes</small>
           </a>
-          <span class="article-type">Field note</span>
         </div>
 
         <div class="article-heading-grid">
@@ -189,7 +188,6 @@ const formatDate = (date: Date) =>
   }
   .article-heading-bar > a > strong,
   .article-heading-bar > a > small,
-  .article-type,
   .article-meta {
     font-family: "IBM Plex Mono", monospace;
     text-transform: uppercase;
@@ -209,11 +207,6 @@ const formatDate = (date: Date) =>
   .article-heading-bar > a:focus-visible {
     outline: 2px solid var(--red);
     outline-offset: 7px;
-  }
-  .article-type {
-    color: var(--red);
-    font-size: 0.62rem;
-    letter-spacing: 0.08em;
   }
   .article-heading-grid {
     display: grid;
@@ -509,8 +502,7 @@ const formatDate = (date: Date) =>
     .article-heading {
       padding-top: 1rem;
     }
-    .article-heading-bar > a > small,
-    .article-type {
+    .article-heading-bar > a > small {
       display: none;
     }
     h1 {
