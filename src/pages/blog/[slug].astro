@@ -67,7 +67,6 @@ const formatDate = (date: Date) =>
     <main>
       <header class="article-heading">
         <a href="/#journal">← Journal index</a>
-        <p>{tags.join(" / ")}</p>
         <h1>{title}</h1>
         <div class="article-meta">
           <time datetime={pubDatetime.toISOString()}
@@ -152,17 +151,15 @@ const formatDate = (date: Date) =>
     padding: clamp(5rem, 11vw, 9rem) 0 clamp(3rem, 7vw, 5rem);
     text-align: center;
   }
-  .article-heading > a,
-  .article-heading > p:first-of-type {
+  .article-heading > a {
+    display: inline-block;
+    margin: 0 0 3rem;
     color: var(--red);
     font-family: "IBM Plex Mono", monospace;
     font-size: 0.6rem;
     letter-spacing: 0.08em;
     text-decoration: none;
     text-transform: uppercase;
-  }
-  .article-heading > p:first-of-type {
-    margin: 3rem 0 1rem;
   }
   h1,
   h2,
