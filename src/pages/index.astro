@@ -86,8 +86,13 @@ const bookingLinks = [
           <p class="hero-intro">
             I’m a founder, CTO, AI engineer, and author. Over the past decade,
             I’ve worked across the engineering stack and spent a decade in the
-            CTO seat. This is my corner of the internet for field notes on
-            technology, leadership, careers, and building across cultures.
+            CTO seat at my own company,
+            <a
+              href="https://odecloud.com"
+              target="_blank"
+              rel="noopener noreferrer">OdeCloud, Inc</a
+            >. This is my corner of the internet for field notes on technology,
+            leadership, careers, and building across cultures.
           </p>
 
           <figure class="portrait-system">
@@ -510,6 +515,20 @@ const bookingLinks = [
     color: #5f594f;
     font-size: clamp(1rem, 1.45vw, 1.16rem);
     line-height: 1.7;
+  }
+  .hero-intro a {
+    color: inherit;
+    text-decoration-color: var(--red);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+    transition: color 180ms ease;
+  }
+  .hero-intro a:hover {
+    color: var(--red);
+  }
+  .hero-intro a:focus-visible {
+    outline: 2px solid var(--amber);
+    outline-offset: 3px;
   }
   .hero-links {
     grid-area: links;
