@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 import NewsletterSignup from "@components/NewsletterSignup.astro";
 import PaintSplatter from "@components/PaintSplatter.astro";
+import DecisionKnot from "@components/DecisionKnot.astro";
 import getSortedPosts from "@utils/getSortedPosts";
 
 const AMAZON_URL = "https://www.amazon.com/dp/B0HF6JW33T";
@@ -32,13 +33,17 @@ const socialLinks = [
 
 const bookingLinks = [
   {
-    label: "Book 30 minutes",
-    detail: "$150 · focused advisory call",
+    duration: "30 min",
+    label: "Untangle one decision",
+    detail: "$150 · one focused question",
+    note: "Best when you can name the decision, but not the answer.",
     href: "https://cal.com/leevanielle/advisory-30",
   },
   {
-    label: "Book one hour",
-    detail: "$300 · working advisory session",
+    duration: "1 hour",
+    label: "Work through the whole knot",
+    detail: "$300 · a deeper working session",
+    note: "Best for layered architecture, product, or leadership calls.",
     href: "https://cal.com/leevanielle/advisory-60",
   },
 ];
@@ -182,26 +187,62 @@ const bookingLinks = [
         aria-labelledby="advisory-heading"
       >
         <div class="advisory-copy reveal">
-          <p class="kicker">Advisory / direct access</p>
-          <h2 id="advisory-heading">Bring me the hard decision.</h2>
-          <p>AI, engineering, product, or team design.</p>
+          <p class="kicker">A private working session</p>
+          <h2 id="advisory-heading">Bring me the messy version.</h2>
+          <p class="advisory-intro">
+            You don’t need a polished brief. Tell me what’s stuck. We’ll name
+            the tradeoffs, pressure-test the options, and leave with a next move
+            you can defend.
+          </p>
+          <p class="advisory-experience">
+            I’ve spent eight years in the CTO seat. I know what it feels like
+            when everyone wants the answer and the answer isn’t obvious.
+          </p>
         </div>
 
-        <div class="booking-links reveal">
-          {
-            bookingLinks.map(link => (
-              <a
-                class="booking-link"
-                href={link.href}
-              >
-                <span>
-                  <strong>{link.label}</strong>
-                  <small>{link.detail}</small>
-                </span>
-                <i>↗</i>
-              </a>
-            ))
-          }
+        <div class="decision-visual reveal">
+          <DecisionKnot />
+          <p>
+            This is the work: make the knot visible, then find the useful path
+            through it.
+          </p>
+        </div>
+
+        <div class="advisory-booking reveal">
+          <header>
+            <span>How much room does the decision need?</span>
+            <p>No deck. No theatre. Just a useful conversation.</p>
+          </header>
+
+          <ul class="advisory-outcomes" aria-label="What you will leave with">
+            <li>Named tradeoffs</li>
+            <li>A clearer decision</li>
+            <li>Concrete next steps</li>
+          </ul>
+
+          <div class="booking-links">
+            {
+              bookingLinks.map(link => (
+                <a class="booking-link" href={link.href}>
+                  <span class="booking-duration">{link.duration}</span>
+                  <span class="booking-copy">
+                    <strong>{link.label}</strong>
+                    <small>{link.detail}</small>
+                    <em>{link.note}</em>
+                  </span>
+                  <span class="booking-action">
+                    Choose <i>↗</i>
+                  </span>
+                </a>
+              ))
+            }
+          </div>
+
+          <p class="advisory-assurance">
+            Private by default <i>·</i> Cal Video <i>·</i> Shown in your
+            timezone
+            <i>·</i> Payment confirms the slot
+          </p>
         </div>
       </section>
 
@@ -222,7 +263,6 @@ const bookingLinks = [
         </nav>
       </section>
     </main>
-
   </div>
 </Layout>
 
@@ -247,7 +287,6 @@ const bookingLinks = [
     );
     revealItems.forEach(item => observer.observe(item));
   }
-
 </script>
 
 <style>
@@ -737,63 +776,210 @@ const bookingLinks = [
     color: var(--red);
   }
   .advisory-section {
-    padding: clamp(7rem, 11vw, 10rem) max(1rem, calc((100vw - 1160px) / 2));
+    position: relative;
+    padding: clamp(6rem, 9vw, 8rem) max(1rem, calc((100vw - 1240px) / 2));
     display: grid;
-    grid-template-columns: 0.8fr 1.2fr;
-    align-items: center;
-    gap: clamp(3rem, 8vw, 7rem);
+    grid-template-columns: minmax(0, 1.02fr) minmax(440px, 0.98fr);
+    grid-template-areas:
+      "copy booking"
+      "visual booking";
+    align-items: start;
+    gap: clamp(2rem, 4vw, 3.5rem) clamp(3.5rem, 7vw, 7rem);
+    overflow: hidden;
     border-top: 1px solid var(--ink);
     background: var(--paper-deep);
   }
-  .advisory-copy h2 {
-    max-width: 560px;
-    margin: 0;
-    font-size: clamp(3.8rem, 6.5vw, 6.5rem);
-    letter-spacing: -0.07em;
-    line-height: 0.88;
+  .advisory-section::before {
+    position: absolute;
+    top: -11vw;
+    right: -9vw;
+    width: min(34vw, 500px);
+    aspect-ratio: 1;
+    border: 1px solid rgba(207, 47, 33, 0.18);
+    border-radius: 50%;
+    content: "";
+    pointer-events: none;
   }
-  .advisory-copy > p:not(.kicker) {
-    margin: 1.4rem 0;
+  .advisory-copy {
+    position: relative;
+    z-index: 1;
+    grid-area: copy;
+  }
+  .advisory-copy h2 {
+    max-width: 650px;
+    margin: 0;
+    font-size: clamp(4.4rem, 7.3vw, 7.1rem);
+    letter-spacing: -0.07em;
+    line-height: 0.86;
+  }
+  .advisory-copy .advisory-intro {
+    max-width: 610px;
+    margin: 1.6rem 0 0;
     color: #655f55;
+    font-size: clamp(1rem, 1.45vw, 1.18rem);
+    line-height: 1.65;
+  }
+  .advisory-experience {
+    max-width: 570px;
+    margin: 1.35rem 0 0;
+    padding: 1rem 0 0 1rem;
+    border-top: 1px solid rgba(25, 25, 21, 0.28);
+    border-left: 3px solid var(--red);
+    color: var(--ink);
+    font-family: "Bodoni Moda", Didot, serif;
+    font-size: clamp(1.1rem, 1.55vw, 1.34rem);
+    letter-spacing: -0.025em;
+    line-height: 1.36;
+  }
+  .decision-visual {
+    position: relative;
+    z-index: 1;
+    grid-area: visual;
+    min-width: 0;
+  }
+  .decision-visual > p {
+    max-width: 560px;
+    margin: 0.8rem 0 0;
+    color: #6b6459;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.56rem;
+    letter-spacing: 0.01em;
+    line-height: 1.55;
+  }
+  .advisory-booking {
+    position: relative;
+    z-index: 1;
+    grid-area: booking;
+    align-self: center;
+    min-width: 0;
+  }
+  .advisory-booking > header {
+    display: grid;
+    gap: 0.55rem;
+  }
+  .advisory-booking > header span {
+    max-width: 520px;
+    font-family: "Bodoni Moda", Didot, serif;
+    font-size: clamp(2.3rem, 3.7vw, 3.7rem);
+    font-weight: 500;
+    letter-spacing: -0.055em;
+    line-height: 0.98;
+  }
+  .advisory-booking > header p {
+    margin: 0;
+    color: #6b6459;
+    font-size: 0.92rem;
+  }
+  .advisory-outcomes {
+    margin: 1.4rem 0 1.5rem;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+  }
+  .advisory-outcomes li {
+    padding: 0.46rem 0.62rem;
+    border: 1px solid rgba(25, 25, 21, 0.45);
+    background: rgba(251, 248, 239, 0.34);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
   .booking-links {
     border-top: 1px solid var(--ink);
   }
-  .booking-links a {
-    min-height: 100px;
-    padding: 1rem;
-    display: flex;
+  .booking-link {
+    min-height: 164px;
+    padding: 1.15rem 0.8rem;
+    display: grid;
+    grid-template-columns: 66px minmax(0, 1fr) auto;
     align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
+    gap: 1.2rem;
     border-bottom: 1px solid var(--ink);
     color: var(--ink);
     text-decoration: none;
+    transition:
+      padding 180ms ease,
+      background 180ms ease,
+      color 180ms ease;
   }
-  .booking-links a > span {
-    display: grid;
-    gap: 0.25rem;
-  }
-  .booking-links strong {
-    font-family: "Bodoni Moda", Didot, serif;
-    font-size: 2.35rem;
-    font-weight: 500;
-    letter-spacing: -0.045em;
-  }
-  .booking-links .booking-link strong {
+  .booking-duration {
+    align-self: start;
+    padding-top: 0.35rem;
     color: var(--red);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.56rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
-  .booking-links .booking-link small {
+  .booking-copy {
+    display: grid;
+    gap: 0.3rem;
+  }
+  .booking-copy strong {
+    color: var(--red);
+    font-family: "Bodoni Moda", Didot, serif;
+    font-size: clamp(2rem, 3vw, 3rem);
+    font-weight: 500;
+    letter-spacing: -0.055em;
+    line-height: 0.98;
+  }
+  .booking-copy small {
     color: var(--ink);
-  }
-  .booking-links small {
-    color: #6c665c;
     font-family: "IBM Plex Mono", monospace;
     font-size: 0.54rem;
   }
-  .booking-links i {
+  .booking-copy em {
+    max-width: 390px;
+    margin-top: 0.3rem;
+    color: #6c665c;
+    font-size: 0.75rem;
+    font-style: normal;
+    line-height: 1.45;
+  }
+  .booking-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.52rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .booking-action i {
     color: var(--red);
     font-size: 1.4rem;
+    font-style: normal;
+  }
+  .booking-link:hover {
+    padding-right: 1rem;
+    padding-left: 1rem;
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .booking-link:hover .booking-duration,
+  .booking-link:hover .booking-copy strong,
+  .booking-link:hover .booking-action i {
+    color: var(--salmon);
+  }
+  .booking-link:hover .booking-copy small,
+  .booking-link:hover .booking-copy em {
+    color: var(--paper);
+  }
+  .advisory-assurance {
+    margin: 1rem 0 0;
+    color: #6c665c;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.5rem;
+    line-height: 1.6;
+    text-transform: uppercase;
+  }
+  .advisory-assurance i {
+    padding: 0 0.18rem;
+    color: var(--red);
     font-style: normal;
   }
   .social-section {
@@ -910,6 +1096,17 @@ const bookingLinks = [
     .social-section {
       grid-template-columns: 1fr;
     }
+    .advisory-section {
+      grid-template-areas:
+        "copy"
+        "visual"
+        "booking";
+      gap: 2.4rem;
+    }
+    .advisory-booking {
+      width: 100%;
+      margin-top: 1.4rem;
+    }
     .home-hero {
       min-height: auto;
     }
@@ -966,6 +1163,16 @@ const bookingLinks = [
     .advisory-copy h2 {
       font-size: clamp(3.5rem, 16vw, 5.2rem);
     }
+    .advisory-section {
+      padding-top: 4.8rem;
+      padding-bottom: 5.2rem;
+    }
+    .advisory-copy .advisory-intro {
+      font-size: 1rem;
+    }
+    .advisory-experience {
+      font-size: 1.08rem;
+    }
     .book-details,
     .home-posts {
       grid-template-columns: 1fr;
@@ -977,8 +1184,26 @@ const bookingLinks = [
     .post-field {
       width: min(82vw, 340px);
     }
-    .booking-links strong {
-      font-size: 2rem;
+    .booking-link {
+      min-height: 0;
+      padding: 1.2rem 0.25rem;
+      grid-template-columns: 54px minmax(0, 1fr);
+      gap: 0.85rem;
+    }
+    .booking-copy strong {
+      font-size: clamp(1.9rem, 8vw, 2.45rem);
+    }
+    .booking-action {
+      grid-column: 2;
+      justify-self: start;
+      margin-top: 0.35rem;
+    }
+    .booking-link:hover {
+      padding-right: 0.6rem;
+      padding-left: 0.6rem;
+    }
+    .advisory-assurance {
+      font-size: 0.47rem;
     }
     .social-links {
       grid-template-columns: 1fr;

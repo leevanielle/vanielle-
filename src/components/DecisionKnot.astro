@@ -1,0 +1,351 @@
+<div class="decision-field" data-decision-field aria-hidden="true">
+  <canvas></canvas>
+  <div class="decision-field-fallback"></div>
+  <div class="decision-field-legend">
+    <span>the knot</span>
+    <i></i>
+    <span>the next move</span>
+  </div>
+</div>
+
+<script>
+  import {
+    CatmullRomCurve3,
+    Group,
+    Mesh,
+    MeshBasicMaterial,
+    PerspectiveCamera,
+    RingGeometry,
+    Scene,
+    SphereGeometry,
+    TubeGeometry,
+    Vector3,
+    WebGLRenderer,
+  } from "three";
+
+  const roots = document.querySelectorAll<HTMLElement>(
+    "[data-decision-field]:not([data-ready])"
+  );
+
+  roots.forEach(root => {
+    root.dataset.ready = "true";
+    const canvas = root.querySelector<HTMLCanvasElement>("canvas");
+    if (!canvas) return;
+
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    let renderer: WebGLRenderer | undefined;
+
+    try {
+      renderer = new WebGLRenderer({
+        canvas,
+        alpha: true,
+        antialias: true,
+        powerPreference: "high-performance",
+      });
+    } catch {
+      root.classList.add("is-fallback");
+      return;
+    }
+
+    renderer.setClearColor(0x000000, 0);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+
+    const scene = new Scene();
+    const camera = new PerspectiveCamera(38, 1, 0.1, 100);
+    camera.position.set(0, 0, 7.4);
+
+    const field = new Group();
+    field.rotation.x = -0.06;
+    scene.add(field);
+
+    const geometries: Array<TubeGeometry | SphereGeometry | RingGeometry> = [];
+    const materials: MeshBasicMaterial[] = [];
+    const threadColors = [
+      0xcf2f21, 0x9e2018, 0xe34a35, 0x7f1814, 0xcf2f21, 0xf06a4f,
+    ];
+
+    const makeThread = (index: number) => {
+      const phase = index * 1.17 + 0.35;
+      const endX = 0.82 + (index % 3) * 0.23;
+      const points: Vector3[] = [];
+
+      for (let step = 0; step < 12; step += 1) {
+        const t = step / 11;
+        const knot = Math.exp(-Math.pow((t - 0.53) * 3.3, 2));
+        const amplitude = 0.13 + knot * (0.67 + (index % 2) * 0.12);
+        const x = -2.55 + (endX + 2.55) * t;
+        const y =
+          Math.sin(t * Math.PI * (2.4 + (index % 3) * 0.42) + phase) *
+            amplitude +
+          (index - 2.5) * 0.075 * (1 - t);
+        const z =
+          Math.cos(t * Math.PI * (2.1 + (index % 2) * 0.5) + phase) *
+          amplitude *
+          0.72;
+        points.push(new Vector3(x, y, z));
+      }
+
+      const curve = new CatmullRomCurve3(points);
+      const geometry = new TubeGeometry(
+        curve,
+        92,
+        0.017 + (index % 2) * 0.005,
+        7,
+        false
+      );
+      const material = new MeshBasicMaterial({
+        color: threadColors[index],
+        transparent: true,
+        opacity: 0.4 + index * 0.065,
+      });
+      geometries.push(geometry);
+      materials.push(material);
+      field.add(new Mesh(geometry, material));
+    };
+
+    for (let index = 0; index < 6; index += 1) makeThread(index);
+
+    const resolvedPoints = [
+      new Vector3(-2.55, 0.02, 0.08),
+      new Vector3(-1.95, 0.13, -0.1),
+      new Vector3(-1.36, -0.31, 0.32),
+      new Vector3(-0.88, 0.58, -0.31),
+      new Vector3(-0.24, -0.52, 0.34),
+      new Vector3(0.28, 0.31, -0.12),
+      new Vector3(0.84, 0.08, 0.05),
+      new Vector3(1.55, 0.07, 0.02),
+      new Vector3(2.28, 0.07, 0),
+    ];
+    const resolvedCurve = new CatmullRomCurve3(resolvedPoints);
+    const resolvedGeometry = new TubeGeometry(
+      resolvedCurve,
+      140,
+      0.029,
+      9,
+      false
+    );
+    const resolvedMaterial = new MeshBasicMaterial({
+      color: 0xf3bd2f,
+      transparent: true,
+      opacity: 0.96,
+    });
+    geometries.push(resolvedGeometry);
+    materials.push(resolvedMaterial);
+    field.add(new Mesh(resolvedGeometry, resolvedMaterial));
+
+    const beadGeometry = new SphereGeometry(0.072, 20, 20);
+    const beadMaterial = new MeshBasicMaterial({ color: 0xffd355 });
+    const bead = new Mesh(beadGeometry, beadMaterial);
+    geometries.push(beadGeometry);
+    materials.push(beadMaterial);
+    field.add(bead);
+
+    const ringGeometry = new RingGeometry(0.16, 0.182, 64);
+    const ringMaterial = new MeshBasicMaterial({
+      color: 0xf3bd2f,
+      transparent: true,
+      opacity: 0.76,
+    });
+    const ring = new Mesh(ringGeometry, ringMaterial);
+    ring.position.set(2.28, 0.07, -0.02);
+    geometries.push(ringGeometry);
+    materials.push(ringMaterial);
+    field.add(ring);
+
+    const nodeGeometry = new SphereGeometry(0.036, 14, 14);
+    const nodeMaterial = new MeshBasicMaterial({
+      color: 0xef746d,
+      transparent: true,
+      opacity: 0.8,
+    });
+    geometries.push(nodeGeometry);
+    materials.push(nodeMaterial);
+    [
+      [-1.75, 0.48, 0.12],
+      [-1.2, -0.5, -0.2],
+      [-0.72, 0.62, 0.25],
+      [-0.15, -0.62, -0.1],
+      [0.34, 0.43, 0.2],
+    ].forEach(([x, y, z], index) => {
+      const node = new Mesh(nodeGeometry, nodeMaterial);
+      node.position.set(x, y, z);
+      node.scale.setScalar(0.8 + index * 0.1);
+      field.add(node);
+    });
+
+    let targetX = 0;
+    let targetY = 0;
+    let frame = 0;
+    let active = true;
+    let lastFrame = 0;
+    const startedAt = performance.now();
+
+    const resize = () => {
+      if (!renderer) return;
+      const width = Math.max(1, root.clientWidth);
+      const height = Math.max(1, root.clientHeight);
+      renderer.setSize(width, height, false);
+      camera.aspect = width / height;
+      camera.position.z = width < 520 ? 8.5 : 7.4;
+      camera.updateProjectionMatrix();
+      renderer.render(scene, camera);
+    };
+
+    const render = (now: number) => {
+      if (!renderer || !active) return;
+      frame = requestAnimationFrame(render);
+      if (now - lastFrame < 32) return;
+      lastFrame = now;
+
+      const elapsed = (now - startedAt) / 1000;
+      field.rotation.y += (targetX * 0.16 - field.rotation.y) * 0.045;
+      field.rotation.x += (-0.06 - targetY * 0.1 - field.rotation.x) * 0.045;
+      field.position.y = Math.sin(elapsed * 0.55) * 0.025;
+
+      const progress = reducedMotion ? 0.9 : (elapsed * 0.075) % 1;
+      bead.position.copy(resolvedCurve.getPointAt(progress));
+      const pulse = 1 + Math.sin(elapsed * 2.2) * 0.11;
+      ring.scale.setScalar(pulse);
+      renderer.render(scene, camera);
+    };
+
+    const onPointerMove = (event: PointerEvent) => {
+      const rect = root.getBoundingClientRect();
+      targetX = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
+      targetY = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
+    };
+
+    const onPointerLeave = () => {
+      targetX = 0;
+      targetY = 0;
+    };
+
+    const resizeObserver = new ResizeObserver(resize);
+    resizeObserver.observe(root);
+    root.addEventListener("pointermove", onPointerMove);
+    root.addEventListener("pointerleave", onPointerLeave);
+
+    const intersectionObserver = new IntersectionObserver(entries => {
+      active = entries[0]?.isIntersecting ?? false;
+      if (active && !frame && !reducedMotion) {
+        frame = requestAnimationFrame(render);
+      }
+      if (!active && frame) {
+        cancelAnimationFrame(frame);
+        frame = 0;
+      }
+    });
+    intersectionObserver.observe(root);
+
+    resize();
+    if (reducedMotion) {
+      bead.position.copy(resolvedCurve.getPointAt(0.9));
+      renderer.render(scene, camera);
+    } else {
+      frame = requestAnimationFrame(render);
+    }
+
+    const cleanup = () => {
+      active = false;
+      if (frame) cancelAnimationFrame(frame);
+      resizeObserver.disconnect();
+      intersectionObserver.disconnect();
+      root.removeEventListener("pointermove", onPointerMove);
+      root.removeEventListener("pointerleave", onPointerLeave);
+      geometries.forEach(geometry => geometry.dispose());
+      materials.forEach(material => material.dispose());
+      renderer?.dispose();
+    };
+
+    document.addEventListener("astro:before-swap", cleanup, { once: true });
+  });
+</script>
+
+<style>
+  .decision-field {
+    position: relative;
+    min-height: 300px;
+    overflow: hidden;
+    border: 1px solid rgba(251, 248, 239, 0.22);
+    background: radial-gradient(
+        circle at 78% 46%,
+        rgba(243, 189, 47, 0.09),
+        transparent 24%
+      ),
+      linear-gradient(145deg, #201f1a, #11110f 72%);
+    isolation: isolate;
+  }
+  .decision-field::before {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    background-image: linear-gradient(
+        rgba(251, 248, 239, 0.035) 1px,
+        transparent 1px
+      ),
+      linear-gradient(90deg, rgba(251, 248, 239, 0.035) 1px, transparent 1px);
+    background-size: 36px 36px;
+    content: "";
+    mask-image: linear-gradient(to right, black, transparent 86%);
+  }
+  canvas {
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .decision-field-fallback {
+    position: absolute;
+    z-index: 1;
+    inset: 12% 8%;
+    opacity: 0;
+    background: radial-gradient(
+        circle at 78% 50%,
+        #f3bd2f 0 2%,
+        transparent 2.5%
+      ),
+      repeating-radial-gradient(
+        ellipse at 45% 50%,
+        transparent 0 7%,
+        rgba(207, 47, 33, 0.72) 7.5% 8.2%,
+        transparent 8.8% 13%
+      );
+  }
+  .is-fallback .decision-field-fallback {
+    opacity: 1;
+  }
+  .decision-field-legend {
+    position: absolute;
+    z-index: 3;
+    right: 1rem;
+    bottom: 0.8rem;
+    left: 1rem;
+    display: grid;
+    grid-template-columns: auto minmax(20px, 1fr) auto;
+    align-items: center;
+    gap: 0.7rem;
+    color: rgba(251, 248, 239, 0.72);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.52rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .decision-field-legend i {
+    height: 1px;
+    background: linear-gradient(90deg, #cf2f21, #f3bd2f);
+  }
+  @media (max-width: 700px) {
+    .decision-field {
+      min-height: 240px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .decision-field {
+      scroll-behavior: auto;
+    }
+  }
+</style>
