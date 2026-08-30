@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 import NewsletterSignup from "@components/NewsletterSignup.astro";
 import JournalFooter from "@components/JournalFooter.astro";
+import PaintSplatter from "@components/PaintSplatter.astro";
 import getSortedPosts from "@utils/getSortedPosts";
 
 const AMAZON_URL = "https://www.amazon.com/dp/B0HF6JW33T";
@@ -46,9 +47,9 @@ const socialLinks = [
         <div class="hero-copy reveal">
           <p class="kicker">Founder · CTO · AI engineer · Author</p>
           <h1 id="hero-heading">
-            Hi, I’m Vanielle.<em
-              >I like making difficult things feel possible.</em
-            >
+            Hi, I’m <span class="name-mark"
+              ><PaintSplatter /><span class="name-text">Vanielle.</span></span
+            ><em>I like making difficult things feel possible.</em>
           </h1>
           <p class="hero-intro">
             I’m a founder, CTO, AI engineer, and author. Over the past decade,
@@ -359,6 +360,19 @@ const socialLinks = [
     color: inherit;
     font-style: normal;
     font-weight: inherit;
+  }
+  .name-mark {
+    position: relative;
+    z-index: 0;
+    display: inline-block;
+    isolation: isolate;
+    color: #f6c744;
+    white-space: nowrap;
+  }
+  .name-text {
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 1px 0 rgba(91, 15, 8, 0.28);
   }
   .hero-intro {
     max-width: 580px;
