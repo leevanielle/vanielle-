@@ -18,15 +18,31 @@ const formatDate = (date: Date) =>
   }).format(date);
 
 const socialLinks = [
-  { label: "X", handle: "@lee_vanielle", href: "https://x.com/lee_vanielle" },
+  {
+    label: "X",
+    handle: "@lee_vanielle",
+    eyebrow: "Quick notes",
+    description:
+      "Fast thoughts on AI, engineering, and whatever I’m working through right now.",
+    visual: "pulse",
+    href: "https://x.com/lee_vanielle",
+  },
   {
     label: "Threads",
     handle: "@leevanielle",
+    eyebrow: "The human bits",
+    description:
+      "Work, life, leadership, and the thoughts that need a little more room.",
+    visual: "orbit",
     href: "https://www.threads.com/@leevanielle",
   },
   {
     label: "GitHub",
     handle: "github.com/leevanielle",
+    eyebrow: "Work in public",
+    description:
+      "Code, experiments, and the projects sitting behind all those opinions.",
+    visual: "branch",
     href: "https://github.com/leevanielle",
   },
 ];
@@ -69,8 +85,8 @@ const bookingLinks = [
           </h1>
           <p class="hero-intro">
             I’m a founder, CTO, AI engineer, and author. Over the past decade,
-            I’ve worked across the engineering stack and spent a decade in
-            the CTO seat. This is my corner of the internet for field notes on
+            I’ve worked across the engineering stack and spent a decade in the
+            CTO seat. This is my corner of the internet for field notes on
             technology, leadership, careers, and building across cultures.
           </p>
 
@@ -195,8 +211,8 @@ const bookingLinks = [
             you can defend.
           </p>
           <p class="advisory-experience">
-            I’ve spent a decade in the CTO seat. I know what it feels like
-            when everyone wants the answer and the answer isn’t obvious.
+            I’ve spent a decade in the CTO seat. I know what it feels like when
+            everyone wants the answer and the answer isn’t obvious.
           </p>
         </div>
 
@@ -247,16 +263,48 @@ const bookingLinks = [
       </section>
 
       <section class="social-section" aria-labelledby="social-heading">
-        <h2 id="social-heading" class="reveal">Come say hello.</h2>
+        <header class="social-intro reveal">
+          <div>
+            <p class="social-kicker">The less polished version</p>
+            <h2 id="social-heading">
+              Find me where the<br />thoughts are still moving.
+            </h2>
+          </div>
+          <p class="social-deck">
+            I share ideas before they become essays—AI, engineering, leadership,
+            things I’m building, and whatever I’m still trying to figure out.
+          </p>
+        </header>
+
         <nav class="social-links reveal" aria-label="Social profiles">
           {
             socialLinks.map(link => (
-              <a href={link.href} target="_blank" rel="noopener noreferrer">
-                <span>
-                  <strong>{link.label}</strong>
-                  <small>{link.handle}</small>
+              <a
+                class={`social-link social-link--${link.visual}`}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span class="social-card-top">
+                  <small>{link.eyebrow}</small>
+                  <i aria-hidden="true">↗</i>
                 </span>
-                <i>↗</i>
+
+                <span class="social-card-visual" aria-hidden="true">
+                  <b />
+                  <b />
+                  <b />
+                </span>
+
+                <span class="social-card-copy">
+                  <strong>{link.label}</strong>
+                  <span>{link.description}</span>
+                </span>
+
+                <span class="social-card-foot">
+                  <small>{link.handle}</small>
+                  <em>Open {link.label}</em>
+                </span>
               </a>
             ))
           }
@@ -983,68 +1031,237 @@ const bookingLinks = [
     font-style: normal;
   }
   .social-section {
-    padding: clamp(5rem, 8vw, 7rem) max(1rem, calc((100vw - 1160px) / 2));
-    display: grid;
-    grid-template-columns: 0.42fr 1.58fr;
-    align-items: start;
-    gap: clamp(3rem, 8vw, 7rem);
+    padding: clamp(5.5rem, 9vw, 8rem) max(1rem, calc((100vw - 1160px) / 2));
     background: var(--ink);
     color: var(--paper);
   }
-  .social-section h2 {
-    margin: -0.08em 0 0;
-    font-size: clamp(3.4rem, 6vw, 5.8rem);
+  .social-intro {
+    padding-bottom: clamp(3rem, 5vw, 4.8rem);
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(260px, 0.55fr);
+    align-items: end;
+    gap: clamp(2rem, 7vw, 7rem);
+    border-bottom: 1px solid #706b61;
+  }
+  .social-kicker {
+    margin: 0 0 1.15rem;
+    color: var(--salmon);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .social-intro h2 {
+    margin: 0;
+    max-width: 820px;
+    font-size: clamp(3.8rem, 7.2vw, 7rem);
     font-weight: 500;
-    letter-spacing: -0.065em;
-    line-height: 0.9;
+    letter-spacing: -0.07em;
+    line-height: 0.84;
+  }
+  .social-deck {
+    margin: 0 0 0.25rem;
+    max-width: 430px;
+    color: #c9c2b6;
+    font-size: clamp(1rem, 1.3vw, 1.22rem);
+    line-height: 1.55;
   }
   .social-links {
+    margin-top: -1px;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    border-top: 1px solid #706b61;
     border-left: 1px solid #706b61;
   }
   .social-links a {
-    min-height: 170px;
-    padding: 1.2rem;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 1rem;
+    min-height: 420px;
+    padding: 1.35rem;
+    display: grid;
+    grid-template-rows: auto minmax(120px, 1fr) auto auto;
+    gap: 1.25rem;
     border-right: 1px solid #706b61;
     border-bottom: 1px solid #706b61;
     color: var(--paper);
     text-decoration: none;
     transition:
-      background 180ms ease,
-      color 180ms ease;
+      background 240ms ease,
+      color 240ms ease,
+      transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
   }
   .social-links a:hover {
+    background: var(--paper);
+    color: var(--ink);
+    transform: translateY(-10px);
+  }
+  .social-card-top,
+  .social-card-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: "IBM Plex Mono", monospace;
+    text-transform: uppercase;
+  }
+  .social-card-top small {
+    color: #aaa49a;
+    font-size: 0.56rem;
+    letter-spacing: 0.1em;
+  }
+  .social-card-top i {
+    color: var(--salmon);
+    font-size: 1.1rem;
+    font-style: normal;
+    transition: transform 240ms ease;
+  }
+  .social-link:hover .social-card-top i {
+    transform: translate(4px, -4px);
+  }
+  .social-card-visual {
+    min-height: 140px;
+    position: relative;
+    display: block;
+    overflow: hidden;
+  }
+  .social-card-visual b {
+    position: absolute;
+    display: block;
+    transition:
+      border-color 240ms ease,
+      background 240ms ease,
+      transform 480ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .social-link--pulse .social-card-visual b {
+    top: 50%;
+    left: 2%;
+    width: 96%;
+    height: 1px;
+    background: #706b61;
+    transform-origin: center;
+  }
+  .social-link--pulse .social-card-visual b:nth-child(1) {
+    transform: rotate(13deg);
+  }
+  .social-link--pulse .social-card-visual b:nth-child(2) {
+    transform: rotate(-13deg);
+  }
+  .social-link--pulse .social-card-visual b:nth-child(3) {
+    top: calc(50% - 5px);
+    left: calc(50% - 5px);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
     background: var(--red);
   }
-  .social-links a > span {
+  .social-link--pulse:hover .social-card-visual b:nth-child(1) {
+    transform: rotate(18deg) scaleX(1.15);
+  }
+  .social-link--pulse:hover .social-card-visual b:nth-child(2) {
+    transform: rotate(-18deg) scaleX(1.15);
+  }
+  .social-link--orbit .social-card-visual b {
+    top: 50%;
+    left: 50%;
+    border: 1px solid #706b61;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .social-link--orbit .social-card-visual b:nth-child(1) {
+    width: 132px;
+    height: 132px;
+  }
+  .social-link--orbit .social-card-visual b:nth-child(2) {
+    width: 82px;
+    height: 82px;
+    border-color: var(--red);
+  }
+  .social-link--orbit .social-card-visual b:nth-child(3) {
+    width: 14px;
+    height: 14px;
+    border: 0;
+    background: var(--salmon);
+  }
+  .social-link--orbit:hover .social-card-visual b:nth-child(1) {
+    transform: translate(-50%, -50%) scale(1.22);
+  }
+  .social-link--orbit:hover .social-card-visual b:nth-child(2) {
+    transform: translate(-50%, -50%) scale(0.78);
+  }
+  .social-link--branch .social-card-visual b {
+    background: #706b61;
+  }
+  .social-link--branch .social-card-visual b:nth-child(1) {
+    top: 22%;
+    bottom: 22%;
+    left: 32%;
+    width: 1px;
+  }
+  .social-link--branch .social-card-visual b:nth-child(2),
+  .social-link--branch .social-card-visual b:nth-child(3) {
+    left: 32%;
+    width: 44%;
+    height: 1px;
+    transform-origin: left;
+  }
+  .social-link--branch .social-card-visual b:nth-child(2) {
+    top: 38%;
+    transform: rotate(-22deg);
+  }
+  .social-link--branch .social-card-visual b:nth-child(3) {
+    top: 62%;
+    transform: rotate(22deg);
+  }
+  .social-link--branch:hover .social-card-visual b:nth-child(2) {
+    transform: rotate(-30deg) scaleX(1.12);
+  }
+  .social-link--branch:hover .social-card-visual b:nth-child(3) {
+    transform: rotate(30deg) scaleX(1.12);
+  }
+  .social-link:hover .social-card-visual b {
+    background: var(--red);
+    border-color: var(--red);
+  }
+  .social-card-copy {
     display: grid;
-    gap: 0.45rem;
+    gap: 0.65rem;
   }
-  .social-links strong {
+  .social-card-copy strong {
     font-family: "Bodoni Moda", Didot, serif;
-    font-size: clamp(2rem, 3vw, 3rem);
+    font-size: clamp(2.6rem, 4vw, 4rem);
     font-weight: 500;
-    letter-spacing: -0.05em;
+    letter-spacing: -0.065em;
+    line-height: 0.9;
   }
-  .social-links small {
+  .social-card-copy > span {
+    max-width: 300px;
     color: #aaa49a;
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 0.52rem;
+    font-size: 0.88rem;
+    line-height: 1.45;
+    transition: color 240ms ease;
   }
-  .social-links i {
-    color: var(--salmon);
-    font-size: 1.25rem;
+  .social-card-foot {
+    padding-top: 1rem;
+    border-top: 1px solid #706b61;
+  }
+  .social-card-foot small,
+  .social-card-foot em {
+    font-size: 0.5rem;
     font-style: normal;
+    letter-spacing: 0.05em;
   }
-  .social-links a:hover small,
-  .social-links a:hover i {
-    color: var(--paper);
+  .social-card-foot small {
+    color: #aaa49a;
+    text-transform: none;
+  }
+  .social-card-foot em {
+    color: var(--salmon);
+  }
+  .social-link:hover .social-card-copy > span,
+  .social-link:hover .social-card-top small,
+  .social-link:hover .social-card-foot small {
+    color: #5d574e;
+  }
+  .social-link:hover .social-card-foot {
+    border-color: #b8b1a5;
   }
   .booking-links a:focus-visible,
   .social-links a:focus-visible {
@@ -1092,8 +1309,7 @@ const bookingLinks = [
   }
   @media (max-width: 980px) {
     .book-layout,
-    .advisory-section,
-    .social-section {
+    .advisory-section {
       grid-template-columns: 1fr;
     }
     .advisory-section {
@@ -1205,11 +1421,48 @@ const bookingLinks = [
     .advisory-assurance {
       font-size: 0.47rem;
     }
+    .social-intro {
+      grid-template-columns: 1fr;
+      gap: 1.6rem;
+    }
+    .social-intro h2 {
+      max-width: 720px;
+    }
+    .social-deck {
+      max-width: 620px;
+    }
     .social-links {
       grid-template-columns: 1fr;
     }
     .social-links a {
-      min-height: 112px;
+      min-height: 370px;
+    }
+    .social-card-visual {
+      min-height: 118px;
+    }
+  }
+  @media (max-width: 560px) {
+    .social-section {
+      padding-top: 4.8rem;
+      padding-bottom: 4.8rem;
+    }
+    .social-kicker {
+      margin-bottom: 0.9rem;
+      font-size: 0.58rem;
+    }
+    .social-intro h2 {
+      font-size: clamp(3.25rem, 15.5vw, 4.5rem);
+      line-height: 0.86;
+    }
+    .social-deck {
+      font-size: 1rem;
+    }
+    .social-links a {
+      min-height: 338px;
+      padding: 1.1rem;
+    }
+    .social-card-visual {
+      min-height: 100px;
     }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -1218,6 +1471,14 @@ const bookingLinks = [
     }
     .cinema-entry {
       display: none;
+    }
+    .social-links a,
+    .social-card-top i,
+    .social-card-visual b {
+      transition: none;
+    }
+    .social-links a:hover {
+      transform: none;
     }
     .portrait-rings,
     .portrait-rings::before,
