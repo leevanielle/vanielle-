@@ -2,7 +2,6 @@
 import { type CollectionEntry, getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 import NewsletterSignup from "@components/NewsletterSignup.astro";
-import JournalHeader from "@components/JournalHeader.astro";
 import JournalFooter from "@components/JournalFooter.astro";
 import getSortedPosts from "@utils/getSortedPosts";
 import { slugifyStr } from "@utils/slugify";
@@ -61,8 +60,6 @@ const formatDate = (date: Date) =>
     <div class="cinema-entry" aria-hidden="true">
       <span>Field note / {tags[0] ?? "journal"}</span>
     </div>
-
-    <JournalHeader section="Field note" />
 
     <main>
       <header class="article-heading">
