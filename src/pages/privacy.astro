@@ -1,6 +1,5 @@
 ---
 import Layout from "@layouts/Layout.astro";
-const basePath = `${import.meta.env.BASE_URL.replace(/\/+$/, "")}/`;
 ---
 
 <Layout
@@ -8,7 +7,7 @@ const basePath = `${import.meta.env.BASE_URL.replace(/\/+$/, "")}/`;
   description="Privacy information for vanielle.io and its email newsletter."
 >
   <main class="privacy-shell">
-    <a class="back" href={basePath}>← Back to vanielle.io</a>
+    <a class="back" href="/" data-astro-reload>← Back to vanielle.io</a>
     <p class="eyebrow">Plain-language privacy</p>
     <h1>Your inbox is not inventory.</h1>
     <p class="intro">
