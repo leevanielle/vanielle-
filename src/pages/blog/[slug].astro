@@ -116,21 +116,27 @@ const formatDate = (date: Date) =>
 
 <style>
   :global(body) {
-    background: #f4edcf;
+    background: #0f0f0d;
   }
   .article-page {
-    --ink: #191915;
-    --paper: #fbf8ef;
-    --paper-deep: #eee4d2;
-    --red: #cf2f21;
+    --ink: #f2ede3;
+    --paper: #151512;
+    --paper-deep: #211f1a;
+    --red: #ef746d;
     --amber: #d9a738;
-    --muted: #6d665c;
-    --rule: rgba(25, 25, 21, 0.42);
+    --muted: #aaa296;
+    --body-copy: #d4cec2;
+    --rule: rgba(242, 237, 227, 0.22);
     min-height: 100svh;
     overflow: hidden;
     background: var(--paper);
     color: var(--ink);
+    color-scheme: dark;
     font-family: "Instrument Sans", sans-serif;
+  }
+  .article-page ::selection {
+    background: var(--red);
+    color: #151512;
   }
   .cinema-entry {
     position: fixed;
@@ -138,8 +144,8 @@ const formatDate = (date: Date) =>
     inset: 0;
     display: grid;
     place-items: center;
-    background: var(--ink);
-    color: var(--paper);
+    background: #0f0f0d;
+    color: var(--ink);
     font-family: "IBM Plex Mono", monospace;
     font-size: 0.62rem;
     letter-spacing: 0.12em;
@@ -277,8 +283,12 @@ const formatDate = (date: Date) =>
     z-index: -1;
     inset: 0;
     background-image:
-      linear-gradient(rgba(25, 25, 21, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(25, 25, 21, 0.05) 1px, transparent 1px);
+      linear-gradient(rgba(242, 237, 227, 0.055) 1px, transparent 1px),
+      linear-gradient(
+        90deg,
+        rgba(242, 237, 227, 0.055) 1px,
+        transparent 1px
+      );
     background-size: 44px 44px;
     mask-image: linear-gradient(125deg, rgba(0, 0, 0, 0.7), transparent 72%);
   }
@@ -307,7 +317,7 @@ const formatDate = (date: Date) =>
   :global(.article-body) {
     max-width: 740px;
     margin: clamp(3rem, 6vw, 5rem) auto clamp(5rem, 8vw, 7rem);
-    color: #282721;
+    color: var(--body-copy);
     font-family: "Instrument Sans", sans-serif;
     font-size: clamp(1.05rem, 1.45vw, 1.18rem);
     line-height: 1.82;
@@ -339,11 +349,29 @@ const formatDate = (date: Date) =>
     color: var(--red);
     text-underline-offset: 4px;
   }
+  :global(.article-body strong) {
+    color: var(--ink);
+  }
+  :global(.article-body code) {
+    background: #282620;
+    color: #f3b2ad;
+  }
+  :global(.article-body pre) {
+    padding: 1.2rem 1.35rem;
+    overflow-x: auto;
+    border: 1px solid var(--rule);
+    background: #0f0f0d;
+  }
+  :global(.article-body pre code) {
+    padding: 0;
+    background: transparent;
+    color: var(--body-copy);
+  }
   :global(.article-body blockquote) {
     margin: 2.5rem 0;
     padding: 1.2rem 0 1.2rem 1.6rem;
     border-left: 3px solid var(--red);
-    color: #504b42;
+    color: #c2baad;
     font-family: "Bodoni Moda", Didot, serif;
     font-size: 1.35em;
     line-height: 1.45;
@@ -361,7 +389,7 @@ const formatDate = (date: Date) =>
     margin: 3rem 50%;
     display: block;
     transform: translateX(-50%);
-    border: 1px solid var(--ink);
+    border: 1px solid var(--rule);
   }
   :global(.article-body li) {
     margin-bottom: 0.45em;
@@ -370,8 +398,8 @@ const formatDate = (date: Date) =>
     margin: 0 0 clamp(6rem, 10vw, 9rem);
     display: grid;
     grid-template-columns: 1.15fr 0.85fr;
-    border: 1px solid var(--ink);
-    box-shadow: 10px 10px 0 var(--red);
+    border: 1px solid var(--rule);
+    box-shadow: 8px 8px 0 rgba(239, 116, 109, 0.78);
   }
   .join-note,
   .next-note {
@@ -379,8 +407,8 @@ const formatDate = (date: Date) =>
     padding: clamp(1.5rem, 4vw, 3rem);
   }
   .join-note {
-    background: var(--ink);
-    color: var(--paper);
+    background: #0f0f0d;
+    color: var(--ink);
   }
   .join-note > p,
   .next-note > span {
@@ -401,9 +429,18 @@ const formatDate = (date: Date) =>
   .next-note {
     display: flex;
     flex-direction: column;
-    background: #eee4d2;
+    border-left: 1px solid var(--rule);
+    background: var(--paper-deep);
     color: var(--ink);
     text-decoration: none;
+  }
+  :global(.join-note .newsletter-form input) {
+    border-color: #615c53;
+    background: #1d1c18;
+    color: var(--ink);
+  }
+  :global(.join-note .newsletter-form input::placeholder) {
+    color: #827b70;
   }
   .next-note > span {
     color: var(--red);
@@ -461,6 +498,10 @@ const formatDate = (date: Date) =>
     }
     .after-note {
       grid-template-columns: 1fr;
+    }
+    .next-note {
+      border-top: 1px solid var(--rule);
+      border-left: 0;
     }
   }
   @media (max-width: 560px) {
