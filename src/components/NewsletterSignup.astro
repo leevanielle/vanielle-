@@ -70,11 +70,6 @@ const companyId = `${idPrefix}-company`;
       }
       <a href={`${basePath}privacy`}>Privacy</a>.
     </p>
-    {
-      !isConfigured && (
-        <p class="preview-note">Preview build · Connection pending</p>
-      )
-    }
   </div>
 
   <p id={statusId} class="status" role="status" aria-live="polite"></p>
@@ -239,7 +234,6 @@ const companyId = `${idPrefix}-company`;
     gap: 1rem;
   }
   .help,
-  .preview-note,
   .status {
     margin: 0;
     font-size: 0.65rem;
@@ -251,14 +245,6 @@ const companyId = `${idPrefix}-company`;
   .help a {
     color: #d6d1c8;
     text-underline-offset: 3px;
-  }
-  .preview-note {
-    color: #d9a738;
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 0.55rem;
-    letter-spacing: 0.04em;
-    text-align: right;
-    text-transform: uppercase;
   }
   .status {
     min-height: 1.05rem;
@@ -343,9 +329,6 @@ const companyId = `${idPrefix}-company`;
       align-items: flex-start;
       flex-direction: column;
       gap: 0.35rem;
-    }
-    .preview-note {
-      text-align: left;
     }
   }
 

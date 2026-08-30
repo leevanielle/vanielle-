@@ -57,6 +57,18 @@ const socialLinks = [
             technology, leadership, careers, and building across cultures.
           </p>
 
+          <figure class="portrait-system">
+            <div class="portrait-rings" aria-hidden="true"><i></i><b></b></div>
+            <img
+              src="/assets/vanielle-profile.jpg"
+              width="894"
+              height="547"
+              alt="Vanielle Lee smiling in a dark turtleneck"
+              loading="eager"
+              fetchpriority="high"
+            />
+          </figure>
+
           <aside
             class="hero-newsletter"
             id="newsletter"
@@ -80,18 +92,6 @@ const socialLinks = [
             </a>
           </div>
         </div>
-
-        <figure class="portrait-system reveal">
-          <div class="portrait-rings" aria-hidden="true"><i></i><b></b></div>
-          <img
-            src="/assets/vanielle-profile.jpg"
-            width="894"
-            height="547"
-            alt="Vanielle Lee smiling in a dark turtleneck"
-            loading="eager"
-            fetchpriority="high"
-          />
-        </figure>
       </section>
 
       <section class="book-section" id="book" aria-labelledby="book-heading">
@@ -130,11 +130,10 @@ const socialLinks = [
         id="journal"
         aria-labelledby="journal-heading"
       >
-        <div class="journal-shape" aria-hidden="true"><i></i><b></b></div>
         <header class="section-heading reveal">
-          <p class="kicker">The journal</p>
-          <h2 id="journal-heading">Notes from inside the system.</h2>
-          <a href="/blog/">Browse every note <span>↗</span></a>
+          <h2 id="journal-heading">
+            My notes on work, life, and figuring things out.
+          </h2>
         </header>
 
         <div class="home-posts">
@@ -295,6 +294,7 @@ const socialLinks = [
     letter-spacing: -0.06em;
   }
   .hero-newsletter {
+    grid-area: newsletter;
     width: min(100%, 600px);
     margin: 2rem 0 0;
     padding: 1.65rem 0 0;
@@ -332,18 +332,23 @@ const socialLinks = [
     position: relative;
     min-height: auto;
     padding: clamp(3rem, 5vw, 5rem) max(1rem, calc((100vw - 1240px) / 2));
-    display: grid;
-    grid-template-columns: minmax(0, 1.14fr) minmax(360px, 0.86fr);
-    align-items: center;
-    column-gap: clamp(3rem, 7vw, 7rem);
-    row-gap: clamp(2.5rem, 4vw, 4rem);
     overflow: hidden;
   }
   .hero-copy {
     position: relative;
     z-index: 3;
+    display: grid;
+    grid-template-columns: minmax(0, 1.14fr) minmax(360px, 0.86fr);
+    grid-template-areas:
+      "heading portrait"
+      "intro portrait"
+      "newsletter portrait"
+      "links portrait";
+    align-items: center;
+    column-gap: clamp(3rem, 7vw, 7rem);
   }
   h1 {
+    grid-area: heading;
     max-width: 800px;
     margin: 0;
     color: var(--red);
@@ -374,6 +379,7 @@ const socialLinks = [
     text-shadow: 0 1px 0 rgba(91, 15, 8, 0.28);
   }
   .hero-intro {
+    grid-area: intro;
     max-width: 580px;
     margin: 0.85rem 0 2rem;
     color: #5f594f;
@@ -381,6 +387,7 @@ const socialLinks = [
     line-height: 1.7;
   }
   .hero-links {
+    grid-area: links;
     margin-top: 1.8rem;
     display: flex;
     flex-wrap: wrap;
@@ -398,11 +405,13 @@ const socialLinks = [
     color: var(--red);
   }
   .portrait-system {
+    grid-area: portrait;
     position: relative;
     z-index: 2;
-    width: min(100%, 440px);
+    width: min(100%, 420px);
     margin: 0;
     justify-self: center;
+    isolation: isolate;
   }
   .portrait-system > img {
     position: relative;
@@ -410,8 +419,9 @@ const socialLinks = [
     width: 100%;
     aspect-ratio: 1;
     display: block;
-    border: 1px solid var(--ink);
+    border: 4px solid var(--paper);
     border-radius: 50%;
+    box-shadow: 0 0 0 1px var(--ink);
     object-fit: cover;
     object-position: 53% center;
     filter: grayscale(1) contrast(1.08);
@@ -419,13 +429,34 @@ const socialLinks = [
   .portrait-rings {
     position: absolute;
     z-index: 1;
-    width: 114%;
+    width: 116%;
     aspect-ratio: 1;
-    top: -7%;
-    left: -7%;
+    top: -8%;
+    left: -8%;
     border: 1px solid rgba(207, 47, 33, 0.52);
     border-radius: 50%;
     animation: orbit-drift 10s ease-in-out infinite;
+  }
+  .portrait-rings::before {
+    content: "";
+    position: absolute;
+    inset: -4%;
+    border-radius: 50%;
+    background: conic-gradient(
+      from 32deg,
+      transparent 0 13%,
+      rgba(207, 47, 33, 0.82) 13% 20%,
+      transparent 20% 59%,
+      rgba(239, 116, 109, 0.58) 59% 64%,
+      transparent 64% 100%
+    );
+    -webkit-mask: radial-gradient(
+      farthest-side,
+      transparent calc(100% - 2px),
+      #000 0
+    );
+    mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 0);
+    animation: orbit-spin 18s linear infinite;
   }
   .portrait-rings i,
   .portrait-rings b {
@@ -433,8 +464,22 @@ const socialLinks = [
     border-radius: 50%;
   }
   .portrait-rings i {
-    inset: 17%;
-    border: 1px solid rgba(217, 167, 56, 0.45);
+    inset: 14%;
+    background: conic-gradient(
+      from 210deg,
+      transparent 0 18%,
+      rgba(217, 167, 56, 0.72) 18% 31%,
+      transparent 31% 72%,
+      rgba(217, 167, 56, 0.34) 72% 78%,
+      transparent 78% 100%
+    );
+    -webkit-mask: radial-gradient(
+      farthest-side,
+      transparent calc(100% - 1px),
+      #000 0
+    );
+    mask: radial-gradient(farthest-side, transparent calc(100% - 1px), #000 0);
+    animation: orbit-spin-reverse 14s linear infinite;
   }
   .portrait-rings b {
     width: 13px;
@@ -450,7 +495,7 @@ const socialLinks = [
   .section-heading {
     margin-bottom: clamp(4rem, 8vw, 7rem);
     display: grid;
-    grid-template-columns: 0.5fr 1.18fr 0.72fr;
+    grid-template-columns: 0.5fr 1.9fr;
     align-items: end;
     gap: clamp(1rem, 4vw, 4rem);
   }
@@ -458,6 +503,7 @@ const socialLinks = [
     margin: 0 0 0.7rem;
   }
   .section-heading h2 {
+    grid-column: 2;
     margin: 0;
     font-size: clamp(3.8rem, 6.8vw, 6.8rem);
     letter-spacing: -0.07em;
@@ -553,40 +599,6 @@ const socialLinks = [
   }
   .journal-section {
     overflow: hidden;
-  }
-  .journal-section .section-heading > a {
-    align-self: end;
-    color: var(--ink);
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 0.59rem;
-    text-decoration: none;
-    text-transform: uppercase;
-  }
-  .journal-section .section-heading > a span {
-    color: var(--red);
-  }
-  .journal-shape {
-    position: absolute;
-    width: min(52vw, 680px);
-    aspect-ratio: 1;
-    top: -24vw;
-    right: -10vw;
-    border: 1px solid rgba(207, 47, 33, 0.12);
-    border-radius: 50%;
-    pointer-events: none;
-  }
-  .journal-shape i,
-  .journal-shape b {
-    position: absolute;
-    border-radius: 50%;
-  }
-  .journal-shape i {
-    inset: 20%;
-    border: 1px solid rgba(217, 167, 56, 0.2);
-  }
-  .journal-shape b {
-    inset: 43%;
-    background: rgba(239, 116, 109, 0.08);
   }
   .home-posts {
     position: relative;
@@ -787,8 +799,17 @@ const socialLinks = [
       transform: rotate(4deg) scale(1.025);
     }
   }
+  @keyframes orbit-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes orbit-spin-reverse {
+    to {
+      transform: rotate(-360deg);
+    }
+  }
   @media (max-width: 980px) {
-    .home-hero,
     .book-layout,
     .connect-section {
       grid-template-columns: 1fr;
@@ -796,12 +817,28 @@ const socialLinks = [
     .home-hero {
       min-height: auto;
     }
-    .portrait-system,
+    .hero-copy {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "heading"
+        "intro"
+        "portrait"
+        "newsletter"
+        "links";
+    }
+    .portrait-system {
+      width: min(62vw, 360px);
+      margin: clamp(1rem, 4vw, 2rem) auto clamp(2.5rem, 6vw, 4rem);
+      justify-self: center;
+    }
     .book-object {
       justify-self: start;
     }
     .section-heading {
       grid-template-columns: 1fr;
+    }
+    .section-heading h2 {
+      grid-column: 1;
     }
     .section-heading {
       gap: 0.8rem;
@@ -816,6 +853,14 @@ const socialLinks = [
     }
     .home-hero {
       padding-top: 3.5rem;
+    }
+    .hero-copy {
+      column-gap: 0;
+    }
+    .portrait-system {
+      width: min(74vw, 310px);
+      margin-top: 0.75rem;
+      margin-bottom: 3rem;
     }
     h1 {
       font-size: clamp(2.8rem, 13vw, 4rem);
@@ -847,7 +892,9 @@ const socialLinks = [
     .cinema-entry {
       display: none;
     }
-    .portrait-rings {
+    .portrait-rings,
+    .portrait-rings::before,
+    .portrait-rings i {
       animation: none;
     }
     .reveal {
