@@ -88,9 +88,12 @@ const bookingLinks = [
             I’ve worked across the engineering stack and spent a decade in the
             CTO seat at my own company,
             <a
+              class="company-link"
               href="https://odecloud.com"
               target="_blank"
-              rel="noopener noreferrer">OdeCloud, Inc</a
+              rel="noopener noreferrer"
+              aria-label="Visit OdeCloud, Inc (opens in a new tab)"
+              >OdeCloud, Inc<span aria-hidden="true">↗</span></a
             >. This is my corner of the internet for field notes on technology,
             leadership, careers, and building across cultures.
           </p>
@@ -526,19 +529,52 @@ const bookingLinks = [
     font-size: clamp(1rem, 1.45vw, 1.16rem);
     line-height: 1.7;
   }
-  .hero-intro a {
+  .hero-intro .company-link {
+    position: relative;
+    display: inline;
+    padding: 0.02em 0.16em 0.06em;
     color: inherit;
+    background: linear-gradient(
+      to top,
+      rgba(217, 167, 56, 0.34) 0 42%,
+      transparent 42% 100%
+    );
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    font-weight: 650;
+    text-decoration-line: underline;
     text-decoration-color: var(--red);
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.18em;
-    transition: color 180ms ease;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.15em;
+    transition:
+      color 180ms ease,
+      background-color 180ms ease,
+      text-decoration-color 180ms ease;
   }
-  .hero-intro a:hover {
+  .company-link span {
+    display: inline-block;
+    margin-left: 0.28em;
     color: var(--red);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72em;
+    font-weight: 700;
+    transition: transform 180ms ease;
   }
-  .hero-intro a:focus-visible {
+  .hero-intro .company-link:hover {
+    color: var(--red);
+    background: rgba(217, 167, 56, 0.34);
+  }
+  .company-link:hover span {
+    transform: translate(0.1em, -0.1em);
+  }
+  .hero-intro .company-link:focus-visible {
     outline: 2px solid var(--amber);
     outline-offset: 3px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .company-link span {
+      transition: none;
+    }
   }
   .hero-links {
     grid-area: links;
