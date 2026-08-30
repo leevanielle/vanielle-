@@ -36,11 +36,15 @@ const bookingLinks = [
     label: "Book 30 minutes",
     detail: "$150 · focused advisory call",
     href: "https://cal.com/leevanielle/advisory-30",
+    calLink: "leevanielle/advisory-30",
+    namespace: "advisory-30",
   },
   {
     label: "Book one hour",
     detail: "$300 · working advisory session",
     href: "https://cal.com/leevanielle/advisory-60",
+    calLink: "leevanielle/advisory-60",
+    namespace: "advisory-60",
   },
 ];
 ---
@@ -194,8 +198,9 @@ const bookingLinks = [
               <a
                 class="booking-link"
                 href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
+                data-cal-link={link.calLink}
+                data-cal-namespace={link.namespace}
+                data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
               >
                 <span>
                   <strong>{link.label}</strong>
@@ -251,6 +256,56 @@ const bookingLinks = [
     );
     revealItems.forEach(item => observer.observe(item));
   }
+</script>
+
+<script is:inline>
+  (function (C, A, L) {
+    const enqueue = function (api, args) {
+      api.q.push(args);
+    };
+    const document = C.document;
+    C.Cal =
+      C.Cal ||
+      function () {
+        const cal = C.Cal;
+        const args = arguments;
+        if (!cal.loaded) {
+          cal.ns = {};
+          cal.q = cal.q || [];
+          document.head.appendChild(document.createElement("script")).src = A;
+          cal.loaded = true;
+        }
+        if (args[0] === L) {
+          const api = function () {
+            enqueue(api, arguments);
+          };
+          const namespace = args[1];
+          api.q = api.q || [];
+          if (typeof namespace === "string") {
+            cal.ns[namespace] = cal.ns[namespace] || api;
+            enqueue(cal.ns[namespace], args);
+            enqueue(cal, ["initNamespace", namespace]);
+          } else {
+            enqueue(cal, args);
+          }
+          return;
+        }
+        enqueue(cal, args);
+      };
+  })(window, "https://app.cal.com/embed/embed.js", "init");
+
+  Cal("init", "advisory-30", { origin: "https://app.cal.com" });
+  Cal("init", "advisory-60", { origin: "https://app.cal.com" });
+  Cal.config = Cal.config || {};
+  Cal.config.forwardQueryParams = true;
+  Cal.ns["advisory-30"]("ui", {
+    hideEventTypeDetails: false,
+    layout: "month_view",
+  });
+  Cal.ns["advisory-60"]("ui", {
+    hideEventTypeDetails: false,
+    layout: "month_view",
+  });
 </script>
 
 <style>
