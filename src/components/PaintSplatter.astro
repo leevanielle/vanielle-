@@ -59,8 +59,27 @@
     }
 
     float drop(vec2 p, vec2 center, float radius) {
-      float wobble = noise((p - center) * 22.0) * 0.025;
-      return 1.0 - smoothstep(radius - 0.025, radius + 0.02, length(p - center) + wobble);
+      float wobble = (noise((p - center) * 24.0) - 0.5) * 0.035;
+      return 1.0 - smoothstep(radius - 0.01, radius + 0.012, length(p - center) + wobble);
+    }
+
+    float ray(vec2 p, vec2 direction, float start, float finish, float width) {
+      vec2 side = vec2(-direction.y, direction.x);
+      float along = dot(p, direction);
+      float across = abs(dot(p, side));
+      float progress = smoothstep(start, finish, along);
+      float taper = mix(width, width * 0.08, progress);
+      float sides = 1.0 - smoothstep(taper, taper + 0.012, across);
+      float begins = smoothstep(start - 0.08, start + 0.02, along);
+      float ends = 1.0 - smoothstep(finish - 0.035, finish + 0.025, along);
+      return sides * begins * ends;
+    }
+
+    float capsule(vec2 p, vec2 a, vec2 b, float radius) {
+      vec2 pa = p - a;
+      vec2 ba = b - a;
+      float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
+      return 1.0 - smoothstep(radius - 0.01, radius + 0.012, length(pa - ba * h));
     }
 
     void main() {
@@ -68,33 +87,50 @@
       float drift = uTime * 0.035;
       float broad = fbm(vec2(p.x * 1.4 + drift, p.y * 3.1 - drift));
       float fine = fbm(vec2(p.x * 4.0 - drift, p.y * 8.0 + drift));
-
-      vec2 warped = p;
-      warped.y += sin(p.x * 3.2 + broad * 3.4) * 0.055;
-      warped.x += (broad - 0.5) * 0.12;
-
       float halfWidth = uAspect * 0.5;
-      float ellipse = length(vec2(warped.x / (halfWidth * 0.84), warped.y / 0.4));
-      float roughEdge = 0.86 + broad * 0.18 + fine * 0.055;
-      float paint = 1.0 - smoothstep(roughEdge - 0.055, roughEdge + 0.035, ellipse);
+      vec2 q = vec2(p.x / (halfWidth * 0.78), p.y / 0.48);
+      q.x += (broad - 0.5) * 0.045;
+      q.y += (fine - 0.5) * 0.035;
 
-      float brush = 1.0 - smoothstep(
-        0.25 + broad * 0.08,
-        0.34 + broad * 0.1,
-        abs(warped.y + sin(p.x * 6.0 + fine * 2.0) * 0.035)
+      vec2 body = vec2(q.x * 0.75, q.y);
+      float angle = atan(body.y, body.x);
+      float radius = length(body);
+      float edgeNoise = fbm(vec2(cos(angle), sin(angle)) * 3.8 + 5.7);
+      float jaggedEdge = 0.73
+        + sin(angle * 5.0 + 0.7) * 0.07
+        + sin(angle * 11.0 - 1.2) * 0.045
+        + sin(angle * 19.0 + 2.4) * 0.025
+        + (edgeNoise - 0.5) * 0.15;
+      float paint = 1.0 - smoothstep(jaggedEdge - 0.012, jaggedEdge + 0.018, radius);
+
+      paint = max(paint, ray(q, normalize(vec2(-0.82, 0.57)), 0.45, 1.18, 0.085));
+      paint = max(paint, ray(q, normalize(vec2(-0.48, 0.88)), 0.48, 1.05, 0.06));
+      paint = max(paint, ray(q, normalize(vec2(0.12, 0.99)), 0.5, 1.02, 0.045));
+      paint = max(paint, ray(q, normalize(vec2(0.64, 0.77)), 0.46, 1.08, 0.065));
+      paint = max(paint, ray(q, normalize(vec2(0.98, 0.21)), 0.5, 1.24, 0.055));
+      paint = max(paint, ray(q, normalize(vec2(0.91, -0.41)), 0.47, 1.12, 0.05));
+      paint = max(paint, ray(q, normalize(vec2(-0.95, -0.32)), 0.46, 1.13, 0.07));
+      paint = max(paint, ray(q, normalize(vec2(-0.58, -0.82)), 0.5, 1.03, 0.055));
+
+      float heavyDrip = capsule(q, vec2(0.15, -0.32), vec2(0.27, -0.88), 0.075);
+      heavyDrip = max(heavyDrip, drop(q, vec2(0.27, -0.89), 0.1));
+      paint = max(paint, heavyDrip);
+
+      paint = max(paint, drop(q, vec2(-0.69, 0.88), 0.075));
+      paint = max(paint, drop(q, vec2(-0.91, 0.76), 0.052));
+      paint = max(paint, drop(q, vec2(-1.04, 0.64), 0.038));
+      paint = max(paint, drop(q, vec2(0.71, 0.87), 0.044));
+      paint = max(paint, drop(q, vec2(1.04, 0.63), 0.055));
+      paint = max(paint, drop(q, vec2(1.2, 0.18), 0.032));
+      paint = max(paint, drop(q, vec2(-1.13, -0.46), 0.03));
+
+      float revealFront = uReveal * 1.5;
+      float impactReveal = 1.0 - smoothstep(
+        revealFront - 0.18,
+        revealFront + 0.025,
+        radius + (fine - 0.5) * 0.08
       );
-      float taper = 1.0 - smoothstep(0.72, 0.98, abs(p.x) / halfWidth);
-      paint = max(paint, brush * taper * 0.94);
-
-      paint = max(paint, drop(p, vec2(-halfWidth * 0.83, 0.39), 0.075));
-      paint = max(paint, drop(p, vec2(-halfWidth * 0.68, -0.43), 0.045));
-      paint = max(paint, drop(p, vec2(halfWidth * 0.72, 0.37), 0.06));
-      paint = max(paint, drop(p, vec2(halfWidth * 0.87, -0.31), 0.035));
-      paint = max(paint, drop(p, vec2(halfWidth * 0.45, -0.47), 0.028));
-      paint = max(paint, drop(p, vec2(-halfWidth * 0.31, 0.46), 0.03));
-
-      float sweep = 1.0 - smoothstep(uReveal - 0.08, uReveal + 0.055, vUv.x + (fine - 0.5) * 0.08);
-      paint *= sweep;
+      paint *= impactReveal;
 
       float marble = fbm(vec2(p.x * 2.3 + broad, p.y * 7.0 - broad + drift));
       float vein = smoothstep(0.68, 0.96, sin((marble + p.x * 0.13) * 31.0) * 0.5 + 0.5);
@@ -142,12 +178,7 @@
     }
 
     renderer.setClearColor(0x000000, 0);
-    renderer.setPixelRatio(
-      Math.min(
-        window.devicePixelRatio || 1,
-        window.innerWidth < 700 ? 1.25 : 1.7
-      )
-    );
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2.5));
 
     const scene = new Scene();
     const camera = new OrthographicCamera(-1, 1, 1, -1, 0, 1);
@@ -229,11 +260,9 @@
   .paint-splatter {
     position: absolute;
     z-index: 0;
-    inset: -0.2em -0.24em -0.14em -0.22em;
+    inset: -0.8em -0.5em -0.65em -0.48em;
     display: block;
     pointer-events: none;
-    transform: rotate(-1.2deg) scale(1.03);
-    transform-origin: center;
   }
   canvas {
     width: 100%;
@@ -243,23 +272,45 @@
   .paint-splatter.is-fallback::before {
     content: "";
     position: absolute;
-    inset: 15% -3%;
+    inset: 7% -1% 5%;
     background: #cf2f21;
     clip-path: polygon(
-      0 37%,
-      8% 22%,
-      22% 28%,
-      34% 14%,
-      51% 25%,
-      67% 11%,
-      81% 29%,
-      100% 20%,
-      95% 71%,
-      80% 78%,
-      63% 68%,
-      46% 83%,
-      27% 69%,
-      11% 81%
+      0 44%,
+      16% 37%,
+      5% 23%,
+      28% 32%,
+      25% 5%,
+      41% 27%,
+      49% 0,
+      55% 28%,
+      76% 10%,
+      70% 34%,
+      100% 27%,
+      82% 48%,
+      96% 63%,
+      71% 59%,
+      66% 84%,
+      54% 65%,
+      49% 100%,
+      42% 65%,
+      20% 84%,
+      27% 60%,
+      4% 68%,
+      20% 51%
     );
+  }
+  .paint-splatter.is-fallback::after {
+    content: "";
+    position: absolute;
+    width: 0.075em;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    top: 2%;
+    left: 20%;
+    background: #cf2f21;
+    box-shadow:
+      -0.18em 0.08em 0 -0.015em #cf2f21,
+      0.7em -0.04em 0 -0.018em #cf2f21,
+      1.7em 0.22em 0 -0.022em #cf2f21;
   }
 </style>
