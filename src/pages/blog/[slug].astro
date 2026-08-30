@@ -62,15 +62,32 @@ const formatDate = (date: Date) =>
 
     <main>
       <header class="article-heading">
-        <a href="/" data-astro-reload>← Journal index</a>
-        <h1>{title}</h1>
-        <div class="article-meta">
-          <time datetime={pubDatetime.toISOString()}
-            >{formatDate(pubDatetime)}</time
-          >
-          <span>Written by {author}</span>
+        <div class="article-heading-bar">
+          <a href="/" data-astro-reload>
+            <span aria-hidden="true">←</span>
+            <strong>Journal index</strong>
+            <small>All field notes</small>
+          </a>
+          <span class="article-type">Field note</span>
         </div>
-        <p class="article-description">{description}</p>
+
+        <div class="article-heading-grid">
+          <aside class="article-meta" aria-label="Article details">
+            <span class="article-meta-label">Filed</span>
+            <time datetime={pubDatetime.toISOString()}
+              >{formatDate(pubDatetime)}</time
+            >
+            <span>By {author}</span>
+            <span class="field-marker" aria-hidden="true">
+              <i></i><b></b>
+            </span>
+          </aside>
+
+          <div class="article-lede">
+            <h1>{title}</h1>
+            <p class="article-description">{description}</p>
+          </div>
+        </div>
       </header>
 
       <article class="article-body" role="article">
@@ -104,8 +121,11 @@ const formatDate = (date: Date) =>
   .article-page {
     --ink: #191915;
     --paper: #fbf8ef;
+    --paper-deep: #eee4d2;
     --red: #cf2f21;
     --amber: #d9a738;
+    --muted: #6d665c;
+    --rule: rgba(25, 25, 21, 0.42);
     min-height: 100svh;
     overflow: hidden;
     background: var(--paper);
@@ -132,24 +152,135 @@ const formatDate = (date: Date) =>
     max-width: none;
   }
   main {
-    width: min(100% - 2rem, 1120px);
+    width: min(100% - 2rem, 1240px);
     margin-inline: auto;
   }
   .article-heading {
-    max-width: 920px;
-    margin-inline: auto;
-    padding: clamp(5rem, 11vw, 9rem) 0 clamp(3rem, 7vw, 5rem);
-    text-align: center;
+    padding: clamp(2rem, 4vw, 3.75rem) 0 0;
   }
-  .article-heading > a {
-    display: inline-block;
-    margin: 0 0 3rem;
-    color: var(--red);
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.08em;
+  .article-heading-bar {
+    min-height: 66px;
+    padding: 0 0 1.15rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .article-heading-bar > a {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    gap: 0.08rem 0.75rem;
+    color: var(--ink);
     text-decoration: none;
+  }
+  .article-heading-bar > a > span {
+    grid-row: 1 / span 2;
+    color: var(--red);
+    font-size: 1.4rem;
+    transition: transform 180ms ease;
+  }
+  .article-heading-bar > a > strong,
+  .article-heading-bar > a > small,
+  .article-type,
+  .article-meta {
+    font-family: "IBM Plex Mono", monospace;
     text-transform: uppercase;
+  }
+  .article-heading-bar > a > strong {
+    font-size: clamp(0.88rem, 1.2vw, 1.02rem);
+    letter-spacing: 0.04em;
+  }
+  .article-heading-bar > a > small {
+    color: var(--muted);
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
+  }
+  .article-heading-bar > a:hover > span {
+    transform: translateX(-0.35rem);
+  }
+  .article-heading-bar > a:focus-visible {
+    outline: 2px solid var(--red);
+    outline-offset: 7px;
+  }
+  .article-type {
+    color: var(--red);
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+  }
+  .article-heading-grid {
+    display: grid;
+    grid-template-columns: minmax(150px, 0.2fr) minmax(0, 1fr);
+    border-bottom: 1px solid var(--rule);
+  }
+  .article-meta {
+    min-height: 100%;
+    padding: clamp(2.5rem, 5vw, 4.5rem) clamp(1.25rem, 3vw, 2.25rem) 2rem 0;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.7rem;
+    border-right: 1px solid var(--rule);
+    color: var(--muted);
+    font-size: 0.58rem;
+    letter-spacing: 0.04em;
+    line-height: 1.55;
+  }
+  .article-meta-label {
+    margin-bottom: 0.25rem;
+    color: var(--red);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+  }
+  .field-marker {
+    position: relative;
+    width: 84px;
+    height: 84px;
+    margin-top: auto;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--rule);
+    border-radius: 50%;
+  }
+  .field-marker::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 100%;
+    width: 1px;
+    height: clamp(2rem, 5vw, 4rem);
+    background: linear-gradient(to top, var(--rule), transparent);
+  }
+  .field-marker i {
+    width: 52px;
+    height: 52px;
+    border: 1px solid rgba(207, 47, 33, 0.72);
+    border-radius: 50%;
+  }
+  .field-marker b {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--red);
+  }
+  .article-lede {
+    position: relative;
+    isolation: isolate;
+    padding: clamp(2.75rem, 6vw, 5.5rem) 0 clamp(3rem, 6vw, 5rem)
+      clamp(2rem, 6vw, 5.75rem);
+  }
+  .article-lede::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(25, 25, 21, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(25, 25, 21, 0.05) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: linear-gradient(125deg, rgba(0, 0, 0, 0.7), transparent 72%);
   }
   h1,
   h2,
@@ -160,30 +291,22 @@ const formatDate = (date: Date) =>
   }
   h1 {
     margin: 0;
-    font-size: clamp(4rem, 9vw, 8rem);
-    letter-spacing: -0.075em;
-    line-height: 0.87;
-  }
-  .article-meta {
-    margin-top: 2rem;
-    display: flex;
-    justify-content: center;
-    gap: 0.7rem 1.4rem;
-    color: #716b61;
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 0.58rem;
-    text-transform: uppercase;
+    max-width: 980px;
+    font-size: clamp(3.75rem, 6.5vw, 6.25rem);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    text-wrap: balance;
   }
   .article-description {
-    max-width: 650px;
-    margin: 1.5rem auto 0;
-    color: #5f594f;
+    max-width: 720px;
+    margin: clamp(1.5rem, 3vw, 2.5rem) 0 0;
+    color: var(--muted);
     font-size: clamp(1rem, 1.5vw, 1.18rem);
-    line-height: 1.7;
+    line-height: 1.65;
   }
   :global(.article-body) {
     max-width: 740px;
-    margin: clamp(4.5rem, 9vw, 8rem) auto;
+    margin: clamp(3rem, 6vw, 5rem) auto clamp(5rem, 8vw, 7rem);
     color: #282721;
     font-family: "Instrument Sans", sans-serif;
     font-size: clamp(1.05rem, 1.45vw, 1.18rem);
@@ -310,23 +433,48 @@ const formatDate = (date: Date) =>
     }
   }
   @media (max-width: 760px) {
-    .article-heading {
-      text-align: left;
+    .article-heading-bar {
+      min-height: 58px;
+    }
+    .article-heading-grid {
+      grid-template-columns: 1fr;
     }
     .article-meta {
-      align-items: flex-start;
-      flex-direction: column;
+      min-height: auto;
+      padding: 1.4rem 0;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.35rem 1rem;
+      border-right: 0;
+      border-bottom: 1px solid var(--rule);
     }
-    .article-description {
-      margin-left: 0;
+    .article-meta-label {
+      grid-row: 1 / span 2;
+      padding-right: 1rem;
+      border-right: 1px solid var(--rule);
+    }
+    .field-marker {
+      display: none;
+    }
+    .article-lede {
+      padding: clamp(2.2rem, 8vw, 3.5rem) 0 clamp(2.5rem, 8vw, 3.5rem);
     }
     .after-note {
       grid-template-columns: 1fr;
     }
   }
   @media (max-width: 560px) {
+    .article-heading {
+      padding-top: 1rem;
+    }
+    .article-heading-bar > a > small,
+    .article-type {
+      display: none;
+    }
     h1 {
-      font-size: clamp(3.8rem, 18vw, 5.5rem);
+      font-size: clamp(3.15rem, 15vw, 4.7rem);
+      letter-spacing: -0.025em;
+      line-height: 1.02;
     }
     .join-note,
     .next-note {
