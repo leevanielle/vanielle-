@@ -11,6 +11,9 @@ export default defineConfig({
   site: SITE.website,
   base: process.env.GITHUB_PAGES_BASE ?? "/",
   output: "static",
+  redirects: {
+    "/blog": "/",
+  },
   integrations: [
     tailwind({
       applyBaseStyles: false,
