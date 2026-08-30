@@ -73,10 +73,6 @@ const formatDate = (date: Date) =>
         <p class="article-description">{description}</p>
       </header>
 
-      <div class="article-rule" aria-hidden="true">
-        <span></span><i></i><b></b>
-      </div>
-
       <article class="article-body" role="article">
         <Content />
       </article>
@@ -184,33 +180,6 @@ const formatDate = (date: Date) =>
     color: #5f594f;
     font-size: clamp(1rem, 1.5vw, 1.18rem);
     line-height: 1.7;
-  }
-  .article-rule {
-    position: relative;
-    height: 150px;
-    display: grid;
-    place-items: center;
-    border-top: 1px solid rgba(25, 25, 21, 0.4);
-    border-bottom: 1px solid rgba(25, 25, 21, 0.4);
-  }
-  .article-rule > span {
-    width: 86px;
-    aspect-ratio: 1;
-    border: 1px solid var(--red);
-    border-radius: 50%;
-  }
-  .article-rule > i,
-  .article-rule > b {
-    position: absolute;
-    width: 1px;
-    height: 42px;
-    background: var(--ink);
-  }
-  .article-rule > i {
-    transform: rotate(45deg);
-  }
-  .article-rule > b {
-    transform: rotate(-45deg);
   }
   :global(.article-body) {
     max-width: 740px;
@@ -358,9 +327,6 @@ const formatDate = (date: Date) =>
   @media (max-width: 560px) {
     h1 {
       font-size: clamp(3.8rem, 18vw, 5.5rem);
-    }
-    .article-rule {
-      height: 110px;
     }
     .join-note,
     .next-note {
