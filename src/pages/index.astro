@@ -36,15 +36,11 @@ const bookingLinks = [
     label: "Book 30 minutes",
     detail: "$150 · focused advisory call",
     href: "https://cal.com/leevanielle/advisory-30",
-    embedSrc:
-      "https://app.cal.com/leevanielle/advisory-30/embed?embed=&layout=month_view&useSlotsViewOnSmallScreen=true&embedType=inline",
   },
   {
     label: "Book one hour",
     detail: "$300 · working advisory session",
     href: "https://cal.com/leevanielle/advisory-60",
-    embedSrc:
-      "https://app.cal.com/leevanielle/advisory-60/embed?embed=&layout=month_view&useSlotsViewOnSmallScreen=true&embedType=inline",
   },
 ];
 ---
@@ -198,8 +194,6 @@ const bookingLinks = [
               <a
                 class="booking-link"
                 href={link.href}
-                data-booking-src={link.embedSrc}
-                data-booking-title={link.label}
               >
                 <span>
                   <strong>{link.label}</strong>
@@ -230,33 +224,6 @@ const bookingLinks = [
       </section>
     </main>
 
-    <dialog
-      class="booking-dialog"
-      id="booking-dialog"
-      aria-labelledby="booking-dialog-title"
-    >
-      <header>
-        <div>
-          <span class="booking-dialog-kicker">Advisory / secure checkout</span>
-          <h2 id="booking-dialog-title">Book a session</h2>
-        </div>
-        <button
-          class="booking-dialog-close"
-          type="button"
-          aria-label="Close booking dialog"
-        >
-          <span>Close</span><i aria-hidden="true">×</i>
-        </button>
-      </header>
-      <iframe
-        class="booking-dialog-frame"
-        title="Book an advisory session"
-        src="about:blank"
-        allow="payment"
-        referrerpolicy="strict-origin-when-cross-origin"
-      ></iframe>
-    </dialog>
-
     <JournalFooter showSocials={false} />
   </div>
 </Layout>
@@ -283,41 +250,6 @@ const bookingLinks = [
     revealItems.forEach(item => observer.observe(item));
   }
 
-  const bookingDialog = document.querySelector<HTMLDialogElement>(
-    "#booking-dialog"
-  );
-  const bookingFrame =
-    bookingDialog?.querySelector<HTMLIFrameElement>(".booking-dialog-frame");
-  const bookingTitle = bookingDialog?.querySelector<HTMLElement>(
-    "#booking-dialog-title"
-  );
-  const bookingClose = bookingDialog?.querySelector<HTMLButtonElement>(
-    ".booking-dialog-close"
-  );
-
-  document.querySelectorAll<HTMLAnchorElement>("[data-booking-src]").forEach(
-    link => {
-      link.addEventListener("click", event => {
-        if (!bookingDialog || !bookingFrame || !bookingTitle) return;
-        event.preventDefault();
-        const src = link.dataset.bookingSrc;
-        if (!src) return;
-        const title = link.dataset.bookingTitle ?? "Book a session";
-        bookingTitle.textContent = title;
-        bookingFrame.title = `${title} with Vanielle Lee`;
-        bookingFrame.src = src;
-        bookingDialog.showModal();
-      });
-    }
-  );
-
-  bookingClose?.addEventListener("click", () => bookingDialog?.close());
-  bookingDialog?.addEventListener("click", event => {
-    if (event.target === bookingDialog) bookingDialog.close();
-  });
-  bookingDialog?.addEventListener("close", () => {
-    if (bookingFrame) bookingFrame.src = "about:blank";
-  });
 </script>
 
 <style>
@@ -866,86 +798,6 @@ const bookingLinks = [
     font-size: 1.4rem;
     font-style: normal;
   }
-  .booking-dialog {
-    width: min(1120px, calc(100vw - 2rem));
-    height: min(860px, calc(100dvh - 2rem));
-    max-width: 1120px;
-    max-height: 860px;
-    margin: auto;
-    padding: 0;
-    overflow: hidden;
-    border: 1px solid var(--ink);
-    background: var(--paper);
-    color: var(--ink);
-  }
-  .booking-dialog[open] {
-    display: grid;
-    grid-template-rows: auto minmax(0, 1fr);
-  }
-  .booking-dialog::backdrop {
-    background: rgba(25, 25, 21, 0.72);
-    backdrop-filter: blur(7px);
-  }
-  .booking-dialog header {
-    padding: 0.9rem 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    border-bottom: 1px solid var(--ink);
-    background: var(--paper-deep);
-  }
-  .booking-dialog header > div {
-    display: grid;
-    gap: 0.12rem;
-  }
-  .booking-dialog-kicker,
-  .booking-dialog-close {
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 0.53rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-  .booking-dialog-kicker {
-    color: var(--red);
-  }
-  .booking-dialog h2 {
-    margin: 0;
-    font-size: clamp(1.6rem, 3vw, 2.35rem);
-    letter-spacing: -0.045em;
-    line-height: 1;
-  }
-  .booking-dialog-close {
-    padding: 0.6rem 0.7rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.55rem;
-    border: 1px solid var(--ink);
-    background: transparent;
-    color: var(--ink);
-    cursor: pointer;
-  }
-  .booking-dialog-close i {
-    color: var(--red);
-    font-family: "Instrument Sans", sans-serif;
-    font-size: 1.25rem;
-    font-style: normal;
-    line-height: 0.6;
-  }
-  .booking-dialog-close:hover {
-    background: var(--ink);
-    color: var(--paper);
-  }
-  .booking-dialog-close:focus-visible {
-    outline: 2px solid var(--red);
-    outline-offset: 3px;
-  }
-  .booking-dialog-frame {
-    width: 100%;
-    height: 100%;
-    border: 0;
-    background: var(--paper);
-  }
   .social-section {
     padding: clamp(5rem, 8vw, 7rem) max(1rem, calc((100vw - 1160px) / 2));
     display: grid;
@@ -1129,22 +981,6 @@ const bookingLinks = [
     }
     .booking-links strong {
       font-size: 2rem;
-    }
-    .booking-dialog {
-      width: 100vw;
-      height: 100dvh;
-      max-width: none;
-      max-height: none;
-      border: 0;
-    }
-    .booking-dialog header {
-      padding: 0.75rem;
-    }
-    .booking-dialog-close {
-      padding: 0.55rem;
-    }
-    .booking-dialog-close > span {
-      display: none;
     }
     .social-links {
       grid-template-columns: 1fr;
