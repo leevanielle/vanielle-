@@ -186,24 +186,6 @@ const bookingLinks = [
           <p class="kicker">Advisory / direct access</p>
           <h2 id="advisory-heading">Bring me the hard decision.</h2>
           <p>AI, engineering, product, or team design.</p>
-          <div class="advisory-pricing">
-            <a
-              href={bookingLinks[0].href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Book a 30-minute advisory call for $150"
-            >
-              <strong>$150</strong><span>/ 30 min</span>
-            </a>
-            <a
-              href={bookingLinks[1].href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Book a one-hour advisory session for $300"
-            >
-              <strong>$300</strong><span>/ hour</span>
-            </a>
-          </div>
         </div>
 
         <div class="booking-links reveal">
@@ -776,48 +758,6 @@ const bookingLinks = [
   .advisory-copy > p:not(.kicker) {
     margin: 1.4rem 0;
     color: #655f55;
-  }
-  .advisory-pricing {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.8rem 1.6rem;
-  }
-  .advisory-pricing a {
-    display: inline-flex;
-    align-items: baseline;
-    gap: 0.55rem;
-    color: var(--ink);
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 0.57rem;
-    text-decoration: none;
-    text-transform: uppercase;
-  }
-  .advisory-pricing strong {
-    color: var(--red);
-    font-family: "Bodoni Moda", Didot, serif;
-    font-size: 2rem;
-    font-weight: 500;
-    transition: transform 180ms ease;
-  }
-  .advisory-pricing a::after {
-    color: var(--red);
-    content: "↗";
-    font-size: 0.7rem;
-    opacity: 0.45;
-    transition:
-      opacity 180ms ease,
-      transform 180ms ease;
-  }
-  .advisory-pricing a:hover strong {
-    transform: translateY(-2px);
-  }
-  .advisory-pricing a:hover::after {
-    opacity: 1;
-    transform: translate(2px, -2px);
-  }
-  .advisory-pricing a:focus-visible {
-    outline: 2px solid var(--red);
-    outline-offset: 5px;
   }
   .booking-links {
     border-top: 1px solid var(--ink);
