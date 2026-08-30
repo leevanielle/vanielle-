@@ -2,7 +2,6 @@
 import { type CollectionEntry, getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 import NewsletterSignup from "@components/NewsletterSignup.astro";
-import JournalFooter from "@components/JournalFooter.astro";
 import getSortedPosts from "@utils/getSortedPosts";
 import { slugifyStr } from "@utils/slugify";
 
@@ -99,8 +98,6 @@ const formatDate = (date: Date) =>
         }
       </section>
     </main>
-
-    <JournalFooter />
   </div>
 </Layout>
 
