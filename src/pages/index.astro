@@ -30,6 +30,19 @@ const socialLinks = [
     href: "https://github.com/leevanielle",
   },
 ];
+
+const bookingLinks = [
+  {
+    label: "Book 30 minutes",
+    detail: "$150 · focused advisory call",
+    href: "https://cal.com/leevanielle/advisory-30",
+  },
+  {
+    label: "Book one hour",
+    detail: "$300 · working advisory session",
+    href: "https://cal.com/leevanielle/advisory-60",
+  },
+];
 ---
 
 <Layout
@@ -165,18 +178,57 @@ const socialLinks = [
       </section>
 
       <section
-        class="connect-section"
+        class="advisory-section"
         id="connect"
-        aria-labelledby="connect-heading"
+        aria-labelledby="advisory-heading"
       >
-        <div class="connect-copy reveal">
+        <div class="advisory-copy reveal">
           <p class="kicker">Advisory / direct access</p>
-          <h2 id="connect-heading">Bring me the hard decision.</h2>
+          <h2 id="advisory-heading">Bring me the hard decision.</h2>
           <p>AI, engineering, product, or team design.</p>
-          <span><strong>$300</strong> / hour · projects scoped separately</span>
+          <div class="advisory-pricing">
+            <a
+              href={bookingLinks[0].href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Book a 30-minute advisory call for $150"
+            >
+              <strong>$150</strong><span>/ 30 min</span>
+            </a>
+            <a
+              href={bookingLinks[1].href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Book a one-hour advisory session for $300"
+            >
+              <strong>$300</strong><span>/ hour</span>
+            </a>
+          </div>
         </div>
 
-        <div class="connect-links reveal">
+        <div class="booking-links reveal">
+          {
+            bookingLinks.map(link => (
+              <a
+                class="booking-link"
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span>
+                  <strong>{link.label}</strong>
+                  <small>{link.detail}</small>
+                </span>
+                <i>↗</i>
+              </a>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="social-section" aria-labelledby="social-heading">
+        <h2 id="social-heading" class="reveal">Elsewhere</h2>
+        <nav class="social-links reveal" aria-label="Social profiles">
           {
             socialLinks.map(link => (
               <a href={link.href} target="_blank" rel="noopener noreferrer">
@@ -188,11 +240,11 @@ const socialLinks = [
               </a>
             ))
           }
-        </div>
+        </nav>
       </section>
     </main>
 
-    <JournalFooter />
+    <JournalFooter showSocials={false} />
   </div>
 </Layout>
 
@@ -705,7 +757,7 @@ const socialLinks = [
   .home-post:hover h3 {
     color: var(--red);
   }
-  .connect-section {
+  .advisory-section {
     padding: clamp(7rem, 11vw, 10rem) max(1rem, calc((100vw - 1160px) / 2));
     display: grid;
     grid-template-columns: 0.8fr 1.2fr;
@@ -714,32 +766,63 @@ const socialLinks = [
     border-top: 1px solid var(--ink);
     background: var(--paper-deep);
   }
-  .connect-copy h2 {
+  .advisory-copy h2 {
     max-width: 560px;
     margin: 0;
     font-size: clamp(3.8rem, 6.5vw, 6.5rem);
     letter-spacing: -0.07em;
     line-height: 0.88;
   }
-  .connect-copy > p:not(.kicker) {
+  .advisory-copy > p:not(.kicker) {
     margin: 1.4rem 0;
     color: #655f55;
   }
-  .connect-copy > span {
+  .advisory-pricing {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem 1.6rem;
+  }
+  .advisory-pricing a {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.55rem;
+    color: var(--ink);
     font-family: "IBM Plex Mono", monospace;
     font-size: 0.57rem;
+    text-decoration: none;
     text-transform: uppercase;
   }
-  .connect-copy > span strong {
+  .advisory-pricing strong {
     color: var(--red);
     font-family: "Bodoni Moda", Didot, serif;
     font-size: 2rem;
     font-weight: 500;
+    transition: transform 180ms ease;
   }
-  .connect-links {
+  .advisory-pricing a::after {
+    color: var(--red);
+    content: "↗";
+    font-size: 0.7rem;
+    opacity: 0.45;
+    transition:
+      opacity 180ms ease,
+      transform 180ms ease;
+  }
+  .advisory-pricing a:hover strong {
+    transform: translateY(-2px);
+  }
+  .advisory-pricing a:hover::after {
+    opacity: 1;
+    transform: translate(2px, -2px);
+  }
+  .advisory-pricing a:focus-visible {
+    outline: 2px solid var(--red);
+    outline-offset: 5px;
+  }
+  .booking-links {
     border-top: 1px solid var(--ink);
   }
-  .connect-links a {
+  .booking-links a {
     min-height: 100px;
     padding: 1rem;
     display: flex;
@@ -750,25 +833,100 @@ const socialLinks = [
     color: var(--ink);
     text-decoration: none;
   }
-  .connect-links a > span {
+  .booking-links a > span {
     display: grid;
     gap: 0.25rem;
   }
-  .connect-links strong {
+  .booking-links strong {
     font-family: "Bodoni Moda", Didot, serif;
     font-size: 2.35rem;
     font-weight: 500;
     letter-spacing: -0.045em;
   }
-  .connect-links small {
+  .booking-links .booking-link strong {
+    color: var(--red);
+  }
+  .booking-links .booking-link small {
+    color: var(--ink);
+  }
+  .booking-links small {
     color: #6c665c;
     font-family: "IBM Plex Mono", monospace;
     font-size: 0.54rem;
   }
-  .connect-links i {
+  .booking-links i {
     color: var(--red);
     font-size: 1.4rem;
     font-style: normal;
+  }
+  .social-section {
+    padding: clamp(5rem, 8vw, 7rem) max(1rem, calc((100vw - 1160px) / 2));
+    display: grid;
+    grid-template-columns: 0.42fr 1.58fr;
+    align-items: start;
+    gap: clamp(3rem, 8vw, 7rem);
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .social-section h2 {
+    margin: -0.08em 0 0;
+    font-size: clamp(3.4rem, 6vw, 5.8rem);
+    font-weight: 500;
+    letter-spacing: -0.065em;
+    line-height: 0.9;
+  }
+  .social-links {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid #706b61;
+    border-left: 1px solid #706b61;
+  }
+  .social-links a {
+    min-height: 170px;
+    padding: 1.2rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    border-right: 1px solid #706b61;
+    border-bottom: 1px solid #706b61;
+    color: var(--paper);
+    text-decoration: none;
+    transition:
+      background 180ms ease,
+      color 180ms ease;
+  }
+  .social-links a:hover {
+    background: var(--red);
+  }
+  .social-links a > span {
+    display: grid;
+    gap: 0.45rem;
+  }
+  .social-links strong {
+    font-family: "Bodoni Moda", Didot, serif;
+    font-size: clamp(2rem, 3vw, 3rem);
+    font-weight: 500;
+    letter-spacing: -0.05em;
+  }
+  .social-links small {
+    color: #aaa49a;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.52rem;
+  }
+  .social-links i {
+    color: var(--salmon);
+    font-size: 1.25rem;
+    font-style: normal;
+  }
+  .social-links a:hover small,
+  .social-links a:hover i {
+    color: var(--paper);
+  }
+  .booking-links a:focus-visible,
+  .social-links a:focus-visible {
+    outline: 2px solid var(--amber);
+    outline-offset: 4px;
   }
   .reveal {
     opacity: 0;
@@ -811,7 +969,8 @@ const socialLinks = [
   }
   @media (max-width: 980px) {
     .book-layout,
-    .connect-section {
+    .advisory-section,
+    .social-section {
       grid-template-columns: 1fr;
     }
     .home-hero {
@@ -867,7 +1026,7 @@ const socialLinks = [
     }
     .section-heading h2,
     .book-copy h2,
-    .connect-copy h2 {
+    .advisory-copy h2 {
       font-size: clamp(3.5rem, 16vw, 5.2rem);
     }
     .book-details,
@@ -881,8 +1040,14 @@ const socialLinks = [
     .post-field {
       width: min(82vw, 340px);
     }
-    .connect-links strong {
+    .booking-links strong {
       font-size: 2rem;
+    }
+    .social-links {
+      grid-template-columns: 1fr;
+    }
+    .social-links a {
+      min-height: 112px;
     }
   }
   @media (prefers-reduced-motion: reduce) {

@@ -1,25 +1,37 @@
+---
+interface Props {
+  showSocials?: boolean;
+}
+
+const { showSocials = true } = Astro.props;
+---
+
 <footer class="journal-footer">
   <div>
     <strong>Vanielle Lee</strong>
     <span>AI engineer · Founder · CTO · Author</span>
   </div>
-  <nav aria-label="Social links">
-    <a
-      href="https://x.com/lee_vanielle"
-      target="_blank"
-      rel="noopener noreferrer">X</a
-    >
-    <a
-      href="https://www.threads.com/@leevanielle"
-      target="_blank"
-      rel="noopener noreferrer">Threads</a
-    >
-    <a
-      href="https://github.com/leevanielle"
-      target="_blank"
-      rel="noopener noreferrer">GitHub</a
-    >
-  </nav>
+  {
+    showSocials && (
+      <nav aria-label="Social links">
+        <a
+          href="https://x.com/lee_vanielle"
+          target="_blank"
+          rel="noopener noreferrer">X</a
+        >
+        <a
+          href="https://www.threads.com/@leevanielle"
+          target="_blank"
+          rel="noopener noreferrer">Threads</a
+        >
+        <a
+          href="https://github.com/leevanielle"
+          target="_blank"
+          rel="noopener noreferrer">GitHub</a
+        >
+      </nav>
+    )
+  }
 </footer>
 
 <style>
