@@ -2,7 +2,6 @@
 import { getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 import NewsletterSignup from "@components/NewsletterSignup.astro";
-import JournalFooter from "@components/JournalFooter.astro";
 import PaintSplatter from "@components/PaintSplatter.astro";
 import getSortedPosts from "@utils/getSortedPosts";
 
@@ -224,7 +223,6 @@ const bookingLinks = [
       </section>
     </main>
 
-    <JournalFooter showSocials={false} />
   </div>
 </Layout>
 
