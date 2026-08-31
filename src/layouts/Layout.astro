@@ -15,6 +15,7 @@ export interface Props {
   canonicalURL?: string;
   pubDatetime?: Date;
   modDatetime?: Date;
+  pageType?: "standard" | "not_found";
 }
 
 const {
@@ -25,6 +26,7 @@ const {
   canonicalURL = new URL(Astro.url.pathname, Astro.site).href,
   pubDatetime,
   modDatetime,
+  pageType = "standard",
 } = Astro.props;
 
 const socialImageURL = new URL(
@@ -106,7 +108,7 @@ const socialImageURL = new URL(
 
     <script is:inline src={`${basePath}toggle-theme.js`}></script>
   </head>
-  <body>
+  <body data-page-type={pageType}>
     <slot />
     <Analytics />
   </body>

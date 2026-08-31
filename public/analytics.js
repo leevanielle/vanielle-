@@ -11,6 +11,8 @@
   let googleTagLoaded = false;
   let lastLocation = "";
   let previousLocation = document.referrer;
+  const reportedIssues = new Set();
+  const reportedNotFoundLocations = new Set();
 
   window.dataLayer = window.dataLayer || [];
   window.gtag =
@@ -131,11 +133,84 @@
     window.gtag("event", eventName, properties);
   };
 
+  const classifyAssetOrigin = source => {
+    if (!source) return "unknown";
+    try {
+      return new URL(source, window.location.href).origin ===
+        window.location.origin
+        ? "same_origin"
+        : "third_party";
+    } catch {
+      return "unknown";
+    }
+  };
+
+  const reportTechnicalIssue = (issueType, details = {}) => {
+    if (getConsent() !== granted) return;
+    const properties = {
+      issue_type: issueType,
+      page_path: window.location.pathname,
+      error_name: details.errorName || "unknown",
+      asset_type: details.assetType || "not_applicable",
+      asset_origin: details.assetOrigin || "not_applicable",
+    };
+    const issueKey = Object.values(properties).join("|");
+    if (reportedIssues.has(issueKey) || reportedIssues.size >= 20) return;
+    reportedIssues.add(issueKey);
+    sendEvent("site_technical_error", properties);
+  };
+
+  window.addEventListener(
+    "error",
+    event => {
+      const target = event.target;
+      if (target instanceof HTMLElement && !(event instanceof ErrorEvent)) {
+        const source = target.currentSrc || target.src || target.href || "";
+        reportTechnicalIssue("resource_load_error", {
+          assetType: target.tagName.toLowerCase(),
+          assetOrigin: classifyAssetOrigin(source),
+        });
+        return;
+      }
+
+      reportTechnicalIssue("javascript_error", {
+        errorName:
+          event instanceof ErrorEvent && event.error instanceof Error
+            ? event.error.name.slice(0, 60)
+            : "Error",
+      });
+    },
+    true
+  );
+
+  window.addEventListener("unhandledrejection", event => {
+    reportTechnicalIssue("unhandled_promise_rejection", {
+      errorName:
+        event.reason instanceof Error
+          ? event.reason.name.slice(0, 60)
+          : "NonErrorReason",
+    });
+  });
+
   const syncAnalytics = () => {
     const choice = getConsent();
     setBannerVisibility(choice !== granted && choice !== denied);
     updatePreferenceStatus();
-    if (choice === granted) sendPageView();
+    if (choice !== granted) return;
+
+    const currentLocation = window.location.href;
+    const currentReferrer = previousLocation;
+    sendPageView();
+    if (
+      document.body.dataset.pageType === "not_found" &&
+      !reportedNotFoundLocations.has(currentLocation)
+    ) {
+      reportedNotFoundLocations.add(currentLocation);
+      sendEvent("page_not_found", {
+        page_path: window.location.pathname,
+        page_referrer: currentReferrer,
+      });
+    }
   };
 
   document.addEventListener("click", event => {

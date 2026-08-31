@@ -120,6 +120,7 @@ const companyId = `${idPrefix}-company`;
         button.textContent = "Joining…";
       }
       status.textContent = "Adding you to the field notes…";
+      let failureType = "request_failed";
 
       try {
         const response = await fetch(form.action, {
@@ -129,7 +130,13 @@ const companyId = `${idPrefix}-company`;
         });
         const payload = await response.json().catch(() => ({}));
 
-        if (!response.ok || payload.ok !== true) {
+        if (!response.ok) {
+          failureType = response.status >= 500 ? "server_error" : "rejected";
+          throw new Error(payload.error || "Unable to subscribe right now.");
+        }
+
+        if (payload.ok !== true) {
+          failureType = "invalid_response";
           throw new Error(payload.error || "Unable to subscribe right now.");
         }
 
@@ -151,6 +158,21 @@ const companyId = `${idPrefix}-company`;
           })
         );
       } catch (error) {
+        window.dispatchEvent(
+          new CustomEvent("vanielle:analytics", {
+            detail: {
+              event: "newsletter_signup_failed",
+              properties: {
+                form_variant: form.classList.contains(
+                  "newsletter-form--editorial"
+                )
+                  ? "editorial"
+                  : "default",
+                failure_type: failureType,
+              },
+            },
+          })
+        );
         status.textContent =
           error instanceof Error
             ? error.message

@@ -7,7 +7,7 @@ import LinkButton from "@components/LinkButton.astro";
 const basePath = `${import.meta.env.BASE_URL.replace(/\/+$/, "")}/`;
 ---
 
-<Layout title={`404 Not Found | ${SITE.title}`}>
+<Layout title={`404 Not Found | ${SITE.title}`} pageType="not_found">
   <Header />
 
   <main id="main-content">
