@@ -1,0 +1,115 @@
+---
+const measurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID?.trim();
+const isConfigured = /^G-[A-Z0-9]+$/i.test(measurementId ?? "");
+const basePath = `${import.meta.env.BASE_URL.replace(/\/+$/, "")}/`;
+---
+
+{
+  isConfigured && measurementId && (
+    <aside
+      class="analytics-consent"
+      data-analytics-consent
+      data-measurement-id={measurementId}
+      aria-labelledby="analytics-consent-title"
+      hidden
+    >
+      <div>
+        <strong id="analytics-consent-title">
+          A small measurement request
+        </strong>
+        <p>
+          May I use Google Analytics to count visits and learn how people find
+          this site? No email addresses or form contents are sent.
+        </p>
+        <a href={`${basePath}privacy#analytics`}>What is measured</a>
+      </div>
+      <div class="analytics-consent__actions">
+        <button type="button" data-analytics-decline>
+          No thanks
+        </button>
+        <button type="button" data-analytics-accept>
+          Allow analytics
+        </button>
+      </div>
+    </aside>
+  )
+}
+
+{isConfigured && <script is:inline src={`${basePath}analytics.js`} />}
+
+<style>
+  .analytics-consent[hidden] {
+    display: none;
+  }
+  .analytics-consent {
+    position: fixed;
+    z-index: 1000;
+    right: 1rem;
+    bottom: 1rem;
+    display: grid;
+    width: min(540px, calc(100% - 2rem));
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    border: 1px solid #696358;
+    padding: 1rem;
+    background: #171713;
+    color: #fbf8ef;
+    box-shadow: 0 14px 40px rgb(0 0 0 / 25%);
+    font-family: "Instrument Sans", Inter, ui-sans-serif, system-ui, sans-serif;
+  }
+  .analytics-consent strong {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.74rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .analytics-consent p {
+    margin: 0;
+    color: #d6d0c4;
+    font-size: 0.84rem;
+    line-height: 1.5;
+  }
+  .analytics-consent a {
+    display: inline-block;
+    margin-top: 0.45rem;
+    color: #fbf8ef;
+    font-size: 0.78rem;
+    text-underline-offset: 3px;
+  }
+  .analytics-consent__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+  .analytics-consent button {
+    min-height: 40px;
+    border: 1px solid #8b857a;
+    padding: 0 0.8rem;
+    background: transparent;
+    color: #fbf8ef;
+    cursor: pointer;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .analytics-consent button:last-child {
+    border-color: #cf2f21;
+    background: #cf2f21;
+  }
+  .analytics-consent button:focus-visible,
+  .analytics-consent a:focus-visible {
+    outline: 2px solid #fbf8ef;
+    outline-offset: 3px;
+  }
+  @media (max-width: 620px) {
+    .analytics-consent {
+      grid-template-columns: 1fr;
+    }
+    .analytics-consent__actions {
+      justify-content: flex-end;
+    }
+  }
+</style>

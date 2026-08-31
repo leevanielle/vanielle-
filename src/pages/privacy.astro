@@ -4,38 +4,61 @@ import Layout from "@layouts/Layout.astro";
 
 <Layout
   title="Privacy — Vanielle Lee"
-  description="Privacy information for vanielle.io and its email newsletter."
+  description="Privacy information for vanielle.io, its site analytics, and email newsletter."
 >
   <main class="privacy-shell">
     <a class="back" href="/" data-astro-reload>← Back to vanielle.io</a>
     <p class="eyebrow">Plain-language privacy</p>
     <h1>Your inbox is not inventory.</h1>
     <p class="intro">
-      If you join the email list, vanielle.io collects the email address you
-      provide so Vanielle can send you essays, book news, and occasional
-      updates.
+      Vanielle.io measures only what is useful for improving the site, and it
+      keeps that separate from the email address you choose to share when you
+      join the field notes.
     </p>
 
     <section>
-      <h2>What is collected</h2>
+      <h2>Email</h2>
       <p>
-        Your email address, the time you subscribed, and basic delivery
-        information such as opens or bounces when the newsletter provider
-        supplies it.
+        If you subscribe, the site collects your email address, subscription
+        time, and basic delivery information such as opens or bounces when the
+        newsletter provider supplies it. This is used only to send the field
+        notes, understand whether they are useful, and prevent abuse. Your
+        address is not sold or rented.
       </p>
     </section>
-    <section>
-      <h2>How it is used</h2>
+    <section id="analytics">
+      <h2>Site analytics</h2>
       <p>
-        Only to operate the newsletter, understand whether it is useful, and
-        prevent abuse. The address is not sold or rented.
+        If you select “Allow analytics,” Google Analytics counts page views and
+        records the referring site or campaign, approximate region, browser and
+        device type, and clicks on important links such as the book, articles,
+        social profiles, and advisory bookings. Newsletter form contents and
+        email addresses are never sent to analytics.
       </p>
+      <p>
+        Analytics stays off until you allow it. Advertising storage, advertising
+        personalization, and Google Signals are disabled. You can change your
+        choice at any time below.
+      </p>
+      <p class="analytics-choice" data-analytics-status>
+        No analytics choice has been saved yet.
+      </p>
+      <button
+        type="button"
+        class="preference-button"
+        data-analytics-preferences
+      >
+        Review analytics choices
+      </button>
     </section>
     <section>
       <h2>Service providers</h2>
       <p>
-        The newsletter platform processes subscriptions and deliveries on behalf
-        of vanielle.io. This page will name that provider before public launch.
+        The newsletter service processes subscriptions and deliveries on behalf
+        of vanielle.io. After consent, Google Analytics processes site
+        measurement data under
+        <a href="https://policies.google.com/privacy">Google’s privacy policy</a
+        >.
       </p>
     </section>
     <section>
@@ -46,7 +69,7 @@ import Layout from "@layouts/Layout.astro";
         social links on the homepage.
       </p>
     </section>
-    <p class="updated">Last updated: 26 August 2026</p>
+    <p class="updated">Last updated: 31 August 2026</p>
   </main>
 </Layout>
 
@@ -100,6 +123,31 @@ import Layout from "@layouts/Layout.astro";
   section p {
     color: #5b5e71;
     line-height: 1.7;
+  }
+  section a {
+    color: #cf2f21;
+    text-underline-offset: 3px;
+  }
+  .analytics-choice {
+    margin-bottom: 0.75rem;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.76rem;
+  }
+  .preference-button {
+    min-height: 42px;
+    border: 1px solid #cf2f21;
+    padding: 0 0.9rem;
+    background: transparent;
+    color: #cf2f21;
+    cursor: pointer;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .preference-button:hover {
+    background: #cf2f21;
+    color: #fff;
   }
   .updated {
     margin-top: 3rem;

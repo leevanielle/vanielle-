@@ -136,6 +136,20 @@ const companyId = `${idPrefix}-company`;
         form.reset();
         status.textContent =
           "You’re on the list. Watch your inbox for the next note.";
+        window.dispatchEvent(
+          new CustomEvent("vanielle:analytics", {
+            detail: {
+              event: "newsletter_signup_completed",
+              properties: {
+                form_variant: form.classList.contains(
+                  "newsletter-form--editorial"
+                )
+                  ? "editorial"
+                  : "default",
+              },
+            },
+          })
+        );
       } catch (error) {
         status.textContent =
           error instanceof Error

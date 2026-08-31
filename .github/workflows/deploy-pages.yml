@@ -21,6 +21,7 @@ jobs:
       ASTRO_TELEMETRY_DISABLED: 1
       GITHUB_PAGES_BASE: /
       PUBLIC_NEWSLETTER_ACTION: ${{ vars.PUBLIC_NEWSLETTER_ACTION }}
+      PUBLIC_GA_MEASUREMENT_ID: ${{ vars.PUBLIC_GA_MEASUREMENT_ID }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6

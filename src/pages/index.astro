@@ -92,6 +92,8 @@ const bookingLinks = [
               href="https://odecloud.com"
               target="_blank"
               rel="noopener noreferrer"
+              data-analytics-event="company_site_clicked"
+              data-analytics-location="homepage_hero"
               aria-label="Visit OdeCloud, Inc (opens in a new tab)"
               >OdeCloud, Inc<span aria-hidden="true">↗</span></a
             >. This is my corner of the internet for field notes on technology,
@@ -132,6 +134,8 @@ const bookingLinks = [
               href={FORBES_URL}
               target="_blank"
               rel="noopener noreferrer"
+              data-analytics-event="press_feature_clicked"
+              data-analytics-location="homepage_hero"
             >
               <span class="forbes-copy">
                 <strong>OdeCloud in Forbes</strong>
@@ -166,7 +170,13 @@ const bookingLinks = [
               <span><strong>6</strong> frameworks</span>
               <span><strong>1</strong> honest field guide</span>
             </div>
-            <a href={AMAZON_URL} target="_blank" rel="noopener noreferrer">
+            <a
+              href={AMAZON_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-analytics-event="book_link_clicked"
+              data-analytics-location="homepage_book"
+            >
               Read the book <span>↗</span>
             </a>
           </div>
@@ -190,6 +200,9 @@ const bookingLinks = [
               <a
                 class={`home-post post-tone-${(index % 3) + 1} reveal`}
                 href={`/blog/${post.slug}/`}
+                data-analytics-event="article_opened"
+                data-analytics-location="homepage_journal"
+                data-analytics-label={post.data.title}
               >
                 <div class="post-field" aria-hidden="true">
                   <span>{String(index + 1).padStart(2, "0")}</span>
@@ -254,7 +267,13 @@ const bookingLinks = [
           <div class="booking-links">
             {
               bookingLinks.map(link => (
-                <a class="booking-link" href={link.href}>
+                <a
+                  class="booking-link"
+                  href={link.href}
+                  data-analytics-event="advisory_booking_clicked"
+                  data-analytics-location="homepage_advisory"
+                  data-analytics-label={link.duration}
+                >
                   <span class="booking-duration">{link.duration}</span>
                   <span class="booking-copy">
                     <strong>{link.label}</strong>
@@ -299,6 +318,9 @@ const bookingLinks = [
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-analytics-event="social_profile_clicked"
+                data-analytics-location="homepage_social"
+                data-analytics-label={link.label}
               >
                 <span class="social-card-top">
                   <small>{link.eyebrow}</small>
