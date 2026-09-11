@@ -1,0 +1,766 @@
+---
+import Layout from "@layouts/Layout.astro";
+---
+
+<Layout
+  title="DuoBird · 鸳鸯飞飞"
+  description="Guide a pair of lucky mandarin ducks through a dreamy spring sky in this tiny Chinese-inspired flying game."
+  canonicalURL="https://duobird.vanielle.io/"
+  ogImage="/games/duobird/spring-sky.png"
+>
+  <main class="duobird" data-duobird>
+    <canvas
+      id="duobird-canvas"
+      tabindex="0"
+      aria-label="DuoBird flying game. Press Space or tap to fly upward, and guide the two mandarin ducks through the gates. Press P or Escape to pause."
+    >
+      Your browser needs canvas support to play DuoBird.
+    </canvas>
+
+    <div class="paper-wash" aria-hidden="true"></div>
+
+    <header class="game-brand" aria-label="DuoBird, Mandarin Ducks in Flight">
+      <span class="brand-seal" aria-hidden="true">双</span>
+      <div>
+        <h1>鸳鸯飞飞</h1>
+        <p>DuoBird</p>
+      </div>
+    </header>
+
+    <aside class="score-ribbon" aria-label="Current score">
+      <span>福气</span>
+      <strong data-score>0</strong>
+    </aside>
+
+    <div class="game-actions">
+      <button
+        class="round-action"
+        type="button"
+        data-pause
+        aria-label="Pause game"
+        title="Pause (P)"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M8.25 6.5v11M15.75 6.5v11"></path>
+        </svg>
+      </button>
+      <button
+        class="round-action"
+        type="button"
+        data-sound
+        aria-label="Mute sound"
+        title="Sound"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M5.5 14.5h3l4 3.25V6.25l-4 3.25h-3zM16 9.25c1.45 1.55 1.45 3.95 0 5.5M18.5 7c2.7 2.75 2.7 7.25 0 10"
+          ></path>
+        </svg>
+      </button>
+    </div>
+
+    <section
+      class="game-panel intro-panel"
+      data-intro
+      aria-labelledby="intro-title"
+    >
+      <div class="panel-cloud panel-cloud-left" aria-hidden="true"></div>
+      <div class="panel-cloud panel-cloud-right" aria-hidden="true"></div>
+      <p class="panel-kicker">飞过春山 · chase the spring breeze</p>
+      <h2 id="intro-title">Together, the sky is kinder.</h2>
+      <p class="panel-copy">
+        Guide our little mandarin-duck duo through the lucky moon gates.
+      </p>
+      <button class="launch-button" type="button" data-start disabled>
+        <span>起飞</span>
+        <small data-start-label>Painting the sky…</small>
+      </button>
+      <p class="control-hint">
+        <span><kbd>Space</kbd> or tap to flutter</span>
+        <span><kbd>P</kbd> to pause</span>
+      </p>
+    </section>
+
+    <section
+      class="game-panel result-panel"
+      data-result
+      aria-labelledby="result-title"
+      hidden
+    >
+      <span class="result-seal" aria-hidden="true">再</span>
+      <p class="panel-kicker">好事成双 · good things come in pairs</p>
+      <h2 id="result-title">A little tumble.</h2>
+      <div class="result-score">
+        <p><span>This flight</span><strong data-final-score>0</strong></p>
+        <i aria-hidden="true"></i>
+        <p><span>Lucky best</span><strong data-best-score>0</strong></p>
+      </div>
+      <button class="launch-button" type="button" data-restart>
+        <span>再来</span>
+        <small>Fly again</small>
+      </button>
+    </section>
+
+    <div class="pause-card" data-pause-card hidden role="status">
+      <span aria-hidden="true">歇</span>
+      <strong>A tiny tea break</strong>
+      <small>Tap or press P to keep flying</small>
+    </div>
+
+    <p class="screen-reader-status" data-live aria-live="polite"></p>
+
+    <footer class="game-signature">
+      <span>Made with two brave hearts</span>
+      <i aria-hidden="true"></i>
+      <span>万事成双</span>
+    </footer>
+  </main>
+
+  <script is:inline src="/games/duobird/game.js"></script>
+</Layout>
+
+<style is:global>
+  :root {
+    --duo-ink: #44352e;
+    --duo-paper: #fff6e7;
+    --duo-red: #c94c42;
+    --duo-deep-red: #8f2f2b;
+    --duo-jade: #5f8f80;
+    --duo-gold: #d8a84d;
+  }
+
+  html:has(.duobird),
+  body:has(.duobird) {
+    height: 100%;
+    overflow: hidden;
+    background: #f7dfc9;
+  }
+
+  body:has(.duobird) {
+    display: block;
+    min-height: 100svh;
+    color: var(--duo-ink);
+    font-family: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+  }
+
+  .duobird {
+    position: relative;
+    isolation: isolate;
+    width: 100%;
+    height: 100svh;
+    min-height: 420px;
+    overflow: hidden;
+    touch-action: none;
+    user-select: none;
+    background:
+      linear-gradient(180deg, rgb(255 219 202 / 20%), rgb(244 231 206 / 35%)),
+      url("/games/duobird/spring-sky.webp") center / cover no-repeat;
+  }
+
+  #duobird-canvas {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    display: block;
+    width: 100%;
+    height: 100%;
+    outline: none;
+  }
+
+  #duobird-canvas:focus-visible {
+    outline: 3px solid rgb(255 246 231 / 92%);
+    outline-offset: -7px;
+  }
+
+  .paper-wash {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.32;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.13'/%3E%3C/svg%3E");
+  }
+
+  .game-brand {
+    position: absolute;
+    z-index: 4;
+    top: clamp(1rem, 3vw, 2.25rem);
+    left: clamp(1rem, 3vw, 2.5rem);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    filter: drop-shadow(0 2px 1px rgb(255 250 239 / 72%));
+  }
+
+  .brand-seal {
+    display: grid;
+    width: 2.8rem;
+    height: 2.8rem;
+    place-items: center;
+    border: 2px solid rgb(255 240 218 / 90%);
+    border-radius: 0.72rem 0.58rem 0.78rem 0.54rem;
+    background: var(--duo-red);
+    color: #fff5df;
+    box-shadow:
+      0 0 0 1px #a93e38,
+      0 5px 18px rgb(112 46 37 / 16%);
+    font-family: "Songti SC", "STSong", "Noto Serif SC", serif;
+    font-size: 1.55rem;
+    line-height: 1;
+    transform: rotate(-3deg);
+  }
+
+  .game-brand h1,
+  .game-brand p {
+    margin: 0;
+  }
+
+  .game-brand h1 {
+    color: #5b3c35;
+    font-family: "Songti SC", "STSong", "Noto Serif SC", serif;
+    font-size: clamp(1.2rem, 2.2vw, 1.7rem);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1.05;
+  }
+
+  .game-brand p {
+    margin-top: 0.2rem;
+    color: #8f5d51;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.21em;
+    text-transform: uppercase;
+  }
+
+  .score-ribbon {
+    position: absolute;
+    z-index: 4;
+    top: clamp(1rem, 3vw, 2.2rem);
+    left: 50%;
+    display: flex;
+    min-width: 4rem;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.48rem 0.75rem 0.72rem;
+    border: 1px solid rgb(163 75 65 / 18%);
+    border-radius: 0.5rem 0.5rem 1.15rem 1.15rem;
+    background: rgb(255 248 232 / 74%);
+    box-shadow:
+      inset 0 0 0 3px rgb(255 255 255 / 40%),
+      0 8px 24px rgb(89 65 54 / 10%);
+    backdrop-filter: blur(8px);
+    transform: translateX(-50%);
+  }
+
+  .score-ribbon::before {
+    content: "";
+    position: absolute;
+    top: -0.32rem;
+    width: 1.25rem;
+    height: 0.48rem;
+    border-radius: 999px;
+    background: var(--duo-red);
+  }
+
+  .score-ribbon span {
+    color: #9a6356;
+    font-family: "Songti SC", "STSong", serif;
+    font-size: 0.64rem;
+    letter-spacing: 0.18em;
+  }
+
+  .score-ribbon strong {
+    margin-top: -0.08rem;
+    color: var(--duo-deep-red);
+    font-family: "Bodoni Moda", Georgia, serif;
+    font-size: clamp(1.75rem, 4vw, 2.55rem);
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .game-actions {
+    position: absolute;
+    z-index: 5;
+    top: clamp(1rem, 3vw, 2.2rem);
+    right: clamp(1rem, 3vw, 2.5rem);
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .round-action {
+    display: grid;
+    width: 2.65rem;
+    height: 2.65rem;
+    place-items: center;
+    border: 1px solid rgb(117 75 61 / 18%);
+    border-radius: 50%;
+    background: rgb(255 248 232 / 70%);
+    color: #815249;
+    box-shadow: 0 6px 20px rgb(89 65 54 / 10%);
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+  }
+
+  .round-action:hover {
+    background: rgb(255 248 232 / 92%);
+    color: var(--duo-red);
+  }
+
+  .round-action:focus-visible,
+  .launch-button:focus-visible {
+    outline: 3px solid #664b3f;
+    outline-offset: 3px;
+  }
+
+  .round-action svg {
+    width: 1.15rem;
+    height: 1.15rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+  }
+
+  .game-panel {
+    position: absolute;
+    z-index: 3;
+    top: 50%;
+    left: 50%;
+    width: min(29rem, calc(100% - 2rem));
+    padding: clamp(1.7rem, 5vw, 3rem) clamp(1.4rem, 5vw, 3.25rem)
+      clamp(1.35rem, 4vw, 2.2rem);
+    border: 1px solid rgb(165 84 69 / 22%);
+    border-radius: 2.3rem 1.35rem 2.6rem 1.5rem;
+    background: linear-gradient(
+        150deg,
+        rgb(255 252 239 / 92%),
+        rgb(255 239 220 / 87%)
+      ),
+      var(--duo-paper);
+    box-shadow:
+      inset 0 0 0 5px rgb(255 255 255 / 35%),
+      0 26px 80px rgb(95 58 46 / 17%);
+    text-align: center;
+    pointer-events: none;
+    backdrop-filter: blur(13px) saturate(0.9);
+    transform: translate(-50%, -46%);
+  }
+
+  .game-panel[hidden],
+  .pause-card[hidden] {
+    display: none;
+  }
+
+  .game-panel::before,
+  .game-panel::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .game-panel::before {
+    inset: 0.56rem;
+    border: 1px solid rgb(180 128 83 / 17%);
+    border-radius: 1.9rem 1.05rem 2.2rem 1.1rem;
+  }
+
+  .game-panel::after {
+    top: -0.42rem;
+    left: 50%;
+    width: 4.2rem;
+    height: 0.75rem;
+    border-radius: 999px 999px 35% 35%;
+    background: linear-gradient(90deg, #bb443c, #d86957, #bb443c);
+    box-shadow: 0 2px 0 #8c3833;
+    transform: translateX(-50%);
+  }
+
+  .panel-cloud {
+    position: absolute;
+    width: 5rem;
+    height: 2rem;
+    border: 1px solid rgb(190 146 91 / 25%);
+    border-color: rgb(190 146 91 / 28%) transparent transparent;
+    border-radius: 50%;
+    opacity: 0.9;
+  }
+
+  .panel-cloud::before,
+  .panel-cloud::after {
+    content: "";
+    position: absolute;
+    border: 1px solid rgb(190 146 91 / 28%);
+    border-color: rgb(190 146 91 / 28%) transparent transparent;
+    border-radius: 50%;
+  }
+
+  .panel-cloud::before {
+    top: -0.45rem;
+    left: 1rem;
+    width: 2rem;
+    height: 1.1rem;
+  }
+
+  .panel-cloud::after {
+    top: -0.35rem;
+    right: 0.35rem;
+    width: 1.45rem;
+    height: 0.85rem;
+  }
+
+  .panel-cloud-left {
+    bottom: 1.5rem;
+    left: -1.5rem;
+    transform: rotate(8deg);
+  }
+
+  .panel-cloud-right {
+    top: 1.4rem;
+    right: -1.2rem;
+    transform: rotate(185deg);
+  }
+
+  .panel-kicker {
+    margin: 0 0 0.8rem;
+    color: #a05247;
+    font-family: "Songti SC", "STSong", "Noto Serif SC", serif;
+    font-size: clamp(0.66rem, 2vw, 0.76rem);
+    letter-spacing: 0.12em;
+  }
+
+  .game-panel h2 {
+    max-width: 8.5em;
+    margin: 0 auto;
+    color: #543b32;
+    font-family: "Bodoni Moda", "Songti SC", Georgia, serif;
+    font-size: clamp(2.35rem, 6.5vw, 4.15rem);
+    font-weight: 500;
+    letter-spacing: -0.045em;
+    line-height: 0.93;
+  }
+
+  .panel-copy {
+    max-width: 28rem;
+    margin: 1rem auto 1.35rem;
+    color: #765a4e;
+    font-family: "Instrument Sans", ui-sans-serif, sans-serif;
+    font-size: clamp(0.86rem, 2vw, 1rem);
+    line-height: 1.5;
+  }
+
+  .launch-button {
+    position: relative;
+    display: inline-flex;
+    min-width: 10.5rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    border: 0;
+    border-radius: 999px;
+    padding: 0.72rem 1.25rem 0.78rem;
+    background: linear-gradient(180deg, #d75d50, #b94039);
+    color: #fff8e8;
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 30%),
+      0 5px 0 #8f312e,
+      0 12px 25px rgb(128 54 46 / 20%);
+    cursor: pointer;
+    pointer-events: auto;
+  }
+
+  .launch-button:hover:not(:disabled) {
+    transform: translateY(-1px);
+  }
+
+  .launch-button:active:not(:disabled) {
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 24%),
+      0 2px 0 #8f312e,
+      0 7px 15px rgb(128 54 46 / 18%);
+    transform: translateY(3px);
+  }
+
+  .launch-button:disabled {
+    cursor: wait;
+    opacity: 0.58;
+  }
+
+  .launch-button span {
+    font-family: "Songti SC", "STSong", "Noto Serif SC", serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+  }
+
+  .launch-button small {
+    border-left: 1px solid rgb(255 255 255 / 30%);
+    padding-left: 0.72rem;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.56rem;
+    letter-spacing: 0.04em;
+  }
+
+  .control-hint {
+    display: flex;
+    justify-content: center;
+    gap: 1.2rem;
+    margin: 1.15rem 0 0;
+    color: #907064;
+    font-size: 0.66rem;
+  }
+
+  .control-hint span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.36rem;
+  }
+
+  .control-hint kbd {
+    border: 1px solid rgb(137 92 76 / 25%);
+    border-radius: 0.3rem;
+    padding: 0.16rem 0.38rem;
+    background: rgb(255 255 255 / 55%);
+    box-shadow: 0 2px 0 rgb(137 92 76 / 15%);
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.58rem;
+  }
+
+  .result-panel {
+    padding-top: 2.7rem;
+  }
+
+  .result-panel h2 {
+    font-size: clamp(2.25rem, 6vw, 3.7rem);
+  }
+
+  .result-seal {
+    position: absolute;
+    top: -1.6rem;
+    left: 1.4rem;
+    display: grid;
+    width: 3.7rem;
+    height: 3.7rem;
+    place-items: center;
+    border: 2px solid #ffe9d2;
+    border-radius: 52% 43% 48% 46%;
+    background: #c94c42;
+    color: #fff7e7;
+    box-shadow: 0 0 0 1px #9c3733;
+    font-family: "Songti SC", "STSong", serif;
+    font-size: 1.85rem;
+    transform: rotate(-8deg);
+  }
+
+  .result-score {
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    align-items: center;
+    gap: 1.25rem;
+    margin: 1.25rem auto 1.5rem;
+  }
+
+  .result-score p {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+  }
+
+  .result-score span {
+    color: #927064;
+    font-size: 0.65rem;
+  }
+
+  .result-score strong {
+    color: var(--duo-deep-red);
+    font-family: "Bodoni Moda", Georgia, serif;
+    font-size: 2.5rem;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .result-score i {
+    width: 1px;
+    height: 2.8rem;
+    background: rgb(144 90 71 / 20%);
+  }
+
+  .pause-card {
+    position: absolute;
+    z-index: 6;
+    top: 50%;
+    left: 50%;
+    display: grid;
+    justify-items: center;
+    width: min(19rem, calc(100% - 2rem));
+    border: 1px solid rgb(151 92 72 / 22%);
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    background: rgb(255 248 231 / 88%);
+    box-shadow: 0 24px 70px rgb(75 53 45 / 20%);
+    backdrop-filter: blur(12px);
+    transform: translate(-50%, -50%);
+  }
+
+  .pause-card span {
+    display: grid;
+    width: 2.8rem;
+    height: 2.8rem;
+    place-items: center;
+    margin-bottom: 0.65rem;
+    border-radius: 50%;
+    background: var(--duo-jade);
+    color: #fff9e9;
+    font-family: "Songti SC", "STSong", serif;
+    font-size: 1.3rem;
+  }
+
+  .pause-card strong {
+    color: #5c4137;
+    font-family: "Bodoni Moda", Georgia, serif;
+    font-size: 1.45rem;
+    font-weight: 500;
+  }
+
+  .pause-card small {
+    margin-top: 0.2rem;
+    color: #8c6d61;
+    font-size: 0.7rem;
+  }
+
+  .game-signature {
+    position: absolute;
+    z-index: 2;
+    bottom: max(0.8rem, env(safe-area-inset-bottom));
+    left: 50%;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    width: max-content;
+    max-width: calc(100% - 2rem);
+    color: rgb(87 63 52 / 62%);
+    font-family: "Songti SC", "STSong", "Noto Serif SC", serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    pointer-events: none;
+    transform: translateX(-50%);
+  }
+
+  .game-signature i {
+    width: 0.22rem;
+    height: 0.22rem;
+    border-radius: 50%;
+    background: var(--duo-red);
+  }
+
+  .screen-reader-status {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 640px) {
+    .game-brand {
+      gap: 0.55rem;
+    }
+
+    .brand-seal {
+      width: 2.3rem;
+      height: 2.3rem;
+      font-size: 1.2rem;
+    }
+
+    .game-brand h1 {
+      font-size: 1.05rem;
+    }
+
+    .game-brand p {
+      font-size: 0.48rem;
+    }
+
+    .score-ribbon {
+      top: 0.75rem;
+      min-width: 3.25rem;
+      padding: 0.42rem 0.55rem 0.58rem;
+    }
+
+    .score-ribbon strong {
+      font-size: 1.7rem;
+    }
+
+    .game-actions {
+      gap: 0.35rem;
+    }
+
+    .round-action {
+      width: 2.25rem;
+      height: 2.25rem;
+    }
+
+    .game-actions .round-action:first-child {
+      display: none;
+    }
+
+    .game-panel {
+      top: 53%;
+      padding-top: 1.8rem;
+      transform: translate(-50%, -50%);
+    }
+
+    .game-panel h2 {
+      font-size: clamp(2.15rem, 12vw, 3.1rem);
+    }
+
+    .panel-copy {
+      max-width: 19rem;
+    }
+
+    .control-hint {
+      gap: 0.75rem;
+    }
+
+    .control-hint span:last-child {
+      display: none;
+    }
+
+    .game-signature {
+      display: none;
+    }
+  }
+
+  @media (max-height: 600px) and (orientation: landscape) {
+    .game-panel {
+      top: 53%;
+      width: min(30rem, calc(100% - 11rem));
+      padding: 1.45rem 2.4rem 1.2rem;
+    }
+
+    .game-panel h2 {
+      font-size: 2.5rem;
+    }
+
+    .panel-copy {
+      margin: 0.65rem auto 0.9rem;
+    }
+
+    .control-hint {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .launch-button:hover:not(:disabled),
+    .launch-button:active:not(:disabled) {
+      transform: none;
+    }
+  }
+</style>

@@ -1,0 +1,16 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": true,
+  "rewrites": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "duobird.vanielle.io"
+        }
+      ],
+      "destination": "/duobird/"
+    }
+  ]
+}
