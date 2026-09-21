@@ -4,6 +4,7 @@ import Layout from "@layouts/Layout.astro";
 import NewsletterSignup from "@components/NewsletterSignup.astro";
 import PaintSplatter from "@components/PaintSplatter.astro";
 import DecisionKnot from "@components/DecisionKnot.astro";
+import SelectedWork from "@components/SelectedWork.astro";
 import getSortedPosts from "@utils/getSortedPosts";
 
 const AMAZON_URL = "https://www.amazon.com/dp/B0HF6JW33T";
@@ -20,12 +21,12 @@ const formatDate = (date: Date) =>
 const socialLinks = [
   {
     label: "X",
-    handle: "@lee_vanielle",
+    handle: "@leevanielle",
     eyebrow: "Quick notes",
     description:
       "Fast thoughts on AI, engineering, and whatever I’m working through right now.",
     visual: "pulse",
-    href: "https://x.com/lee_vanielle",
+    href: "https://x.com/leevanielle",
   },
   {
     label: "Threads",
@@ -84,9 +85,9 @@ const bookingLinks = [
             ><em>I like making difficult things feel possible.</em>
           </h1>
           <p class="hero-intro">
-            I’m a founder, CTO, AI engineer, and author. Over the past decade,
-            I’ve worked across the engineering stack and spent a decade in the
-            CTO seat at my own company,
+            I’m a hands-on AI engineer, co-founder, CTO, and author. Over the
+            past decade, I’ve worked across the engineering stack and spent a
+            decade in the CTO seat at my own company,
             <a
               class="company-link"
               href="https://odecloud.com"
@@ -112,22 +113,6 @@ const bookingLinks = [
             />
           </figure>
 
-          <aside
-            class="hero-newsletter"
-            id="newsletter"
-            aria-labelledby="newsletter-heading"
-          >
-            <div class="newsletter-intro">
-              <span>Field notes</span>
-              <h2 id="newsletter-heading">A useful note, when I have one.</h2>
-              <p>
-                AI, engineering leadership, careers, and building across
-                cultures.
-              </p>
-            </div>
-            <NewsletterSignup variant="editorial" idPrefix="home-newsletter" />
-          </aside>
-
           <div class="hero-links">
             <a
               class="forbes-link"
@@ -143,6 +128,25 @@ const bookingLinks = [
               <span class="forbes-action">Read the feature <i>↗</i></span>
             </a>
           </div>
+        </div>
+      </section>
+
+      <SelectedWork />
+
+      <section
+        class="newsletter-section"
+        id="newsletter"
+        aria-labelledby="newsletter-heading"
+      >
+        <div class="newsletter-layout">
+          <div class="newsletter-intro">
+            <span>Field notes</span>
+            <h2 id="newsletter-heading">A useful note, when I have one.</h2>
+            <p>
+              AI, engineering leadership, careers, and building across cultures.
+            </p>
+          </div>
+          <NewsletterSignup variant="editorial" idPrefix="home-newsletter" />
         </div>
       </section>
 
@@ -458,13 +462,19 @@ const bookingLinks = [
     font-weight: 500;
     letter-spacing: -0.06em;
   }
-  .hero-newsletter {
-    grid-area: newsletter;
-    width: min(100%, 600px);
-    margin: 2rem 0 0;
-    padding: 1.65rem 0 0;
-    border-top: 1px solid rgba(25, 25, 21, 0.38);
+  .newsletter-section {
+    padding: 0 1rem clamp(4rem, 7vw, 6rem);
     color: var(--ink);
+  }
+  .newsletter-layout {
+    display: grid;
+    width: min(100%, 1160px);
+    margin-inline: auto;
+    padding-top: 2.5rem;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: center;
+    gap: clamp(2rem, 5vw, 5rem);
+    border-top: 1px solid rgba(25, 25, 21, 0.38);
   }
   .newsletter-intro {
     display: grid;
@@ -507,7 +517,6 @@ const bookingLinks = [
     grid-template-areas:
       "heading portrait"
       "intro portrait"
-      "newsletter portrait"
       "links portrait";
     align-items: center;
     column-gap: clamp(3rem, 7vw, 7rem);
@@ -1474,7 +1483,6 @@ const bookingLinks = [
         "heading"
         "intro"
         "portrait"
-        "newsletter"
         "links";
     }
     .portrait-system {
@@ -1507,6 +1515,10 @@ const bookingLinks = [
     }
     .hero-copy {
       column-gap: 0;
+    }
+    .newsletter-layout {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
     }
     .portrait-system {
       width: min(74vw, 310px);

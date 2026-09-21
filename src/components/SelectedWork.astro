@@ -1,0 +1,305 @@
+---
+const work = [
+  {
+    id: "odecloud",
+    title: "OdeCloud",
+    role: "Co-founder & CTO",
+    description:
+      "Built and led the technical side of a cloud software company from early product development through production systems, infrastructure, engineering, and ongoing product delivery.",
+    disciplines:
+      "0→1 product development · SaaS · cloud infrastructure · technical leadership",
+    cta: "View company",
+    href: "https://odecloud.com",
+    external: true,
+  },
+  {
+    id: "screenmint",
+    title: "ScreenMint",
+    role: "Founder / Engineer",
+    description:
+      "Built a modern macOS screen recorder from 0→1, including screen capture, microphone and system audio, recording controls, timeline scrubbing, metadata, macOS packaging, and the commercial launch flow.",
+    disciplines: "macOS · product engineering · 0→1 · desktop software",
+    cta: "View ScreenMint",
+    href: "https://screenmint.vanielle.io/",
+    external: true,
+    featured: true,
+  },
+  {
+    id: "soleil",
+    title: "Soleil Nail Salon",
+    role: "Client project",
+    description:
+      "Designed, built, and launched a modern production website for a real client with a one-day initial turnaround. The website is live; the digital marketing engagement is ongoing.",
+    disciplines:
+      "web development · client delivery · rapid execution · digital marketing",
+    cta: "View website",
+    href: "https://soleilvenice.com/",
+    external: true,
+  },
+  {
+    id: "automation",
+    title: "AI & Workflow Automation",
+    role: "Consulting",
+    description:
+      "I work with companies that have an expensive, repetitive, or awkward business process and turn it into production software using AI, automation, internal tools, integrations, agents, document workflows, and LLM systems.",
+    disciplines:
+      "AI engineering · workflow automation · agents · integrations · production systems",
+    cta: "Work with me",
+    href: "#connect",
+    external: false,
+  },
+];
+---
+
+<section class="work-section" id="work" aria-labelledby="work-heading">
+  <div class="work-inner">
+    <header class="work-heading">
+      <h2 id="work-heading">Selected Work</h2>
+      <p>
+        A few things I’ve built, led, or taken from an idea into production.
+      </p>
+    </header>
+
+    <div class="work-list">
+      {
+        work.map(item => (
+          <article
+            class:list={[
+              "work-entry",
+              { "work-entry--featured": item.featured },
+            ]}
+            aria-labelledby={`work-${item.id}`}
+          >
+            <header class="work-identity">
+              <p class="work-role">{item.role}</p>
+              <h3 id={`work-${item.id}`}>{item.title}</h3>
+            </header>
+            <div class="work-detail">
+              <p class="work-description">{item.description}</p>
+              <p class="work-disciplines">{item.disciplines}</p>
+              <a
+                class="work-link"
+                href={item.href}
+                target={item.external ? "_blank" : undefined}
+                rel={item.external ? "noopener noreferrer" : undefined}
+                aria-label={
+                  item.external
+                    ? `${item.cta}: ${item.title} (opens in a new tab)`
+                    : undefined
+                }
+                data-analytics-event={
+                  item.external
+                    ? "selected_work_clicked"
+                    : "consulting_cta_clicked"
+                }
+                data-analytics-location="homepage_selected_work"
+                data-analytics-label={item.title}
+              >
+                {item.cta}{" "}
+                <span aria-hidden="true">{item.external ? "↗" : "↘"}</span>
+              </a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <footer class="work-invitation">
+      <div>
+        <h3>
+          Have a workflow, product, or AI project that’s been stuck on the
+          roadmap?
+        </h3>
+        <p>
+          I help companies take difficult technical problems from idea to
+          production.
+        </p>
+        <p class="work-availability">
+          Available for fractional CTO, AI engineering, automation, and 0→1
+          product engagements.
+        </p>
+      </div>
+      <a
+        class="work-link"
+        href="#connect"
+        data-analytics-event="consulting_cta_clicked"
+        data-analytics-location="homepage_selected_work_footer"
+        data-analytics-label="Work with me"
+      >
+        Work with me <span aria-hidden="true">↘</span>
+      </a>
+    </footer>
+  </div>
+</section>
+
+<style>
+  .work-section {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: clamp(2.5rem, 5vw, 4.5rem) 1rem clamp(4rem, 7vw, 6rem);
+  }
+  .work-inner {
+    width: min(100%, 1160px);
+    margin-inline: auto;
+  }
+  .work-heading,
+  .work-entry {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    column-gap: clamp(2rem, 5vw, 5rem);
+  }
+  h2,
+  h3 {
+    margin: 0;
+    color: var(--ink);
+    font-family: "Bodoni Moda", Didot, serif;
+    font-weight: 500;
+  }
+  .work-heading {
+    align-items: end;
+    padding-bottom: 2.5rem;
+  }
+  .work-heading h2 {
+    font-size: clamp(3.5rem, 6vw, 5.8rem);
+    letter-spacing: -0.065em;
+    line-height: 0.95;
+  }
+  .work-heading > p {
+    max-width: 420px;
+    margin: 0;
+    color: #5f594f;
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+  .work-entry {
+    position: relative;
+    padding: 2.25rem 0;
+    border-top: 1px solid rgba(25, 25, 21, 0.38);
+    isolation: isolate;
+  }
+  .work-entry--featured {
+    border-top-color: var(--red);
+  }
+  .work-entry--featured::before {
+    position: absolute;
+    z-index: -1;
+    inset: 0 -1rem;
+    background: var(--paper-deep);
+    content: "";
+  }
+  .work-role {
+    margin: 0 0 0.85rem;
+    color: var(--red);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    line-height: 1.5;
+  }
+  .work-identity h3 {
+    max-width: 440px;
+    font-size: clamp(2.6rem, 4vw, 3.5rem);
+    letter-spacing: -0.055em;
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+  .work-entry--featured h3 {
+    font-size: clamp(3.2rem, 5vw, 4.5rem);
+  }
+  .work-description {
+    max-width: 620px;
+    margin: 0;
+    color: #4e493f;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+  .work-disciplines {
+    margin: 1rem 0 0.65rem;
+    color: #665e52;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.7rem;
+    line-height: 1.8;
+  }
+  .work-link {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 0.7rem;
+    color: var(--ink);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: rgba(25, 25, 21, 0.38);
+    text-underline-offset: 0.35em;
+    transition:
+      color 180ms ease,
+      text-decoration-color 180ms ease;
+  }
+  .work-link span {
+    color: var(--red);
+    font-size: 1rem;
+  }
+  .work-link:hover {
+    color: var(--red);
+    text-decoration-color: var(--red);
+  }
+  .work-link:focus-visible {
+    outline: 2px solid var(--red);
+    outline-offset: 5px;
+  }
+  .work-invitation {
+    display: flex;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 2.5rem 0 0;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    border-top: 1px solid rgba(25, 25, 21, 0.38);
+  }
+  .work-invitation > div {
+    max-width: 790px;
+  }
+  .work-invitation h3 {
+    max-width: 690px;
+    font-size: clamp(2rem, 3vw, 2.65rem);
+    letter-spacing: -0.045em;
+    line-height: 1.12;
+  }
+  .work-invitation p {
+    margin: 0.85rem 0 0;
+    color: #5f594f;
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+  .work-invitation .work-availability {
+    font-size: 0.84rem;
+  }
+  .work-invitation > a {
+    flex-shrink: 0;
+  }
+  @media (max-width: 700px) {
+    .work-heading,
+    .work-entry {
+      grid-template-columns: 1fr;
+      gap: 1.4rem;
+    }
+    .work-heading {
+      padding-bottom: 2rem;
+    }
+    .work-heading h2 {
+      font-size: clamp(3.25rem, 13vw, 4.5rem);
+    }
+    .work-invitation {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .work-link {
+      transition: none;
+    }
+  }
+</style>
