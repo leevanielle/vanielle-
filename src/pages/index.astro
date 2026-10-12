@@ -292,6 +292,27 @@ const bookingLinks = [
             }
           </div>
 
+          <section class="chat-booking" id="chat" aria-labelledby="chat-heading">
+            <header>
+              <h3 id="chat-heading">Just want to chat?</h3>
+              <p>
+                Say hello, share an idea, or talk about whatever’s on your mind.
+              </p>
+            </header>
+            <a
+              class="booking-link"
+              href="https://cal.com/leevanielle/chat-15"
+            >
+              <span class="booking-duration">15 min</span>
+              <span class="booking-copy">
+                <strong>Chat with Vanielle</strong>
+                <small>$75 USD · a relaxed conversation</small>
+                <em>No agenda or preparation needed.</em>
+              </span>
+              <span class="booking-action">Book <i aria-hidden="true">↗</i></span>
+            </a>
+          </section>
+
           <p class="advisory-assurance">
             Private by default <i>·</i> Cal Video <i>·</i> Shown in your
             timezone
@@ -1175,6 +1196,29 @@ const bookingLinks = [
     font-size: 0.5rem;
     line-height: 1.6;
     text-transform: uppercase;
+  }
+  .chat-booking {
+    margin-top: 2.4rem;
+  }
+  .chat-booking > header {
+    margin-bottom: 1.1rem;
+  }
+  .chat-booking h3 {
+    margin: 0;
+    font-family: "Bodoni Moda", Didot, serif;
+    font-size: clamp(1.8rem, 2.6vw, 2.5rem);
+    font-weight: 500;
+    letter-spacing: -0.045em;
+    line-height: 1.05;
+  }
+  .chat-booking > header p {
+    margin: 0.55rem 0 0;
+    color: #6b6459;
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+  .chat-booking .booking-link {
+    border-top: 1px solid var(--ink);
   }
   .advisory-assurance i {
     padding: 0 0.18rem;
